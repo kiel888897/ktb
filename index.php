@@ -45,6 +45,7 @@
             <!-- LOGO -->
             <div class="flex items-center gap-3">
                 <img src="assets/img/logo.png" class="h-9">
+                <span id="logoNav" class="font-bold text-lg text-white transition-colors">Kusuma Trisna Bali</span>
             </div>
 
             <!-- DESKTOP NAV -->
@@ -61,7 +62,8 @@
             <a id="desktopCTA"
                 class="hidden md:inline-block px-5 py-2 rounded-lg font-semibold transition
       border border-white text-white hover:bg-white hover:text-primary">
-                Hubungi
+                <i class="fa-solid fa-phone-volume"></i>
+                0812-3456-7890
             </a>
 
             <!-- MOBILE BUTTON -->
@@ -131,7 +133,7 @@
                 <div class="swiper-slide relative">
 
                     <img
-                        src="https://images.unsplash.com/photo-1581090700227-1e37b190418e"
+                        src="assets/img/slider1.jpg"
                         class="w-full h-full object-cover"
                         alt="Authorized Service">
 
@@ -222,35 +224,693 @@
         </div>
     </section>
 
+    <!-- TENTANG SINGKAT -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+            <!-- Text -->
+            <div data-aos="fade-right">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Tentang Kami
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-bold mb-5 leading-tight">
+                    Authorized Service & Distribusi
+                    Produk Elektronik Terpercaya
+                </h2>
+
+                <p class="text-gray-600 mb-4">
+                    Kusuma Trisna Bali berdiri sejak tahun <strong>2019</strong> dan bergerak
+                    di bidang <strong>distribusi serta authorized service</strong>
+                    berbagai produk elektronik dari merek ternama.
+                </p>
+
+                <p class="text-gray-600 mb-6">
+                    Dengan dukungan teknisi bersertifikat dan standar resmi pabrikan,
+                    kami berkomitmen memberikan layanan yang profesional, terpercaya,
+                    dan berkualitas bagi pelanggan serta mitra bisnis.
+                </p>
+
+                <a href="about.html"
+                    class="inline-flex items-center px-6 py-3 rounded-lg
+                      bg-primary text-white font-semibold
+                      hover:bg-primary/90 transition">
+                    Selengkapnya Tentang Kami
+                </a>
+            </div>
+
+            <!-- Highlight Box -->
+            <div data-aos="fade-up" class="grid grid-cols-2 gap-6">
+
+                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-3xl font-bold text-primary mb-1">2019</h3>
+                    <p class="text-gray-600 text-sm">Tahun Berdiri</p>
+                </div>
+
+                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-3xl font-bold text-primary mb-1">8+</h3>
+                    <p class="text-gray-600 text-sm">Brand Resmi</p>
+                </div>
+
+                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-3xl font-bold text-primary mb-1">Authorized</h3>
+                    <p class="text-gray-600 text-sm">Service Center</p>
+                </div>
+
+                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-3xl font-bold text-primary mb-1">Profesional</h3>
+                    <p class="text-gray-600 text-sm">Teknisi Bersertifikat</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- LAYANAN UTAMA -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-14">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Layanan Kami
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Layanan Utama
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Layanan resmi dengan standar pabrikan untuk memastikan performa
+                    dan keandalan produk elektronik Anda.
+                </p>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- Service TV -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg
+                        transition duration-300 text-center"
+                    data-aos="fade-up">
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary">
+                        <!-- TV Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-8 h-8"
+                            fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="1.8">
+                            <rect x="3" y="5" width="18" height="12" rx="2" />
+                            <path d="M8 21h8" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">
+                        Service TV
+                    </h3>
+
+                    <p class="text-gray-600 mb-6">
+                        Layanan perbaikan TV LED, LCD, dan Smart TV dengan dukungan
+                        teknisi bersertifikat serta suku cadang resmi.
+                    </p>
+
+                    <a href="service.html"
+                        class="font-semibold text-primary hover:underline">
+                        Selengkapnya →
+                    </a>
+                </div>
+
+                <!-- Service AC -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg
+                        transition duration-300 text-center"
+                    data-aos="fade-up" data-aos-delay="100">
+
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-snowflake"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Service AC
+                    </h3>
+
+                    <p class="text-gray-600 mb-6">
+                        Perawatan dan perbaikan AC untuk menjaga kenyamanan serta
+                        efisiensi pendingin ruangan Anda.
+                    </p>
+
+                    <a href="service.html"
+                        class="font-semibold text-primary hover:underline">
+                        Selengkapnya →
+                    </a>
+                </div>
+
+                <!-- Elektronik Rumah Tangga -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg
+                        transition duration-300 text-center"
+                    data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-plug"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">
+                        Elektronik Rumah Tangga
+                    </h3>
+
+                    <p class="text-gray-600 mb-6">
+                        Layanan perbaikan berbagai produk elektronik rumah tangga
+                        dengan standar layanan resmi dan terpercaya.
+                    </p>
+
+                    <a href="service.html"
+                        class="font-semibold text-primary hover:underline">
+                        Selengkapnya →
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- PRODUK UNGGULAN -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-14">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Produk Kami
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Produk Unggulan
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Produk elektronik pilihan dengan kualitas terjamin dan dukungan
+                    layanan resmi dari merek terpercaya.
+                </p>
+            </div>
+
+            <!-- Grid Produk -->
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+                <!-- Card Produk -->
+                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
+                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                        <img src="assets/img/product1.jpg"
+                            alt="Smart TV LED 43 Inch"
+                            class="max-h-full object-contain">
+                    </div>
+
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">
+                            Smart TV LED 43"
+                        </h3>
+
+                        <p class="text-sm text-gray-600 mb-4">
+                            Resolusi Full HD, Android TV, hemat energi.
+                        </p>
+
+                        <a href="produk.html"
+                            class="inline-flex items-center font-semibold text-primary hover:underline">
+                            Lihat Detail
+                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Produk 2 -->
+                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
+                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                        <img src="assets/img/product2.jpg"
+                            alt="AC Split"
+                            class="max-h-full object-contain">
+                    </div>
+
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">
+                            AC Split
+                        </h3>
+
+                        <p class="text-sm text-gray-600 mb-4">
+                            Pendingin ruangan efisien dan tahan lama.
+                        </p>
+
+                        <a href="produk.html"
+                            class="inline-flex items-center font-semibold text-primary hover:underline">
+                            Lihat Detail
+                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Produk 3 -->
+                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
+                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                        <img src="assets/img/product3.jpg"
+                            alt="Mesin Cuci"
+                            class="max-h-full object-contain">
+                    </div>
+
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">
+                            Mesin Cuci
+                        </h3>
+
+                        <p class="text-sm text-gray-600 mb-4">
+                            Kapasitas besar dengan performa optimal.
+                        </p>
+
+                        <a href="produk.html"
+                            class="inline-flex items-center font-semibold text-primary hover:underline">
+                            Lihat Detail
+                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Produk 4 -->
+                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
+                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                        <img src="assets/img/product4.jpg"
+                            alt="Water Heater"
+                            class="max-h-full object-contain">
+                    </div>
+
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">
+                            Water Heater
+                        </h3>
+
+                        <p class="text-sm text-gray-600 mb-4">
+                            Pemanas air aman dan hemat energi.
+                        </p>
+
+                        <a href="produk.html"
+                            class="inline-flex items-center font-semibold text-primary hover:underline">
+                            Lihat Detail
+                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center mt-14">
+                <a href="produk.html"
+                    class="inline-flex items-center px-8 py-3 rounded-lg
+                      bg-primary text-white font-semibold
+                      hover:bg-primary/90 transition">
+                    Lihat Semua Produk
+                    <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
 
     <!-- PRODUK TERBARU -->
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-10" data-aos="fade-up">
-                Produk Terbaru
-            </h2>
 
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="bg-white p-4 rounded-xl shadow" data-aos="zoom-in">
-                    <img src="https://via.placeholder.com/300" class="rounded mb-3">
-                    <h3 class="font-semibold">Produk A</h3>
+            <!-- Heading -->
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-3" data-aos="fade-up">
+                    Produk Terbaru
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Produk elektronik terbaru dengan kualitas terjamin dan dukungan layanan resmi.
+                </p>
+            </div>
+
+            <!-- Grid Produk -->
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+                <!-- Card Produk -->
+                <div class="bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 group"
+                    data-aos="zoom-in">
+
+                    <div class="overflow-hidden rounded-t-2xl">
+                        <img src="assets/img/tv1.webp"
+                            class="w-full h-48 object-contain bg-white p-4"
+                            alt="Smart TV LED">
+
+                    </div>
+
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">
+                            Smart TV LED 43"
+                        </h3>
+
+                        <p class="text-sm text-gray-600 mb-3">
+                            Resolusi Full HD, Android TV, hemat energi.
+                        </p>
+
+                        <ul class="text-sm text-gray-500 mb-4 space-y-1">
+                            <li>✔ Garansi Resmi</li>
+                            <li>✔ Layanan Authorized Service</li>
+                            <li>✔ Kualitas Terpercaya</li>
+                        </ul>
+
+                        <a href="#"
+                            class="inline-block w-full text-center px-4 py-2 rounded-lg
+                              bg-primary text-white font-semibold
+                              hover:bg-primary/90 transition">
+                            Lihat Detail
+                        </a>
+                    </div>
                 </div>
+
+                <!-- Duplicate card untuk produk lain -->
+                <!-- Tinggal ganti gambar & konten -->
+
             </div>
         </div>
     </section>
-
     <!-- IKLAN / PROMO -->
-    <section class="py-16 bg-primary text-white">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-10">
+    <section class="py-20 bg-primary text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">
+
+            <!-- Content -->
             <div data-aos="fade-right">
-                <h2 class="text-3xl font-bold mb-4">
+                <span class="inline-block mb-3 px-4 py-1 text-sm rounded-full
+                         bg-white/20 text-white">
+                    Authorized Service
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">
                     Promo Service Resmi
                 </h2>
-                <p>Dapatkan layanan terbaik dari teknisi bersertifikat.</p>
+
+                <p class="text-white/90 mb-6 max-w-md">
+                    Dapatkan layanan perbaikan produk elektronik dengan teknisi
+                    bersertifikat dan standar resmi pabrikan.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="#"
+                        class="px-6 py-3 rounded-lg bg-white text-primary
+                          font-semibold hover:bg-gray-100 transition">
+                        Ajukan Service
+                    </a>
+
+                    <a href="#"
+                        class="px-6 py-3 rounded-lg border border-white
+                          text-white font-semibold
+                          hover:bg-white hover:text-primary transition">
+                        Hubungi Kami
+                    </a>
+                </div>
             </div>
-            <img src="https://via.placeholder.com/500" data-aos="fade-up">
+
+            <!-- Image -->
+            <div data-aos="fade-up" class="relative">
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                    <img src="assets/img/promo1.jpg"
+                        alt="Promo Service Resmi"
+                        class="w-full h-[320px] object-contain bg-white p-6">
+                </div>
+            </div>
+
         </div>
     </section>
+    <!-- KENAPA MEMILIH KAMI -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-14">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Keunggulan Kami
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Kenapa Memilih Kami
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Komitmen kami adalah memberikan layanan resmi yang terpercaya
+                    dengan standar kualitas terbaik.
+                </p>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- Authorized Service -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                    data-aos="fade-up">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Authorized Service
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Layanan resmi yang sesuai standar pabrikan untuk menjamin
+                        keaslian suku cadang dan kualitas perbaikan.
+                    </p>
+                </div>
+
+                <!-- Teknisi Bersertifikat -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                    data-aos="fade-up" data-aos-delay="100">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Teknisi Bersertifikat
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Ditangani oleh teknisi berpengalaman dan bersertifikat
+                        untuk memastikan proses perbaikan yang aman dan tepat.
+                    </p>
+                </div>
+
+                <!-- Garansi & Standar Pabrikan -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                    data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Garansi & Standar Pabrikan
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Setiap layanan diberikan dengan garansi dan mengikuti
+                        standar resmi pabrikan untuk hasil yang maksimal.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- KENAPA MEMILIH KAMI -->
+    <section class="relative py-24
+                bg-gradient-to-b from-primary/5 via-white to-gray-50
+                overflow-hidden">
+
+        <!-- Top Wave -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[60px]"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path fill="#ffffff"
+                    d="M0,30 C240,70 480,10 720,20 960,30 1200,60 1440,40 L1440,0 L0,0 Z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-16">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Keunggulan Kami
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Kenapa Memilih Kami
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Komitmen kami adalah memberikan layanan resmi yang terpercaya
+                    dengan standar kualitas terbaik.
+                </p>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- Authorized Service -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                    data-aos="fade-up">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Authorized Service
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Layanan resmi sesuai standar pabrikan untuk menjamin
+                        keaslian suku cadang dan kualitas perbaikan.
+                    </p>
+                </div>
+
+                <!-- Teknisi Bersertifikat -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                    data-aos="fade-up" data-aos-delay="100">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Teknisi Bersertifikat
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Ditangani oleh teknisi berpengalaman dan bersertifikat
+                        untuk memastikan perbaikan yang aman dan tepat.
+                    </p>
+                </div>
+
+                <!-- Garansi -->
+                <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                    data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-3">
+                        Garansi & Standar Pabrikan
+                    </h3>
+
+                    <p class="text-gray-600">
+                        Setiap layanan diberikan dengan garansi dan mengikuti
+                        standar resmi pabrikan.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bottom Wave -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[60px]"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path fill="#f9fafb"
+                    d="M0,40 C240,10 480,60 720,50 960,40 1200,20 1440,30 L1440,90 L0,90 Z">
+                </path>
+            </svg>
+        </div>
+
+    </section>
+    <!-- BRAND PARTNER -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-14">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Brand Partner
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Authorized Brand Partner
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Kami merupakan mitra resmi dan authorized service untuk berbagai
+                    merek elektronik terpercaya.
+                </p>
+            </div>
+
+            <!-- Slider -->
+            <div class="swiper brandSwiper">
+                <div class="swiper-wrapper items-center">
+
+                    <!-- Logo Item -->
+                    <div class="swiper-slide flex justify-center">
+                        <img src="assets/img/brands/tcl.png"
+                            alt="TCL"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="swiper-slide flex justify-center">
+                        <img src="assets/img/brands/coocaa.png"
+                            alt="Coocaa"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="swiper-slide flex justify-center">
+                        <img src="assets/img/brands/akari.png"
+                            alt="Akari"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="swiper-slide flex justify-center">
+                        <img src="assets/img/brands/aqua.png"
+                            alt="Aqua"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="swiper-slide flex justify-center">
+                        <img src="https://www.beko.com/etc.clientlibs/bekoglobal/clientlibs/bekoglobal-rainbow/resources/images/bekoLogoBlueDesktop.svg"
+                            alt="Beko"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="swiper-slide flex justify-center">
+                        <img src="assets/img/brands/ariston.png"
+                            alt="Ariston"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                    <div class="swiper-slide flex justify-center">
+                        <img src="assets/img/brands/toshiba.png"
+                            alt="Toshiba"
+                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
 
     <!-- FOOTER -->
     <footer class="bg-gray-900 text-gray-300 py-16">
@@ -300,10 +960,34 @@
             }
         });
     </script>
+    <script>
+        const brandSwiper = new Swiper('.brandSwiper', {
+            loop: true,
+            speed: 3000,
+            autoplay: {
+                delay: 0,
+                disableOnInteraction: false,
+            },
+            slidesPerView: 2,
+            spaceBetween: 30,
+            breakpoints: {
+                640: {
+                    slidesPerView: 3,
+                },
+                768: {
+                    slidesPerView: 4,
+                },
+                1024: {
+                    slidesPerView: 6,
+                },
+            },
+        });
+    </script>
 
     <script>
         const header = document.getElementById('mainHeader');
         const desktopNav = document.getElementById('desktopNav');
+        const logoNav = document.getElementById('logoNav');
         const desktopCTA = document.getElementById('desktopCTA');
         const openBtn = document.getElementById('openMenu');
         const closeBtn = document.getElementById('closeMenu');
@@ -316,6 +1000,8 @@
                 header.classList.add('bg-white', 'shadow');
                 desktopNav.classList.remove('text-white');
                 desktopNav.classList.add('text-gray-900');
+                logoNav.classList.remove('text-white');
+                logoNav.classList.add('text-gray-900');
                 desktopCTA.classList.remove('border-white', 'text-white');
                 desktopCTA.classList.add('bg-primary', 'text-white');
                 openBtn.classList.remove('text-white');
@@ -325,6 +1011,9 @@
                 header.classList.remove('bg-white', 'shadow');
                 desktopNav.classList.add('text-white');
                 desktopNav.classList.remove('text-gray-900');
+
+                logoNav.classList.add('text-white');
+                logoNav.classList.remove('text-gray-900');
                 desktopCTA.classList.add('border-white', 'text-white');
                 desktopCTA.classList.remove('bg-primary');
                 openBtn.classList.add('text-white');
