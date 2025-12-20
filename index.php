@@ -125,7 +125,7 @@
     <!-- HERO SLIDER -->
     <section class="h-screen relative">
 
-        <div class="swiper h-full">
+        <div class="swiper heroSwiper h-full">
 
             <div class="swiper-wrapper">
 
@@ -947,7 +947,7 @@
         AOS.init();
     </script>
     <script>
-        new Swiper('.swiper', {
+        new Swiper('.heroSwiper', {
             loop: true,
             speed: 800,
             autoplay: {
