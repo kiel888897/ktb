@@ -26,101 +26,11 @@
             }
         }
     </script>
-
-    <style>
-        .nav-blur {
-            backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, .8);
-        }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
-    <!-- HEADER -->
-    <header id="mainHeader"
-        class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent">
-
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
-            <!-- LOGO -->
-            <div class="flex items-center gap-3">
-                <img src="assets/img/logo.png" class="h-9">
-                <span id="logoNav" class="font-bold text-lg text-white transition-colors">Kusuma Trisna Bali</span>
-            </div>
-
-            <!-- DESKTOP NAV -->
-            <nav id="desktopNav"
-                class="hidden md:flex gap-10 font-medium text-white transition-colors duration-300">
-                <a href="#" class="hover:text-primary">Home</a>
-                <a href="#" class="hover:text-primary">About</a>
-                <a href="#" class="hover:text-primary">Produk</a>
-                <a href="#" class="hover:text-primary">Service</a>
-                <a href="#" class="hover:text-primary">Kontak</a>
-            </nav>
-
-            <!-- CTA -->
-            <a id="desktopCTA"
-                class="hidden md:inline-block px-5 py-2 rounded-lg font-semibold transition
-      border border-white text-white hover:bg-white hover:text-primary">
-                <i class="fa-solid fa-phone-volume"></i>
-                0812-3456-7890
-            </a>
-
-            <!-- MOBILE BUTTON -->
-            <button id="openMenu"
-                class="md:hidden text-2xl text-white transition">
-                <i class="fa fa-bars"></i>
-            </button>
-
-        </div>
-    </header>
-
-    <!-- MOBILE MENU OVERLAY -->
-    <div id="mobileMenu"
-        class="fixed inset-0 bg-black/60 z-50 hidden">
-
-        <!-- PANEL -->
-        <div class="absolute right-0 top-0 w-4/5 max-w-sm h-full bg-white shadow-2xl
-              translate-x-full transition-transform duration-300">
-
-            <!-- HEADER MENU -->
-            <div class="flex items-center justify-between p-6 border-b">
-                <img src="assets/img/logo.png" class="h-9">
-                <button id="closeMenu" class="text-2xl text-gray-700">
-                    <i class="fa fa-xmark"></i>
-                </button>
-            </div>
-
-            <!-- MENU ITEMS -->
-            <nav class="p-6 flex flex-col gap-6 text-gray-900 font-semibold text-lg">
-
-                <a href="#" class="flex items-center gap-4 hover:text-primary">
-                    <i class="fa fa-house text-primary"></i> Home
-                </a>
-
-                <a href="#" class="flex items-center gap-4 hover:text-primary">
-                    <i class="fa fa-building"></i> About
-                </a>
-
-                <a href="#" class="flex items-center gap-4 hover:text-primary">
-                    <i class="fa fa-box"></i> Produk
-                </a>
-
-                <a href="#" class="flex items-center gap-4 hover:text-primary">
-                    <i class="fa fa-screwdriver-wrench"></i> Service
-                </a>
-
-                <hr>
-
-                <a href="#" class="flex items-center gap-4 text-primary font-bold">
-                    <i class="fa fa-phone"></i> Kontak
-                </a>
-
-            </nav>
-
-        </div>
-    </div>
-
+    <?php include 'header.php'; ?>
 
     <!-- HERO SLIDER -->
     <section class="h-screen relative">
@@ -910,135 +820,15 @@
 
         </div>
     </section>
-
-
     <!-- FOOTER -->
-    <footer class="bg-gray-900 text-gray-300 py-16">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
-            <div>
-                <h3 class="font-bold mb-4 text-white">KTB</h3>
-                <p class="text-sm">Authorized Service & Produk Resmi</p>
-            </div>
-            <div>
-                <h4 class="font-semibold mb-3 text-white">Menu</h4>
-                <ul class="space-y-2 text-sm">
-                    <li>Home</li>
-                    <li>Produk</li>
-                    <li>Service</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-semibold mb-3 text-white">Kontak</h4>
-                <p class="text-sm">Bali, Indonesia</p>
-            </div>
-            <div>
-                <h4 class="font-semibold mb-3 text-white">Sosial</h4>
-                <div class="flex gap-4 text-xl">
-                    <i class="fab fa-instagram"></i>
-                    <i class="fab fa-facebook"></i>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <?php include 'footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();
     </script>
-    <script>
-        new Swiper('.heroSwiper', {
-            loop: true,
-            speed: 800,
-            autoplay: {
-                delay: 5000,
-                disableOnInteraction: false
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-            }
-        });
-    </script>
-    <script>
-        const brandSwiper = new Swiper('.brandSwiper', {
-            loop: true,
-            speed: 3000,
-            autoplay: {
-                delay: 0,
-                disableOnInteraction: false,
-            },
-            slidesPerView: 2,
-            spaceBetween: 30,
-            breakpoints: {
-                640: {
-                    slidesPerView: 3,
-                },
-                768: {
-                    slidesPerView: 4,
-                },
-                1024: {
-                    slidesPerView: 6,
-                },
-            },
-        });
-    </script>
-
-    <script>
-        const header = document.getElementById('mainHeader');
-        const desktopNav = document.getElementById('desktopNav');
-        const logoNav = document.getElementById('logoNav');
-        const desktopCTA = document.getElementById('desktopCTA');
-        const openBtn = document.getElementById('openMenu');
-        const closeBtn = document.getElementById('closeMenu');
-        const mobileMenu = document.getElementById('mobileMenu');
-        const mobilePanel = mobileMenu.querySelector('div');
-
-        function setScrolled(state) {
-            if (state) {
-                header.classList.remove('bg-transparent');
-                header.classList.add('bg-white', 'shadow');
-                desktopNav.classList.remove('text-white');
-                desktopNav.classList.add('text-gray-900');
-                logoNav.classList.remove('text-white');
-                logoNav.classList.add('text-gray-900');
-                desktopCTA.classList.remove('border-white', 'text-white');
-                desktopCTA.classList.add('bg-primary', 'text-white');
-                openBtn.classList.remove('text-white');
-                openBtn.classList.add('text-gray-900');
-            } else {
-                header.classList.add('bg-transparent');
-                header.classList.remove('bg-white', 'shadow');
-                desktopNav.classList.add('text-white');
-                desktopNav.classList.remove('text-gray-900');
-
-                logoNav.classList.add('text-white');
-                logoNav.classList.remove('text-gray-900');
-                desktopCTA.classList.add('border-white', 'text-white');
-                desktopCTA.classList.remove('bg-primary');
-                openBtn.classList.add('text-white');
-                openBtn.classList.remove('text-gray-900');
-            }
-        }
-
-        window.addEventListener('scroll', () => {
-            setScrolled(window.scrollY > 60);
-        });
-
-        openBtn.onclick = () => {
-            mobileMenu.classList.remove('hidden');
-            setTimeout(() => mobilePanel.classList.remove('translate-x-full'), 10);
-            document.body.classList.add('overflow-hidden');
-            setScrolled(true);
-        };
-
-        closeBtn.onclick = () => {
-            mobilePanel.classList.add('translate-x-full');
-            setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-            document.body.classList.remove('overflow-hidden');
-        };
-    </script>
-
+    <script src="assets/main.js"></script>
 </body>
 
 </html>
