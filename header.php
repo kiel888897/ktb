@@ -13,11 +13,11 @@
          <!-- DESKTOP NAV -->
          <nav id="desktopNav"
              class="hidden md:flex gap-10 font-medium text-white transition-colors duration-300">
-             <a href="#" class="hover:text-primary">Home</a>
-             <a href="#" class="hover:text-primary">About</a>
-             <a href="#" class="hover:text-primary">Produk</a>
-             <a href="#" class="hover:text-primary">Service</a>
-             <a href="#" class="hover:text-primary">Kontak</a>
+             <a href="index.php" class="hover:text-primary">Home</a>
+             <a href="about.php" class="hover:text-primary">About</a>
+             <a href="products.php" class="hover:text-primary">Produk</a>
+             <a href="services.php" class="hover:text-primary">Service</a>
+             <a href="contact.php" class="hover:text-primary">Kontak</a>
          </nav>
 
          <!-- CTA -->
@@ -56,25 +56,25 @@
          <!-- MENU ITEMS -->
          <nav class="p-6 flex flex-col gap-6 text-gray-900 font-semibold text-lg">
 
-             <a href="#" class="flex items-center gap-4 hover:text-primary">
+             <a href="index.php" class="flex items-center gap-4 hover:text-primary">
                  <i class="fa fa-house text-primary"></i> Home
              </a>
 
-             <a href="#" class="flex items-center gap-4 hover:text-primary">
+             <a href="about.php" class="flex items-center gap-4 hover:text-primary">
                  <i class="fa fa-building"></i> About
              </a>
 
-             <a href="#" class="flex items-center gap-4 hover:text-primary">
+             <a href="products.php" class="flex items-center gap-4 hover:text-primary">
                  <i class="fa fa-box"></i> Produk
              </a>
 
-             <a href="#" class="flex items-center gap-4 hover:text-primary">
+             <a href="services.php" class="flex items-center gap-4 hover:text-primary">
                  <i class="fa fa-screwdriver-wrench"></i> Service
              </a>
 
              <hr>
 
-             <a href="#" class="flex items-center gap-4 text-primary font-bold">
+             <a href="contact.php" class="flex items-center gap-4 text-primary font-bold">
                  <i class="fa fa-phone"></i> Kontak
              </a>
 

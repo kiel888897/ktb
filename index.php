@@ -170,29 +170,50 @@
             </div>
 
             <!-- Highlight Box -->
-            <div data-aos="fade-up" class="grid grid-cols-2 gap-6">
+            <div data-aos="fade-up" class="grid grid-cols-2 gap-4 sm:gap-6">
 
-                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-3xl font-bold text-primary mb-1">2019</h3>
-                    <p class="text-gray-600 text-sm">Tahun Berdiri</p>
+                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
+                        2019
+                    </h3>
+                    <p class="text-gray-600 text-xs sm:text-sm">
+                        Tahun Berdiri
+                    </p>
                 </div>
 
-                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-3xl font-bold text-primary mb-1">8+</h3>
-                    <p class="text-gray-600 text-sm">Brand Resmi</p>
+                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
+                        8+
+                    </h3>
+                    <p class="text-gray-600 text-xs sm:text-sm">
+                        Brand Resmi
+                    </p>
                 </div>
 
-                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-3xl font-bold text-primary mb-1">Authorized</h3>
-                    <p class="text-gray-600 text-sm">Service Center</p>
+                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
+                        Authorized
+                    </h3>
+                    <p class="text-gray-600 text-xs sm:text-sm">
+                        Service Center
+                    </p>
                 </div>
 
-                <div class="p-6 bg-blue-50 rounded-2xl text-center shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-3xl font-bold text-primary mb-1">Profesional</h3>
-                    <p class="text-gray-600 text-sm">Teknisi Bersertifikat</p>
+                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
+                        Profesional
+                    </h3>
+                    <p class="text-gray-600 text-xs sm:text-sm">
+                        Teknisi Bersertifikat
+                    </p>
                 </div>
 
             </div>
+
         </div>
     </section>
     <!-- LAYANAN UTAMA -->
@@ -538,13 +559,12 @@
             </div>
 
             <!-- Image -->
-            <div data-aos="fade-up" class="relative">
-                <div class="rounded-2xl overflow-hidden shadow-xl">
-                    <img src="assets/img/promo1.jpg"
-                        alt="Promo Service Resmi"
-                        class="w-full h-[320px] object-contain bg-white p-6">
-                </div>
+            <div class="rounded-2xl overflow-hidden shadow-xl h-[320px] md:h-[380px] relative">
+                <img src="assets/img/promo1.jpg"
+                    class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/10"></div>
             </div>
+
 
         </div>
     </section>
