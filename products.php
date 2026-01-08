@@ -67,126 +67,182 @@
         </div>
     </section>
 
-    <section class="py-16">
+    <section class="py-16 bg-gray-50">
         <div class="max-w-6xl mx-auto px-6">
 
-            <!-- Filter Bar -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12"
+            <!-- FILTER BAR -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 mb-12"
                 data-aos="fade-up">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
 
-                <!-- Search -->
-                <div class="relative w-full md:w-1/3">
-                    <input type="text"
-                        placeholder="Cari produk..."
-                        class="w-full border border-gray-200 rounded-lg px-4 py-3 pl-11 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
-                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <!-- Search -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Cari Produk
+                        </label>
+                        <div class="relative">
+                            <input type="text"
+                                placeholder="Nama produk..."
+                                class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-11 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                    </div>
+
+                    <!-- Brand -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Brand
+                        </label>
+                        <select
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                            <option>Semua Brand</option>
+                            <option>Samsung</option>
+                            <option>LG</option>
+                            <option>Sony</option>
+                        </select>
+                    </div>
+
+                    <!-- Kategori -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Kategori
+                        </label>
+                        <select
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                            <option>Semua Kategori</option>
+                            <option>Elektronik</option>
+                            <option>Audio Visual</option>
+                            <option>Peralatan Rumah</option>
+                        </select>
+                    </div>
+
+                    <!-- Subkategori -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Subkategori
+                        </label>
+                        <select
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
+                            <option>Semua</option>
+                            <option>Televisi</option>
+                            <option>Speaker</option>
+                            <option>Monitor</option>
+                        </select>
+                    </div>
+
                 </div>
-
-                <!-- Category Filter -->
-                <div class="flex flex-wrap gap-3">
-                    <button class="px-5 py-2 rounded-full bg-primary text-white text-sm">
-                        Semua
-                    </button>
-                    <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200">
-                        Produk A
-                    </button>
-                    <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200">
-                        Produk B
-                    </button>
-                    <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200">
-                        Produk C
-                    </button>
-                </div>
-
             </div>
 
-            <!-- Product Grid -->
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- PRODUCT GRID -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-                <!-- Card -->
-                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition"
+                <!-- PRODUCT CARD -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
                     data-aos="fade-up">
-                    <img src="assets/img/tv1.webp"
-                        alt="Product 1"
-                        class="w-full h-56 object-contain">
+                    <div class="h-56 flex items-center justify-center bg-gray-50">
+                        <img src="assets/img/tv1.webp"
+                            alt="TV"
+                            class="max-h-44 object-contain">
+                    </div>
 
                     <div class="p-6">
-                        <span class="text-sm text-primary font-medium">
-                            Produk A
-                        </span>
-                        <h3 class="text-lg font-semibold text-gray-900 mt-2 mb-3">
-                            Nama Produk Satu
+                        <div class="text-sm text-primary font-medium mb-1">
+                            Samsung • Televisi
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                            Smart TV 55 Inch UHD
                         </h3>
                         <p class="text-gray-600 text-sm mb-5">
-                            Deskripsi singkat produk yang menjelaskan
-                            manfaat utama secara ringkas.
+                            Televisi pintar dengan resolusi tinggi dan
+                            teknologi modern untuk kebutuhan rumah dan bisnis.
                         </p>
 
-                        <a href="#"
-                            class="inline-flex items-center text-primary font-medium text-sm hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
-                        </a>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                Audio Visual
+                            </span>
+                            <a href="#"
+                                class="text-primary font-medium text-sm hover:underline">
+                                Detail
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card -->
-                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition"
+                <!-- PRODUCT CARD -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
                     data-aos="fade-up" data-aos-delay="100">
-                    <img src="assets/img/product1.jpg"
-                        alt="Product 2"
-                        class="w-full h-56 object-contain">
+                    <div class="h-56 flex items-center justify-center bg-gray-50">
+                        <img src="assets/img/product1.jpg"
+                            alt="Product"
+                            class="max-h-44 object-contain">
+                    </div>
 
                     <div class="p-6">
-                        <span class="text-sm text-primary font-medium">
-                            Produk B
-                        </span>
-                        <h3 class="text-lg font-semibold text-gray-900 mt-2 mb-3">
-                            Nama Produk Dua
+                        <div class="text-sm text-primary font-medium mb-1">
+                            LG • Monitor
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                            Monitor Profesional 27”
                         </h3>
                         <p class="text-gray-600 text-sm mb-5">
-                            Produk dengan kualitas terbaik untuk
-                            mendukung kebutuhan pelanggan.
+                            Monitor berkualitas tinggi untuk kebutuhan
+                            kerja profesional dan multimedia.
                         </p>
 
-                        <a href="#"
-                            class="inline-flex items-center text-primary font-medium text-sm hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
-                        </a>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                Elektronik
+                            </span>
+                            <a href="#"
+                                class="text-primary font-medium text-sm hover:underline">
+                                Detail
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Card -->
-                <div class="bg-white border border-gray-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition"
+                <!-- PRODUCT CARD -->
+                <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
                     data-aos="fade-up" data-aos-delay="200">
-                    <img src="assets/img/product-3.jpg"
-                        alt="Product 3"
-                        class="w-full h-56 object-contain">
+                    <div class="h-56 flex items-center justify-center bg-gray-50">
+                        <img src="assets/img/product-3.jpg"
+                            alt="Product"
+                            class="max-h-44 object-contain">
+                    </div>
 
                     <div class="p-6">
-                        <span class="text-sm text-primary font-medium">
-                            Produk C
-                        </span>
-                        <h3 class="text-lg font-semibold text-gray-900 mt-2 mb-3">
-                            Nama Produk Tiga
+                        <div class="text-sm text-primary font-medium mb-1">
+                            Sony • Speaker
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                            Speaker Aktif Premium
                         </h3>
                         <p class="text-gray-600 text-sm mb-5">
-                            Solusi yang dirancang untuk memberikan
-                            hasil maksimal secara efisien.
+                            Speaker dengan kualitas suara jernih dan
+                            desain elegan untuk berbagai kebutuhan.
                         </p>
 
-                        <a href="#"
-                            class="inline-flex items-center text-primary font-medium text-sm hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
-                        </a>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">
+                                Audio
+                            </span>
+                            <a href="#"
+                                class="text-primary font-medium text-sm hover:underline">
+                                Detail
+                                <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
             </div>
+
         </div>
     </section>
+
 
     <?php include 'footer.php'; ?>
 
