@@ -66,7 +66,7 @@
             </p>
         </div>
     </section>
-
+    <!-- PRODUCT LIST -->
     <section class="py-16 bg-gray-50">
         <div class="max-w-6xl mx-auto px-6">
 
@@ -77,9 +77,6 @@
 
                     <!-- Search -->
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Cari Produk
-                        </label>
                         <div class="relative">
                             <input type="text"
                                 placeholder="Nama produk..."
@@ -90,9 +87,6 @@
 
                     <!-- Brand -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Brand
-                        </label>
                         <select
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
                             <option>Semua Brand</option>
@@ -104,9 +98,6 @@
 
                     <!-- Kategori -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Kategori
-                        </label>
                         <select
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
                             <option>Semua Kategori</option>
@@ -118,9 +109,6 @@
 
                     <!-- Subkategori -->
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Subkategori
-                        </label>
                         <select
                             class="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/30">
                             <option>Semua</option>
@@ -161,7 +149,7 @@
                             <span class="text-sm text-gray-500">
                                 Audio Visual
                             </span>
-                            <a href="#"
+                            <a href="detail-product.php"
                                 class="text-primary font-medium text-sm hover:underline">
                                 Detail
                                 <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
