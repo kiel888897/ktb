@@ -253,7 +253,7 @@
                                 </li>
                                 <li>
                                     <a
-                                        href="kategori.php"
+                                        href="category.php"
                                         class="menu-dropdown-item group"
                                         :class="page === 'Kategori' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
                                         Kategori
@@ -261,7 +261,7 @@
                                 </li>
                                 <li>
                                     <a
-                                        href="subkategori.php"
+                                        href="subcategory.php"
                                         class="menu-dropdown-item group"
                                         :class="page === 'Subkategori' ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
                                         Subkategori

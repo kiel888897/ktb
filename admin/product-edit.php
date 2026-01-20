@@ -1,0 +1,309 @@
+<?php
+require 'config/database.php';
+
+$id = (int)($_GET['id'] ?? 0);
+if (!$id) {
+    header('Location: product.php');
+    exit;
+}
+
+$stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
+$stmt->execute([$id]);
+$product = $stmt->fetch();
+
+if (!$product) {
+    header('Location: product.php');
+    exit;
+}
+
+$brands = $pdo->query("SELECT id, name FROM brands ORDER BY name")->fetchAll();
+$categories = $pdo->query("SELECT id, name FROM categories ORDER BY name")->fetchAll();
+$subcategories = $pdo->query("SELECT id, name FROM subcategories ORDER BY name")->fetchAll();
+$partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER BY name")->fetchAll();
+
+$imagesStmt = $pdo->prepare("SELECT * FROM product_images WHERE product_id = ? ORDER BY is_main DESC, sort_order ASC");
+$imagesStmt->execute([$id]);
+$images = $imagesStmt->fetchAll();
+?>
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Product | Kusuma Trisna Bali</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="favicon.ico">
+    <link href="style.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body
+    x-data="{ page: 'products', loaded: true, darkMode: false, sidebarToggle: false }"
+    x-init="
+      darkMode = JSON.parse(localStorage.getItem('darkMode'));
+      $watch('darkMode', v => localStorage.setItem('darkMode', JSON.stringify(v)))
+    "
+    :class="{'dark bg-gray-900': darkMode}">
+
+    <!-- Preloader -->
+    <div
+        x-show="loaded"
+        x-init="window.addEventListener('DOMContentLoaded', () => setTimeout(() => loaded = false, 500))"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-black">
+        <div class="h-16 w-16 animate-spin rounded-full border-4 border-brand-500 border-t-transparent"></div>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+
+        <?php include 'sidebar.php'; ?>
+
+        <div class="relative flex flex-1 flex-col overflow-y-auto">
+
+            <?php include 'header.php'; ?>
+
+            <main>
+                <div class="mx-auto max-w-7xl p-4 md:p-6">
+
+                    <!-- Header -->
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
+                                Edit Product
+                            </h2>
+                            <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
+                                Perbarui data produk.
+                            </p>
+                        </div>
+
+                        <a href="product.php"
+                            class="inline-flex items-center gap-2 rounded-lg
+                                   border border-gray-300 px-4 py-2
+                                   text-sm font-medium text-gray-700
+                                   hover:bg-gray-100
+                                   dark:border-gray-700 dark:text-gray-300
+                                   dark:hover:bg-white/[0.05] transition">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back
+                        </a>
+                    </div>
+
+                    <!-- Card -->
+                    <div
+                        class="overflow-hidden rounded-xl border border-gray-200
+                               bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                        <div class="p-5 sm:p-6">
+
+                            <form action="product-update.php" method="POST" enctype="multipart/form-data"
+                                class="grid grid-cols-1 gap-6 max-w-3xl">
+
+                                <input type="hidden" name="id" value="<?= $product['id']; ?>">
+
+                                <!-- Product Name -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Product Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input name="name" type="text" required
+                                        value="<?= htmlspecialchars($product['name']); ?>"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90">
+                                </div>
+
+                                <!-- Slug -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Slug <span class="text-red-500">*</span>
+                                    </label>
+                                    <input name="slug" type="text" required
+                                        value="<?= htmlspecialchars($product['slug']); ?>"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90">
+                                </div>
+
+                                <!-- Brand / Category / Subcategory -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Brand</label>
+                                        <select name="brand_id" required class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                            <?php foreach ($brands as $b): ?>
+                                                <option value="<?= $b['id']; ?>" <?= $product['brand_id'] == $b['id'] ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($b['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Category</label>
+                                        <select name="category_id" required class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                            <?php foreach ($categories as $c): ?>
+                                                <option value="<?= $c['id']; ?>" <?= $product['category_id'] == $c['id'] ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($c['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Subcategory</label>
+                                        <select name="subcategory_id" required class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                            <?php foreach ($subcategories as $s): ?>
+                                                <option value="<?= $s['id']; ?>" <?= $product['subcategory_id'] == $s['id'] ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($s['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Partner & Price -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Partner</label>
+                                        <select name="partner_id" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                            <option value="">-- Optional --</option>
+                                            <?php foreach ($partners as $p): ?>
+                                                <option value="<?= $p['id']; ?>" <?= $product['partner_id'] == $p['id'] ? 'selected' : '' ?>>
+                                                    <?= htmlspecialchars($p['name']); ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Price</label>
+                                        <input name="price" type="number" step="0.01"
+                                            value="<?= number_format((float)$product['price'], 2, '.', ''); ?>"
+                                            class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                    </div>
+                                </div>
+
+                                <!-- Short Description -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Short Description
+                                    </label>
+                                    <textarea name="short_description" rows="3"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90"><?= htmlspecialchars($product['short_description']); ?></textarea>
+                                </div>
+
+                                <!-- Full Description -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Full Description
+                                    </label>
+                                    <textarea name="description" rows="5"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90"><?= htmlspecialchars($product['description']); ?></textarea>
+                                </div>
+
+                                <!-- Existing Images -->
+                                <?php if (!empty($images)): ?>
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                            Existing Images
+                                        </label>
+
+                                        <div class="flex flex-wrap gap-4">
+                                            <?php foreach ($images as $img): ?>
+                                                <div class="relative group">
+
+                                                    <!-- Thumbnail -->
+                                                    <div
+                                                        class="h-20 w-20 overflow-hidden rounded-lg
+                   border border-gray-200 bg-gray-50
+                   dark:border-gray-700 dark:bg-white/[0.03]">
+                                                        <img
+                                                            src="uploads/products/<?= htmlspecialchars($img['image']); ?>"
+                                                            alt="Product Image"
+                                                            class="h-full w-full object-contain">
+                                                    </div>
+
+                                                    <a href="product-image-delete.php?id=<?= $img['id']; ?>&product_id=<?= $product['id']; ?>"
+                                                        onclick="return confirm('Hapus gambar ini?')"
+                                                        class="absolute -top-2 -right-2 z-10
+          h-6 w-6 flex items-center justify-center
+          rounded-full bg-gray-500 text-white
+          hover:bg-gray-700 transition">
+                                                        <i class="fa-solid fa-xmark text-xs"></i>
+                                                    </a>
+
+
+                                                    <!-- Main Badge (optional) -->
+                                                    <?php if (!empty($img['is_main'])): ?>
+                                                        <span
+                                                            class="absolute bottom-1 left-1
+                     rounded bg-green-600
+                     px-1.5 py-0.5 text-[10px]
+                     text-white">
+                                                            Main
+                                                        </span>
+                                                    <?php endif; ?>
+
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+
+
+                                <!-- Upload Images -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Upload New Images
+                                    </label>
+                                    <input type="file" name="images[]" multiple
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                </div>
+
+                                <!-- Status -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Status</label>
+                                    <select name="is_active" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                        <option value="1" <?= $product['is_active'] ? 'selected' : '' ?>>Active</option>
+                                        <option value="0" <?= !$product['is_active'] ? 'selected' : '' ?>>Inactive</option>
+                                    </select>
+                                </div>
+
+                                <!-- Actions -->
+                                <div class="flex justify-end gap-3 pt-2">
+                                    <a href="product.php"
+                                        class="inline-flex items-center gap-2 rounded-lg
+                                               border border-gray-300 px-4 py-2
+                                               text-sm font-medium text-gray-700
+                                               hover:bg-gray-100
+                                               dark:border-gray-700 dark:text-gray-300
+                                               dark:hover:bg-white/[0.05] transition">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        Cancel
+                                    </a>
+
+                                    <button type="submit"
+                                        class="inline-flex items-center gap-2 rounded-lg
+                                               bg-brand-500 px-4 py-2
+                                               text-sm font-medium text-white
+                                               hover:bg-brand-600 transition">
+                                        <i class="fa-solid fa-floppy-disk"></i>
+                                        Update Product
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <script defer src="bundle.js"></script>
+</body>
+
+</html>

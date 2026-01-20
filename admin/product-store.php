@@ -1,0 +1,106 @@
+<?php
+require 'config/database.php';
+
+// ===== VALIDASI REQUEST =====
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: product.php');
+    exit;
+}
+
+// ===== AMBIL & SANITASI INPUT =====
+$name = trim($_POST['name'] ?? '');
+$slug = trim($_POST['slug'] ?? '');
+$brand_id = (int)($_POST['brand_id'] ?? 0);
+$category_id = (int)($_POST['category_id'] ?? 0);
+$subcategory_id = (int)($_POST['subcategory_id'] ?? 0);
+$partner_id = !empty($_POST['partner_id']) ? (int)$_POST['partner_id'] : null;
+$price = ($_POST['price'] !== '' && isset($_POST['price'])) ? (float)$_POST['price'] : null;
+$short_description = trim($_POST['short_description'] ?? '');
+$description = trim($_POST['description'] ?? '');
+$is_active = isset($_POST['is_active']) ? (int)$_POST['is_active'] : 1;
+
+// ===== VALIDASI WAJIB =====
+if ($name === '' || $slug === '' || !$brand_id || !$category_id || !$subcategory_id) {
+    header('Location: product-create.php');
+    exit;
+}
+
+// ===== CEK SLUG UNIK =====
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM products WHERE slug = ?");
+$stmt->execute([$slug]);
+if ($stmt->fetchColumn() > 0) {
+    // slug bentrok
+    header('Location: product-create.php?error=slug');
+    exit;
+}
+
+// ===== INSERT PRODUCT =====
+$stmt = $pdo->prepare("
+    INSERT INTO products
+    (name, slug, brand_id, category_id, subcategory_id, partner_id, price,
+     short_description, description, is_active)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+");
+
+$stmt->execute([
+    $name,
+    $slug,
+    $brand_id,
+    $category_id,
+    $subcategory_id,
+    $partner_id,
+    $price,
+    $short_description ?: null,
+    $description ?: null,
+    $is_active
+]);
+
+$product_id = $pdo->lastInsertId();
+
+// ===== HANDLE IMAGE UPLOAD =====
+$uploadDir = 'uploads/products/';
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0777, true);
+}
+
+if (!empty($_FILES['images']['name'][0])) {
+
+    $isFirstImage = true;
+    $sortOrder = 0;
+
+    foreach ($_FILES['images']['tmp_name'] as $i => $tmpName) {
+
+        if (!is_uploaded_file($tmpName)) continue;
+
+        $originalName = $_FILES['images']['name'][$i];
+        $ext = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+        if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) continue;
+
+        $fileName = uniqid('prod_') . '.' . $ext;
+        $targetPath = $uploadDir . $fileName;
+
+        if (move_uploaded_file($tmpName, $targetPath)) {
+
+            $stmtImg = $pdo->prepare("
+                INSERT INTO product_images
+                (product_id, image, sort_order, is_main)
+                VALUES (?, ?, ?, ?)
+            ");
+
+            $stmtImg->execute([
+                $product_id,
+                $fileName,
+                $sortOrder,
+                $isFirstImage ? 1 : 0
+            ]);
+
+            $isFirstImage = false;
+            $sortOrder++;
+        }
+    }
+}
+
+// ===== SELESAI =====
+header('Location: product.php?created=1');
+exit;
