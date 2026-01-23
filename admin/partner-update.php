@@ -1,4 +1,5 @@
 <?php
+require 'auth.php';
 require 'config/database.php';
 
 // ===== VALIDASI METHOD =====

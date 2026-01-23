@@ -19,6 +19,8 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+
 </head>
 
 <body
@@ -181,25 +183,32 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
 
                                 <!-- Short Description -->
                                 <div>
-                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
                                         Short Description
                                     </label>
-                                    <textarea name="short_description" rows="3"
-                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90"></textarea>
+
+                                    <div class="quill-wrapper">
+                                        <div id="shortEditor"></div>
+                                    </div>
+
+                                    <input type="hidden" name="short_description" id="shortInput">
                                 </div>
+
 
                                 <!-- Full Description -->
                                 <div>
-                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
                                         Full Description
                                     </label>
-                                    <textarea name="description" rows="5"
-                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90"></textarea>
+
+                                    <div class="quill-wrapper">
+                                        <div id="fullEditor"></div>
+                                    </div>
+
+                                    <input type="hidden" name="description" id="fullInput">
                                 </div>
+
+
 
                                 <!-- Images -->
                                 <div>
@@ -302,6 +311,49 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
                 'No file chosen';
         });
     </script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+    <script>
+        const shortQuill = new Quill('#shortEditor', {
+            theme: 'snow',
+            placeholder: 'Short product description...',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{
+                        list: 'bullet'
+                    }],
+                    ['link']
+                ]
+            }
+        });
+
+        const fullQuill = new Quill('#fullEditor', {
+            theme: 'snow',
+            placeholder: 'Full product description...',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{
+                        header: [1, 2, false]
+                    }],
+                    [{
+                        list: 'ordered'
+                    }, {
+                        list: 'bullet'
+                    }],
+                    ['link'],
+                    ['clean']
+                ]
+            }
+        });
+
+        document.querySelector('form').addEventListener('submit', () => {
+            shortInput.value = shortQuill.root.innerHTML;
+            fullInput.value = fullQuill.root.innerHTML;
+        });
+    </script>
+
 
 </body>
 

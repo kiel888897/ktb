@@ -1,4 +1,5 @@
 <?php
+require 'auth.php';
 require 'config/database.php';
 ?>
 <!doctype html>
@@ -18,7 +19,7 @@ require 'config/database.php';
 </head>
 
 <body
-    x-data="{ page: 'partners', loaded: true, darkMode: false, sidebarToggle: false }"
+    x-data="{ page: 'partner', loaded: true, darkMode: false, sidebarToggle: false }"
     x-init="
     darkMode = JSON.parse(localStorage.getItem('darkMode'));
     $watch('darkMode', v => localStorage.setItem('darkMode', JSON.stringify(v)))
