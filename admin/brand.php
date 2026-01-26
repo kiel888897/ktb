@@ -1,4 +1,6 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
 
 $stmt = $pdo->query("SELECT * FROM brands ORDER BY id DESC");
@@ -39,7 +41,7 @@ $brands = $stmt->fetchAll();
 </head>
 
 <body
-  x-data="{ page: 'ecommerce', loaded: true, darkMode: false, sidebarToggle: false }"
+  x-data="{ page: 'brand', loaded: true, darkMode: false, sidebarToggle: false }"
   x-init="
     darkMode = JSON.parse(localStorage.getItem('darkMode'));
     $watch('darkMode', val => localStorage.setItem('darkMode', JSON.stringify(val)))
@@ -107,7 +109,7 @@ $brands = $stmt->fetchAll();
                     </th>
                     <th class="px-5 py-3 sm:px-6">
                       <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">
-                        Status
+                        Slug
                       </p>
                     </th>
                     <th class="px-5 py-3 sm:px-6">
@@ -150,13 +152,11 @@ $brands = $stmt->fetchAll();
 
                         <!-- STATUS -->
                         <td class="px-5 py-4 sm:px-6">
-                          <span
-                            class="rounded-full bg-success-50 px-2 py-0.5
-                             text-theme-xs font-medium text-success-700
-                             dark:bg-success-500/15 dark:text-success-500">
-                            Active
+                          <span class="rounded-full bg-info-50 px-2 py-0.5 text-success-700">
+                            <?= htmlspecialchars($brand['slug']); ?>
                           </span>
                         </td>
+
 
                         <!-- AKSI -->
                         <td class="px-5 py-4 sm:px-6">

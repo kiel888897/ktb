@@ -1,41 +1,45 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
 
+// ===== VALIDASI ID =====
 $id = (int)($_GET['id'] ?? 0);
 if ($id <= 0) {
-    header('Location: users.php');
+    header('Location: user.php');
     exit;
 }
 
-// Ambil data user
+// ===== AMBIL DATA USER =====
 $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$id]);
-$user = $stmt->fetch();
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
-    header('Location: users.php');
+    header('Location: user.php');
     exit;
 }
 
 $error = '';
 
+// ===== PROSES UPDATE =====
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $role = $_POST['role'] ?? 'admin';
+    $name      = trim($_POST['name'] ?? '');
+    $email     = trim($_POST['email'] ?? '');
+    $role      = $_POST['role'] ?? 'staff';
     $is_active = isset($_POST['is_active']) ? 1 : 0;
-    $password = $_POST['password'] ?? '';
+    $password  = $_POST['password'] ?? '';
 
     if ($name === '' || $email === '') {
         $error = 'Name and email are required.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email address.';
-    } elseif (!in_array($role, ['superadmin', 'admin', 'staff'])) {
+    } elseif (!in_array($role, ['superadmin', 'admin', 'staff'], true)) {
         $error = 'Invalid role.';
     } else {
 
-        // cek email unik (kecuali user ini)
+        // cek email unik
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
         $stmt->execute([$email, $id]);
 
@@ -54,7 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         SET name = ?, email = ?, password = ?, role = ?, is_active = ?
                         WHERE id = ?
                     ");
-                    $stmt->execute([$name, $email, $hash, $role, $is_active, $id]);
+                    $stmt->execute([
+                        $name,
+                        $email,
+                        $hash,
+                        $role,
+                        $is_active,
+                        $id
+                    ]);
                 }
             } else {
                 $stmt = $pdo->prepare("
@@ -62,7 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     SET name = ?, email = ?, role = ?, is_active = ?
                     WHERE id = ?
                 ");
-                $stmt->execute([$name, $email, $role, $is_active, $id]);
+                $stmt->execute([
+                    $name,
+                    $email,
+                    $role,
+                    $is_active,
+                    $id
+                ]);
             }
 
             if ($error === '') {
@@ -83,7 +100,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <link rel="icon" href="favicon.ico">
     <link href="style.css" rel="stylesheet">
-
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -115,33 +131,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <main>
                 <div class="mx-auto max-w-7xl p-4 md:p-6">
 
-                    <!-- Header -->
                     <div class="mb-6 flex items-center justify-between">
-                        <div>
-                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
-                                Edit User
-                            </h2>
-                            <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-                                Perbarui data user
-                            </p>
-                        </div>
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
+                            Edit User
+                        </h2>
 
-                        <a href="users.php"
-                            class="inline-flex items-center gap-2 rounded-lg
-                                   border border-gray-300 px-4 py-2
-                                   text-sm font-medium text-gray-700
-                                   hover:bg-gray-100
-                                   dark:border-gray-700 dark:text-gray-300
-                                   dark:hover:bg-white/[0.05] transition">
+                        <a href="user.php"
+                            class="inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm">
                             <i class="fa-solid fa-arrow-left"></i>
                             Back
                         </a>
                     </div>
 
-                    <!-- Card -->
-                    <div
-                        class="overflow-hidden rounded-xl border border-gray-200
-                               bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                    <div class="rounded-xl border bg-white dark:bg-white/[0.03]">
                         <div class="p-5 sm:p-6 max-w-xl">
 
                             <?php if ($error): ?>
@@ -150,80 +152,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                             <?php endif; ?>
 
-                            <form method="POST" class="grid grid-cols-1 gap-6">
+                            <form method="POST" class="grid gap-6">
 
-                                <div>
-                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
-                                        Name
-                                    </label>
-                                    <input type="text" name="name" required
-                                        value="<?= htmlspecialchars($user['name']); ?>"
-                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
-                                </div>
+                                <input type="text" name="name" required
+                                    value="<?= htmlspecialchars($user['name']); ?>"
+                                    class="rounded-lg border px-4 py-2">
 
-                                <div>
-                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
-                                        Email
-                                    </label>
-                                    <input type="email" name="email" required
-                                        value="<?= htmlspecialchars($user['email']); ?>"
-                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
-                                </div>
+                                <input type="email" name="email" required
+                                    value="<?= htmlspecialchars($user['email']); ?>"
+                                    class="rounded-lg border px-4 py-2">
 
-                                <div>
-                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
-                                        New Password
-                                    </label>
-                                    <input type="password" name="password"
-                                        placeholder="Leave blank to keep current password"
-                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
-                                </div>
+                                <input type="password" name="password"
+                                    placeholder="Leave blank to keep current password"
+                                    class="rounded-lg border px-4 py-2">
 
-                                <div>
-                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
-                                        Role
-                                    </label>
-                                    <select name="role"
-                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
-                                        <option value="superadmin" <?= $user['role'] === 'superadmin' ? 'selected' : '' ?>>Superadmin</option>
-                                        <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
-                                        <option value="staff" <?= $user['role'] === 'staff' ? 'selected' : '' ?>>Staff</option>
-                                    </select>
-                                </div>
+                                <select name="role" class="rounded-lg border px-4 py-2">
+                                    <option value="superadmin" <?= $user['role'] === 'superadmin' ? 'selected' : '' ?>>Superadmin</option>
+                                    <option value="admin" <?= $user['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                                    <option value="staff" <?= $user['role'] === 'staff' ? 'selected' : '' ?>>Staff</option>
+                                </select>
 
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="is_active"
-                                        <?= $user['is_active'] ? 'checked' : '' ?>
-                                        class="h-4 w-4 rounded border-gray-300 dark:border-gray-700">
-                                    <label class="text-sm text-gray-700 dark:text-gray-300">
-                                        Active
-                                    </label>
-                                </div>
+                                <label class="flex items-center gap-2">
+                                    <input type="checkbox" name="is_active" <?= $user['is_active'] ? 'checked' : '' ?>>
+                                    Active
+                                </label>
 
-                                <div class="flex justify-end gap-3 pt-2">
-                                    <a href="users.php"
-                                        class="inline-flex items-center gap-2 rounded-lg
-                                               border border-gray-300 px-4 py-2
-                                               text-sm font-medium text-gray-700
-                                               hover:bg-gray-100
-                                               dark:border-gray-700 dark:text-gray-300
-                                               dark:hover:bg-white/[0.05] transition">
-                                        Cancel
-                                    </a>
-
-                                    <button type="submit"
-                                        class="inline-flex items-center gap-2 rounded-lg
-                                               bg-brand-500 px-4 py-2
-                                               text-sm font-medium text-white
-                                               hover:bg-brand-600 transition">
+                                <div class="flex justify-end gap-3">
+                                    <a href="user.php" class="rounded-lg border px-4 py-2 text-sm">Cancel</a>
+                                    <button class="rounded-lg bg-brand-500 px-4 py-2 text-sm text-white">
                                         <i class="fa-solid fa-floppy-disk"></i>
                                         Update User
                                     </button>

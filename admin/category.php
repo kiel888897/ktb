@@ -1,4 +1,6 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
 
 // Ambil data kategori
@@ -26,12 +28,12 @@ $categories = $stmt->fetchAll();
 </head>
 
 <body
-    x-data="{ page: 'categories', loaded: true, darkMode: false, sidebarToggle: false }"
+    x-data="{ page: 'category', loaded: true, darkMode: false, sidebarToggle: false }"
     x-init="
     darkMode = JSON.parse(localStorage.getItem('darkMode'));
     $watch('darkMode', v => localStorage.setItem('darkMode', JSON.stringify(v)))
   "
-    :class=\"{'dark bg-gray-900': darkMode}\">
+    :class="{'dark bg-gray-900': darkMode}">
 
     <!-- Preloader -->
     <div

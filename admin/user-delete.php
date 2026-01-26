@@ -1,42 +1,34 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
-session_start();
 
-/**
- * Ambil ID user yang akan dihapus
- */
+// ===== VALIDASI ID =====
 $id = (int)($_GET['id'] ?? 0);
-
 if ($id <= 0) {
-    header('Location: users.php');
+    header('Location: user.php');
     exit;
 }
 
-/**
- * Proteksi: tidak boleh hapus diri sendiri
- * Asumsi user login disimpan di $_SESSION['user_id']
- */
-if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $id) {
-    header('Location: users.php?error=self_delete');
+// ===== PROTEKSI: TIDAK BOLEH HAPUS DIRI SENDIRI =====
+if ($_SESSION['user']['id'] === $id) {
+    header('Location: user.php?error=self_delete');
     exit;
 }
 
-/**
- * Cek user ada atau tidak
- */
+// ===== CEK USER ADA =====
 $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ?");
 $stmt->execute([$id]);
 
 if (!$stmt->fetch()) {
-    header('Location: users.php');
+    header('Location: user.php');
     exit;
 }
 
-/**
- * Hapus user
- */
+// ===== HAPUS USER =====
 $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
 $stmt->execute([$id]);
 
+// ===== REDIRECT =====
 header('Location: user.php?deleted=1');
 exit;

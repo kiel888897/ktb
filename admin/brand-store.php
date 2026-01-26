@@ -1,4 +1,6 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
 
 // ===== VALIDASI BASIC =====

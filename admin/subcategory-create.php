@@ -1,4 +1,6 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
 
 // Ambil semua kategori untuk checkbox
@@ -22,7 +24,7 @@ $categories = $stmt->fetchAll();
 </head>
 
 <body
-    x-data="{ page: 'subcategories', loaded: true, darkMode: false, sidebarToggle: false }"
+    x-data="{ page: 'subcategory', loaded: true, darkMode: false, sidebarToggle: false }"
     x-init="
     darkMode = JSON.parse(localStorage.getItem('darkMode'));
     $watch('darkMode', v => localStorage.setItem('darkMode', JSON.stringify(v)))

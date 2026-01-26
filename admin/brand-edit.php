@@ -1,4 +1,6 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']);
 require 'config/database.php';
 
 // ===== VALIDASI ID =====
@@ -35,7 +37,7 @@ if (!$brand) {
 </head>
 
 <body
-    x-data="{ page: 'brands', loaded: true, darkMode: false, sidebarToggle: false }"
+    x-data="{ page: 'brand', loaded: true, darkMode: false, sidebarToggle: false }"
     x-init="
     darkMode = JSON.parse(localStorage.getItem('darkMode'));
     $watch('darkMode', val => localStorage.setItem('darkMode', JSON.stringify(val)))

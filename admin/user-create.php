@@ -1,28 +1,29 @@
 <?php
+require 'auth.php';
+require_role(['admin', 'superadmin']); // ⬅️ WAJIB
 require 'config/database.php';
 
 $error = '';
-$success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = trim($_POST['name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $role = $_POST['role'] ?? 'admin';
+    $name      = trim($_POST['name'] ?? '');
+    $email     = trim($_POST['email'] ?? '');
+    $password  = $_POST['password'] ?? '';
+    $role      = $_POST['role'] ?? 'staff';
     $is_active = isset($_POST['is_active']) ? 1 : 0;
 
     if ($name === '' || $email === '' || $password === '') {
         $error = 'All fields are required.';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Invalid email address.';
-    } elseif (!in_array($role, ['superadmin', 'admin', 'staff'])) {
+    } elseif (!in_array($role, ['superadmin', 'admin', 'staff'], true)) {
         $error = 'Invalid role.';
     } elseif (strlen($password) < 6) {
         $error = 'Password must be at least 6 characters.';
     } else {
 
-        // cek email
+        // cek email unik
         $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
 
@@ -36,7 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 INSERT INTO users (name, email, password, role, is_active)
                 VALUES (?, ?, ?, ?, ?)
             ");
-            $stmt->execute([$name, $email, $hash, $role, $is_active]);
+            $stmt->execute([
+                $name,
+                $email,
+                $hash,
+                $role,
+                $is_active
+            ]);
 
             header('Location: user.php?created=1');
             exit;
@@ -54,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <link rel="icon" href="favicon.ico">
     <link href="style.css" rel="stylesheet">
-
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -86,33 +92,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <main>
                 <div class="mx-auto max-w-7xl p-4 md:p-6">
 
-                    <!-- Header -->
                     <div class="mb-6 flex items-center justify-between">
-                        <div>
-                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
-                                Add User
-                            </h2>
-                            <p class="mt-1 text-gray-500 text-theme-sm dark:text-gray-400">
-                                Tambahkan user baru
-                            </p>
-                        </div>
+                        <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90">
+                            Add User
+                        </h2>
 
-                        <a href="users.php"
+                        <a href="user.php"
                             class="inline-flex items-center gap-2 rounded-lg
-                                   border border-gray-300 px-4 py-2
-                                   text-sm font-medium text-gray-700
-                                   hover:bg-gray-100
-                                   dark:border-gray-700 dark:text-gray-300
-                                   dark:hover:bg-white/[0.05] transition">
+                              border border-gray-300 px-4 py-2
+                              text-sm font-medium text-gray-700
+                              hover:bg-gray-100
+                              dark:border-gray-700 dark:text-gray-300
+                              dark:hover:bg-white/[0.05] transition">
                             <i class="fa-solid fa-arrow-left"></i>
                             Back
                         </a>
                     </div>
 
-                    <!-- Card -->
                     <div
                         class="overflow-hidden rounded-xl border border-gray-200
-                               bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+                           bg-white dark:border-gray-800 dark:bg-white/[0.03]">
                         <div class="p-5 sm:p-6 max-w-xl">
 
                             <?php if ($error): ?>
@@ -129,8 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </label>
                                     <input type="text" name="name" required
                                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
+                                              dark:border-gray-700 dark:text-white/90">
                                 </div>
 
                                 <div>
@@ -139,8 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </label>
                                     <input type="email" name="email" required
                                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
+                                              dark:border-gray-700 dark:text-white/90">
                                 </div>
 
                                 <div>
@@ -149,8 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </label>
                                     <input type="password" name="password" required
                                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
-                                               dark:border-gray-700 dark:text-white/90">
+                                              dark:border-gray-700 dark:text-white/90">
                                 </div>
 
                                 <div>
@@ -159,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </label>
                                     <select name="role"
                                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
-                                               text-gray-800 outline-none focus:border-brand-500
                                                dark:border-gray-700 dark:text-white/90">
                                         <option value="admin">Admin</option>
                                         <option value="staff">Staff</option>
@@ -168,29 +163,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
 
                                 <div class="flex items-center gap-2">
-                                    <input type="checkbox" name="is_active" checked
-                                        class="h-4 w-4 rounded border-gray-300 dark:border-gray-700">
-                                    <label class="text-sm text-gray-700 dark:text-gray-300">
-                                        Active
-                                    </label>
+                                    <input type="checkbox" name="is_active" checked>
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">Active</span>
                                 </div>
 
-                                <div class="flex justify-end gap-3 pt-2">
-                                    <a href="users.php"
-                                        class="inline-flex items-center gap-2 rounded-lg
-                                               border border-gray-300 px-4 py-2
-                                               text-sm font-medium text-gray-700
-                                               hover:bg-gray-100
-                                               dark:border-gray-700 dark:text-gray-300
-                                               dark:hover:bg-white/[0.05] transition">
+                                <div class="flex justify-end gap-3">
+                                    <a href="user.php"
+                                        class="rounded-lg border px-4 py-2 text-sm">
                                         Cancel
                                     </a>
-
                                     <button type="submit"
-                                        class="inline-flex items-center gap-2 rounded-lg
-                                               bg-brand-500 px-4 py-2
-                                               text-sm font-medium text-white
-                                               hover:bg-brand-600 transition">
+                                        class="rounded-lg bg-brand-500 px-4 py-2 text-sm text-white">
                                         <i class="fa-solid fa-floppy-disk"></i>
                                         Save User
                                     </button>

@@ -1,13 +1,13 @@
 <?php
 require 'auth.php';
-require_role(['superadmin']);
+require_role(['superadmin']); // ⬅️ WAJIB
 require 'config/database.php';
-
 
 // Ambil data users
 $stmt = $pdo->query("SELECT * FROM users ORDER BY id DESC");
 $users = $stmt->fetchAll();
 ?>
+
 <!doctype html>
 <html lang="en">
 

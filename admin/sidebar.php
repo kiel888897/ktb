@@ -139,7 +139,7 @@ $userRole = $_SESSION['user']['role'] ?? 'guest';
                 </li>
 
                 <!-- USERS (ADMIN ONLY) -->
-                <?php if ($userRole === 'admin'): ?>
+                <?php if ($userRole === 'superadmin'): ?>
                     <li>
                         <a href="user.php"
                             class="menu-item group"
