@@ -1,3 +1,60 @@
+<?php
+
+require 'admin/config/database.php';
+
+$stmt = $pdo->prepare("
+    SELECT name, logo 
+    FROM partners
+    WHERE is_active = 1
+    ORDER BY sort_order ASC, id DESC
+");
+$stmt->execute();
+$partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt1 = $pdo->prepare("
+    SELECT
+        p.id,
+        p.name,
+        p.slug,
+        p.short_description,
+        pi.image
+    FROM products p
+    LEFT JOIN product_images pi
+        ON pi.product_id = p.id
+        AND pi.is_main = 1
+    WHERE p.is_active = 1
+      AND p.is_featured = 1
+      AND p.deleted_at IS NULL
+    ORDER BY p.sort_order ASC, p.created_at DESC
+    LIMIT 4
+");
+
+$stmt1->execute();
+$featuredProducts = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt2 = $pdo->prepare("
+    SELECT
+        p.id,
+        p.name,
+        p.slug,
+        p.short_description,
+        pi.image
+    FROM products p
+    LEFT JOIN product_images pi
+        ON pi.product_id = p.id
+        AND pi.is_main = 1
+    WHERE p.is_active = 1
+      AND p.deleted_at IS NULL
+    ORDER BY p.created_at DESC
+    LIMIT 4
+");
+$stmt2->execute();
+
+$latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -347,107 +404,44 @@
             <!-- Grid Produk -->
             <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
 
-                <!-- Card Produk -->
-                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
-                        <img src="assets/img/product1.jpg"
-                            alt="Smart TV LED 43 Inch"
-                            class="max-h-full object-contain">
-                    </div>
+                <?php if ($featuredProducts): ?>
+                    <?php foreach ($featuredProducts as $product): ?>
 
-                    <div class="p-5">
-                        <h3 class="font-semibold text-lg mb-1">
-                            Smart TV LED 43"
-                        </h3>
+                        <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
+                            <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                                <img
+                                    src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
+                                    alt="<?= htmlspecialchars($product['name']); ?>"
+                                    class="max-h-full object-contain">
 
-                        <p class="text-sm text-gray-600 mb-4">
-                            Resolusi Full HD, Android TV, hemat energi.
-                        </p>
+                            </div>
 
-                        <a href="produk.html"
-                            class="inline-flex items-center font-semibold text-primary hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
-                </div>
+                            <div class="p-5">
+                                <h3 class="font-semibold text-lg mb-1">
+                                    <?= htmlspecialchars($product['name']); ?>
+                                </h3>
 
-                <!-- Card Produk 2 -->
-                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
-                        <img src="assets/img/product2.jpg"
-                            alt="AC Split"
-                            class="max-h-full object-contain">
-                    </div>
+                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">
+                                    <?= $product['short_description']; ?>
+                                </p>
 
-                    <div class="p-5">
-                        <h3 class="font-semibold text-lg mb-1">
-                            AC Split
-                        </h3>
+                                <a href="produk/<?= htmlspecialchars($product['slug']); ?>"
+                                    class="inline-flex items-center font-semibold text-primary hover:underline mt-2">
+                                    Lihat Detail
+                                    <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                                </a>
+                            </div>
+                        </div>
 
-                        <p class="text-sm text-gray-600 mb-4">
-                            Pendingin ruangan efisien dan tahan lama.
-                        </p>
-
-                        <a href="produk.html"
-                            class="inline-flex items-center font-semibold text-primary hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Card Produk 3 -->
-                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
-                        <img src="assets/img/product3.jpg"
-                            alt="Mesin Cuci"
-                            class="max-h-full object-contain">
-                    </div>
-
-                    <div class="p-5">
-                        <h3 class="font-semibold text-lg mb-1">
-                            Mesin Cuci
-                        </h3>
-
-                        <p class="text-sm text-gray-600 mb-4">
-                            Kapasitas besar dengan performa optimal.
-                        </p>
-
-                        <a href="produk.html"
-                            class="inline-flex items-center font-semibold text-primary hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Card Produk 4 -->
-                <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                    <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
-                        <img src="assets/img/product4.jpg"
-                            alt="Water Heater"
-                            class="max-h-full object-contain">
-                    </div>
-
-                    <div class="p-5">
-                        <h3 class="font-semibold text-lg mb-1">
-                            Water Heater
-                        </h3>
-
-                        <p class="text-sm text-gray-600 mb-4">
-                            Pemanas air aman dan hemat energi.
-                        </p>
-
-                        <a href="produk.html"
-                            class="inline-flex items-center font-semibold text-primary hover:underline">
-                            Lihat Detail
-                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                        </a>
-                    </div>
-                </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="col-span-4 text-center text-gray-500">
+                        Produk unggulan belum tersedia
+                    </p>
+                <?php endif; ?>
 
             </div>
+
 
             <!-- CTA -->
             <div class="text-center mt-14">
@@ -481,45 +475,52 @@
             <!-- Grid Produk -->
             <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
 
-                <!-- Card Produk -->
-                <div class="bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 group"
-                    data-aos="zoom-in">
+                <?php if ($latestProducts): ?>
+                    <?php foreach ($latestProducts as $product): ?>
 
-                    <div class="overflow-hidden rounded-t-2xl">
-                        <img src="assets/img/tv1.webp"
-                            class="w-full h-48 object-contain bg-white p-4"
-                            alt="Smart TV LED">
+                        <div class="bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 group"
+                            data-aos="zoom-in">
 
-                    </div>
+                            <div class="overflow-hidden rounded-t-2xl">
+                                <img
+                                    src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
+                                    class="w-full h-48 object-contain bg-white p-4"
+                                    alt="<?= htmlspecialchars($product['name']); ?>">
+                            </div>
 
-                    <div class="p-5">
-                        <h3 class="font-semibold text-lg mb-1">
-                            Smart TV LED 43"
-                        </h3>
+                            <div class="p-5">
+                                <h3 class="font-semibold text-lg mb-1">
+                                    <?= htmlspecialchars($product['name']); ?>
+                                </h3>
 
-                        <p class="text-sm text-gray-600 mb-3">
-                            Resolusi Full HD, Android TV, hemat energi.
-                        </p>
+                                <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                                    <?= $product['short_description']; ?>
+                                </p>
 
-                        <ul class="text-sm text-gray-500 mb-4 space-y-1">
-                            <li>✔ Garansi Resmi</li>
-                            <li>✔ Layanan Authorized Service</li>
-                            <li>✔ Kualitas Terpercaya</li>
-                        </ul>
+                                <ul class="text-sm text-gray-500 mb-4 space-y-1">
+                                    <!-- <li>✔ Garansi Resmi</li>
+                                    <li>✔ Layanan Authorized Service</li>
+                                    <li>✔ Kualitas Terpercaya</li> -->
+                                </ul>
 
-                        <a href="#"
-                            class="inline-block w-full text-center px-4 py-2 rounded-lg
+                                <a href="produk/<?= htmlspecialchars($product['slug']); ?>"
+                                    class="inline-block w-full text-center px-4 py-2 rounded-lg
                               bg-primary text-white font-semibold
                               hover:bg-primary/90 transition">
-                            Lihat Detail
-                        </a>
-                    </div>
-                </div>
+                                    Lihat Detail
+                                </a>
+                            </div>
+                        </div>
 
-                <!-- Duplicate card untuk produk lain -->
-                <!-- Tinggal ganti gambar & konten -->
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="col-span-4 text-center text-gray-500">
+                        Produk terbaru belum tersedia
+                    </p>
+                <?php endif; ?>
 
             </div>
+
         </div>
     </section>
     <!-- IKLAN / PROMO -->
@@ -788,55 +789,24 @@
                 </p>
             </div>
 
+
             <!-- Slider -->
             <div class="swiper brandSwiper">
                 <div class="swiper-wrapper items-center">
 
-                    <!-- Logo Item -->
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/tcl.png"
-                            alt="TCL"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/coocaa.png"
-                            alt="Coocaa"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/akari.png"
-                            alt="Akari"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/aqua.png"
-                            alt="Aqua"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="https://www.beko.com/etc.clientlibs/bekoglobal/clientlibs/bekoglobal-rainbow/resources/images/bekoLogoBlueDesktop.svg"
-                            alt="Beko"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/ariston.png"
-                            alt="Ariston"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/toshiba.png"
-                            alt="Toshiba"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
+                    <?php foreach ($partners as $partner): ?>
+                        <div class="swiper-slide flex justify-center">
+                            <img
+                                src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
+                                alt="<?= htmlspecialchars($partner['name']); ?>"
+                                class="h-14 object-contain grayscale opacity-70
+                           hover:grayscale-0 hover:opacity-100 transition">
+                        </div>
+                    <?php endforeach; ?>
 
                 </div>
             </div>
+
 
         </div>
     </section>

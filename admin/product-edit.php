@@ -276,6 +276,14 @@ $images = $imagesStmt->fetchAll();
                                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
                                 </div>
 
+                                <!-- Unggulan -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Unggulan</label>
+                                    <select name="is_featured" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                        <option value="1" <?= $product['is_featured'] ? 'selected' : '' ?>>Yes</option>
+                                        <option value="0" <?= !$product['is_featured'] ? 'selected' : '' ?>>No</option>
+                                    </select>
+                                </div>
                                 <!-- Status -->
                                 <div>
                                     <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Status</label>

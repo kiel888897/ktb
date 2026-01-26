@@ -1,3 +1,17 @@
+<?php
+
+require 'admin/config/database.php';
+
+$stmt = $pdo->prepare("
+    SELECT name, logo 
+    FROM partners
+    WHERE is_active = 1
+    ORDER BY sort_order ASC, id DESC
+");
+$stmt->execute();
+$partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -181,51 +195,19 @@
             <div class="swiper brandSwiper">
                 <div class="swiper-wrapper items-center">
 
-                    <!-- Logo Item -->
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/tcl.png"
-                            alt="TCL"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/coocaa.png"
-                            alt="Coocaa"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/akari.png"
-                            alt="Akari"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/aqua.png"
-                            alt="Aqua"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="https://www.beko.com/etc.clientlibs/bekoglobal/clientlibs/bekoglobal-rainbow/resources/images/bekoLogoBlueDesktop.svg"
-                            alt="Beko"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/ariston.png"
-                            alt="Ariston"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
-
-                    <div class="swiper-slide flex justify-center">
-                        <img src="assets/img/brands/toshiba.png"
-                            alt="Toshiba"
-                            class="h-14 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition">
-                    </div>
+                    <?php foreach ($partners as $partner): ?>
+                        <div class="swiper-slide flex justify-center">
+                            <img
+                                src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
+                                alt="<?= htmlspecialchars($partner['name']); ?>"
+                                class="h-14 object-contain grayscale opacity-70
+                           hover:grayscale-0 hover:opacity-100 transition">
+                        </div>
+                    <?php endforeach; ?>
 
                 </div>
             </div>
+
 
         </div>
     </section>

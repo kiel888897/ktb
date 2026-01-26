@@ -95,6 +95,7 @@ $products = $stmt->fetchAll();
                                         <th class="px-5 py-3 sm:px-6">Brand</th>
                                         <th class="px-5 py-3 sm:px-6">Category</th>
                                         <th class="px-5 py-3 sm:px-6">Price</th>
+                                        <th class="px-5 py-3 sm:px-6">Featured</th>
                                         <th class="px-5 py-3 sm:px-6">Status</th>
                                         <th class="px-5 py-3 sm:px-6">Aksi</th>
                                     </tr>
@@ -127,6 +128,21 @@ $products = $stmt->fetchAll();
                                                 <?= $p['price'] !== null ? 'Rp ' . number_format($p['price'], 0, ',', '.') : '-' ?>
                                             </td>
 
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <?php if ($p['is_featured']): ?>
+                                                    <span class="rounded-full bg-success-50 px-2 py-0.5
+                                       text-theme-xs font-medium text-success-700
+                                       dark:bg-success-500/15 dark:text-success-500">
+                                                        Yes
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span class="rounded-full bg-error-50 px-2 py-0.5
+                                       text-theme-xs font-medium text-error-700
+                                       dark:bg-error-500/15 dark:text-error-500">
+                                                        No
+                                                    </span>
+                                                <?php endif; ?>
+                                            </td>
                                             <td class="px-5 py-4 sm:px-6">
                                                 <?php if ($p['is_active']): ?>
                                                     <span class="rounded-full bg-success-50 px-2 py-0.5

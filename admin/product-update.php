@@ -20,6 +20,7 @@ $partner_id = ($_POST['partner_id'] !== '') ? (int)$_POST['partner_id'] : null;
 $price = ($_POST['price'] !== '' && isset($_POST['price'])) ? (float)$_POST['price'] : null;
 $short_description = trim($_POST['short_description'] ?? '');
 $description = trim($_POST['description'] ?? '');
+$is_featured = isset($_POST['is_featured']) ? (int)$_POST['is_featured'] : 0;
 $is_active = isset($_POST['is_active']) ? (int)$_POST['is_active'] : 1;
 
 // ===== VALIDASI =====
@@ -56,6 +57,7 @@ $stmt = $pdo->prepare("
         price = ?,
         short_description = ?,
         description = ?,
+        is_featured = ?,
         is_active = ?
     WHERE id = ?
 ");
@@ -70,6 +72,7 @@ $stmt->execute([
     $price,
     $short_description ?: null,
     $description ?: null,
+    $is_featured,
     $is_active,
     $id
 ]);
