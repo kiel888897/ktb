@@ -19,6 +19,7 @@ $partner_id = !empty($_POST['partner_id']) ? (int)$_POST['partner_id'] : null;
 $price = ($_POST['price'] !== '' && isset($_POST['price'])) ? (float)$_POST['price'] : null;
 $short_description = trim($_POST['short_description'] ?? '');
 $description = trim($_POST['description'] ?? '');
+$specifications = trim($_POST['specifications'] ?? '');
 $is_featured = isset($_POST['is_featured']) ? (int)$_POST['is_featured'] : 0;
 $is_active = isset($_POST['is_active']) ? (int)$_POST['is_active'] : 1;
 
@@ -41,8 +42,8 @@ if ($stmt->fetchColumn() > 0) {
 $stmt = $pdo->prepare("
     INSERT INTO products
     (name, slug, brand_id, category_id, subcategory_id, partner_id, price,
-     short_description, description, is_featured, is_active)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     short_description, description, specifications, is_featured, is_active)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
 $stmt->execute([
@@ -55,6 +56,7 @@ $stmt->execute([
     $price,
     $short_description ?: null,
     $description ?: null,
+    $specifications ?: null,
     $is_featured,
     $is_active
 ]);

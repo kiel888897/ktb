@@ -215,6 +215,19 @@ $images = $imagesStmt->fetchAll();
                                     <input type="hidden" name="description" id="fullInput"
                                         value="<?= htmlspecialchars($product['description'], ENT_QUOTES); ?>">
                                 </div>
+                                <!-- specifications -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Specifications Product
+                                    </label>
+
+                                    <div class="quill-wrapper">
+                                        <div id="specificationsEditor"></div>
+                                    </div>
+
+                                    <input type="hidden" name="specifications" id="specificationsInput"
+                                        value="<?= htmlspecialchars($product['specifications'], ENT_QUOTES); ?>">
+                                </div>
 
 
                                 <!-- Existing Images -->
@@ -358,6 +371,19 @@ $images = $imagesStmt->fetchAll();
         });
     </script>
     <script>
+        const specificationQuill = new Quill('#specificationsEditor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{
+                        list: 'bullet'
+                    }],
+                    ['link']
+                ]
+            }
+        });
+
         const shortQuill = new Quill('#shortEditor', {
             theme: 'snow',
             modules: {
@@ -391,11 +417,13 @@ $images = $imagesStmt->fetchAll();
         });
 
         // 👉 SET VALUE DARI DATABASE
+        specificationQuill.root.innerHTML = document.getElementById('specificationsInput').value;
         shortQuill.root.innerHTML = document.getElementById('shortInput').value;
         fullQuill.root.innerHTML = document.getElementById('fullInput').value;
 
         // 👉 SYNC SAAT SUBMIT
         document.querySelector('form').addEventListener('submit', () => {
+            specificationInput.value = specificationQuill.root.innerHTML;
             shortInput.value = shortQuill.root.innerHTML;
             fullInput.value = fullQuill.root.innerHTML;
         });

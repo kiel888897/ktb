@@ -425,7 +425,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                     <?= $product['short_description']; ?>
                                 </p>
 
-                                <a href="produk/<?= htmlspecialchars($product['slug']); ?>"
+                                <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
                                     class="inline-flex items-center font-semibold text-primary hover:underline mt-2">
                                     Lihat Detail
                                     <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
@@ -503,7 +503,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                     <li>✔ Kualitas Terpercaya</li> -->
                                 </ul>
 
-                                <a href="produk/<?= htmlspecialchars($product['slug']); ?>"
+                                <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
                                     class="inline-block w-full text-center px-4 py-2 rounded-lg
                               bg-primary text-white font-semibold
                               hover:bg-primary/90 transition">

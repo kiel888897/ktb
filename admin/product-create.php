@@ -210,7 +210,18 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
                                     <input type="hidden" name="description" id="fullInput">
                                 </div>
 
+                                <!-- specifications -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Spesifikasi Produk
+                                    </label>
 
+                                    <div class="quill-wrapper">
+                                        <div id="specificationsEditor"></div>
+                                    </div>
+
+                                    <input type="hidden" name="specifications" id="specificationsInput">
+                                </div>
 
                                 <!-- Images -->
                                 <div>
@@ -329,6 +340,20 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
     <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
 
     <script>
+        const specificationQuill = new Quill('#specificationsEditor', {
+            theme: 'snow',
+            placeholder: 'Product specifications...',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{
+                        list: 'bullet'
+                    }],
+                    ['link']
+                ]
+            }
+        });
+
         const shortQuill = new Quill('#shortEditor', {
             theme: 'snow',
             placeholder: 'Short product description...',
@@ -364,6 +389,7 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
         });
 
         document.querySelector('form').addEventListener('submit', () => {
+            specificationInput.value = specificationQuill.root.innerHTML;
             shortInput.value = shortQuill.root.innerHTML;
             fullInput.value = fullQuill.root.innerHTML;
         });

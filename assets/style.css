@@ -2,3 +2,62 @@
     backdrop-filter: blur(12px);
     background: rgba(255, 255, 255, .8);
 }
+ .productMain img {
+            max-height: 380px;
+            object-fit: contain;
+        }
+
+
+        /* Kecilkan arrow */
+        .productMain .swiper-button-next,
+        .productMain .swiper-button-prev {
+            width: 36px;
+            height: 36px;
+        }
+
+        .productMain .swiper-button-next::after,
+        .productMain .swiper-button-prev::after {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+
+
+        .thumb-box {
+            height: 80px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .thumb-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Active thumbnail */
+        .productThumbs .swiper-slide-thumb-active .thumb-box {
+            border: 2px solid #c1121f;
+            /* primary */
+        }
+
+        .productMain .swiper-zoom-container {
+            cursor: zoom-in;
+        }
+
+        .swiper-zoomed .swiper-zoom-container {
+            cursor: zoom-out;
+        }
+
+        .swiper-button-next {
+            right: 1px;
+        }
+
+        .swiper-button-prev {
+            left: 1px;
+        }
