@@ -83,6 +83,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Produk | Kusuma Trisna Bali</title>
+    <link rel="icon" href="admin/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script src="https://cdn.tailwindcss.com"></script>

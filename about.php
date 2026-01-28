@@ -20,6 +20,7 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Kusuma Trisna Bali</title>
 
+    <link rel="icon" href="admin/favicon.ico">
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

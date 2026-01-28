@@ -95,6 +95,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($product['name']); ?> | Kusuma Trisna Bali</title>
+    <link rel="icon" href="admin/favicon.ico">
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -134,7 +135,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
     <section class="relative pt-40 pb-32">
         <!-- Background -->
         <div class="absolute inset-0">
-            <img src="assets/img/slider1.jpg"
+            <img src="assets/img/slider8.jpg"
                 class="w-full h-full object-cover"
                 alt="Produk Kusuma Trisna Bali">
             <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20"></div>
