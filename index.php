@@ -62,7 +62,6 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kusuma Trisna Bali</title>
-
     <link rel="icon" href="admin/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -219,7 +218,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     dan berkualitas bagi pelanggan serta mitra bisnis.
                 </p>
 
-                <a href="about.html"
+                <a href="about.php"
                     class="inline-flex items-center px-6 py-3 rounded-lg
                       bg-primary text-white font-semibold
                       hover:bg-primary/90 transition">
@@ -321,7 +320,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                         teknisi bersertifikat serta suku cadang resmi.
                     </p>
 
-                    <a href="service.html"
+                    <a href="service.php"
                         class="font-semibold text-primary hover:underline">
                         Selengkapnya →
                     </a>
@@ -349,7 +348,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                         efisiensi pendingin ruangan Anda.
                     </p>
 
-                    <a href="service.html"
+                    <a href="service.php"
                         class="font-semibold text-primary hover:underline">
                         Selengkapnya →
                     </a>
@@ -375,7 +374,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                         dengan standar layanan resmi dan terpercaya.
                     </p>
 
-                    <a href="service.html"
+                    <a href="service.php"
                         class="font-semibold text-primary hover:underline">
                         Selengkapnya →
                     </a>
@@ -446,7 +445,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
             <!-- CTA -->
             <div class="text-center mt-14">
-                <a href="produk.html"
+                <a href="produk.php"
                     class="inline-flex items-center px-8 py-3 rounded-lg
                       bg-primary text-white font-semibold
                       hover:bg-primary/90 transition">
