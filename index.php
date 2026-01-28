@@ -100,7 +100,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 <div class="swiper-slide relative">
 
                     <img
-                        src="assets/img/slider1.jpg"
+                        src="assets/img/slider3.jpg"
                         class="w-full h-full object-cover"
                         alt="Authorized Service">
 
@@ -149,7 +149,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 <div class="swiper-slide relative">
 
                     <img
-                        src="https://images.unsplash.com/photo-1604014237800-1c9102c219da"
+                        src="assets/img/slider2.jpg"
                         class="w-full h-full object-cover"
                         alt="Produk Terlaris">
 

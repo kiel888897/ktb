@@ -56,7 +56,7 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <section class="relative py-32">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            <img src="assets/img/slider1.jpg"
+            <img src="assets/img/slider4.jpg"
                 alt="About Kusuma Trisna Bali"
                 class="w-full h-full object-cover">
             <!-- Overlay -->

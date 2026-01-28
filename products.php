@@ -118,7 +118,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- HERO -->
     <section class="relative py-28">
         <div class="absolute inset-0">
-            <img src="assets/img/slider1.jpg" class="w-full h-full object-cover" alt="Produk">
+            <img src="assets/img/slider5.jpg" class="w-full h-full object-cover" alt="Produk">
             <div class="absolute inset-0 bg-black/40"></div>
         </div>
         <div class="relative max-w-6xl mx-auto px-6 text-center">
