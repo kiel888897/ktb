@@ -135,59 +135,113 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="max-w-6xl mx-auto px-6">
 
             <!-- FILTER -->
-            <form method="GET" class="bg-white p-6 rounded-xl border mb-10">
-                <div class="grid md:grid-cols-5 gap-4 items-end">
+            <form method="GET"
+                class="bg-white border rounded-2xl p-5 mb-10 shadow-md
+           transition-all duration-300 hover:shadow-lg">
 
-                    <div class="md:col-span-2">
-                        <input type="text" name="search" value="<?= htmlspecialchars($search); ?>"
-                            placeholder="Nama produk..."
-                            class="w-full border rounded-lg px-4 py-3">
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-[2fr_1.2fr_1.2fr_1fr_auto] 
+               gap-4 items-center">
+
+                    <!-- SEARCH -->
+                    <div>
+                        <div class="relative">
+                            <input type="text"
+                                name="search"
+                                value="<?= htmlspecialchars($search); ?>"
+                                placeholder="Nama produk..."
+                                class="w-full border border-gray-300 rounded-xl
+                           px-4 py-3 pl-11
+                           focus:ring-2 focus:ring-primary/30
+                           focus:border-primary transition">
+
+                            <i
+                                class="fa-solid fa-magnifying-glass
+                           absolute left-4 top-1/2 -translate-y-1/2
+                           text-gray-400">
+                            </i>
+                        </div>
                     </div>
 
+                    <!-- BRAND -->
                     <div>
-                        <select name="brand" class="w-full border rounded-lg px-4 py-3">
+                        <select name="brand"
+                            class="w-full border border-gray-300 rounded-xl
+                       px-4 py-3
+                       focus:ring-2 focus:ring-primary/30
+                       focus:border-primary transition">
                             <option value="0">Semua Brand</option>
                             <?php foreach ($brands as $b): ?>
-                                <option value="<?= (int)$b['id']; ?>" <?= $brand_id == (int)$b['id'] ? 'selected' : ''; ?>>
+                                <option value="<?= (int)$b['id']; ?>"
+                                    <?= $brand_id == (int)$b['id'] ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($b['name']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
+                    <!-- CATEGORY -->
                     <div>
-                        <select name="category" class="w-full border rounded-lg px-4 py-3">
+                        <select name="category"
+                            class="w-full border border-gray-300 rounded-xl
+                       px-4 py-3
+                       focus:ring-2 focus:ring-primary/30
+                       focus:border-primary transition">
                             <option value="0">Semua Kategori</option>
                             <?php foreach ($categories as $c): ?>
-                                <option value="<?= (int)$c['id']; ?>" <?= $category_id == (int)$c['id'] ? 'selected' : ''; ?>>
+                                <option value="<?= (int)$c['id']; ?>"
+                                    <?= $category_id == (int)$c['id'] ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($c['name']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
+                    <!-- SUBCATEGORY -->
                     <div>
-                        <select name="subcategory" class="w-full border rounded-lg px-4 py-3">
+                        <select name="subcategory"
+                            class="w-full border border-gray-300 rounded-xl
+                       px-4 py-3
+                       focus:ring-2 focus:ring-primary/30
+                       focus:border-primary transition">
                             <option value="0">Semua</option>
                             <?php foreach ($subcategories as $s): ?>
-                                <option value="<?= (int)$s['id']; ?>" <?= $subcategory_id == (int)$s['id'] ? 'selected' : ''; ?>>
+                                <option value="<?= (int)$s['id']; ?>"
+                                    <?= $subcategory_id == (int)$s['id'] ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($s['name']); ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
 
-                </div>
+                    <!-- ACTION -->
+                    <div class="flex items-center gap-2">
 
-                <div class="mt-4 flex justify-end gap-3">
-                    <a href="products.php" class="border px-6 py-2 rounded-lg">
-                        Reset
-                    </a>
-                    <button class="bg-primary text-white px-6 py-2 rounded-lg">
-                        Filter
-                    </button>
+                        <!-- FILTER -->
+                        <button type="submit"
+                            class="w-11 h-11 flex items-center justify-center
+                       rounded-xl bg-primary text-white
+                       hover:bg-darkred hover:scale-105
+                       transition-all duration-300 shadow">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                        <!-- RESET -->
+                        <a href="products.php"
+                            class="w-11 h-11 flex items-center justify-center
+                       rounded-xl border border-gray-300
+                       text-gray-600
+                       hover:bg-gray-100 hover:rotate-180
+                       transition-all duration-300">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </a>
+
+
+                    </div>
+
                 </div>
             </form>
+
+
 
             <!-- GRID -->
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
