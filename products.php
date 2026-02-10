@@ -125,7 +125,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="relative max-w-6xl mx-auto px-6 text-center">
             <h1 class="text-4xl font-semibold text-primary mb-4">Produk Kami</h1>
             <p class="text-white max-w-xl mx-auto">
-                Produk dan solusi terbaik untuk kebutuhan bisnis Anda.
+            <p class="text-white max-w-xl mx-auto">
+                Berbagai pilihan produk elektronik untuk kebutuhan bisnis dan pelanggan Anda.
+            </p>
+
             </p>
         </div>
     </section>

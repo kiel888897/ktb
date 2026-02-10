@@ -1,28 +1,97 @@
 <!-- FOOTER -->
-<footer class="bg-gray-900 text-gray-300 py-16">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-8">
+<footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-10">
+
+        <!-- Brand -->
         <div>
-            <h3 class="font-bold mb-4 text-white">KTB</h3>
-            <p class="text-sm">Authorized Service & Produk Resmi</p>
+            <h3 class="text-xl font-bold text-white mb-4">
+                Kusuma Trisna Bali
+            </h3>
+            <p class="text-sm leading-relaxed">
+                Distribusi dan layanan perbaikan produk elektronik
+                untuk kebutuhan toko dan pelanggan.
+            </p>
         </div>
+
+        <!-- Menu -->
         <div>
-            <h4 class="font-semibold mb-3 text-white">Menu</h4>
+            <h4 class="font-semibold text-white mb-4">
+                Menu
+            </h4>
             <ul class="space-y-2 text-sm">
-                <li>Home</li>
-                <li>Produk</li>
-                <li>Service</li>
+                <li>
+                    <a href="index.php" class="hover:text-primary transition">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="about.php" class="hover:text-primary transition">
+                        About
+                    </a>
+                </li>
+                <li>
+                    <a href="products.php" class="hover:text-primary transition">
+                        Produk
+                    </a>
+                </li>
+                <li>
+                    <a href="services.php" class="hover:text-primary transition">
+                        Service
+                    </a>
+                </li>
+                <li>
+                    <a href="contact.php" class="hover:text-primary transition">
+                        Kontak
+                    </a>
+                </li>
             </ul>
         </div>
+
+        <!-- Kontak -->
         <div>
-            <h4 class="font-semibold mb-3 text-white">Kontak</h4>
-            <p class="text-sm">Bali, Indonesia</p>
+            <h4 class="font-semibold text-white mb-4">
+                Kontak
+            </h4>
+            <p class="text-sm leading-relaxed mb-3">
+                Jl. By Pass Dr. Ir. Soekarno,<br>
+                Banjar Tegal Belodan, Dauh Peken,<br>
+                Kec. Tabanan, Kabupaten Tabanan,<br>
+                Bali 82113
+            </p>
+            <p class="text-sm">
+                <a href="tel:085215291012"
+                    class="hover:text-primary transition">
+                    📞 0852-1529-1012
+                </a>
+            </p>
         </div>
+
+        <!-- Sosial & Maps -->
         <div>
-            <h4 class="font-semibold mb-3 text-white">Sosial</h4>
-            <div class="flex gap-4 text-xl">
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-facebook"></i>
+            <h4 class="font-semibold text-white mb-4">
+                Lokasi
+            </h4>
+            <a href="https://share.google/GXLSKryh0bfsy3vYe"
+                target="_blank"
+                class="inline-flex items-center gap-2 text-sm
+                      hover:text-primary transition mb-4">
+                📍 Lihat di Google Maps
+            </a>
+
+            <div class="flex gap-4 text-xl mt-4">
+                <a href="#" class="hover:text-primary transition">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="hover:text-primary transition">
+                    <i class="fab fa-facebook"></i>
+                </a>
             </div>
         </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="border-t border-gray-800 mt-12 pt-6 text-center text-sm text-gray-500">
+        © <?= date('Y'); ?> Kusuma Trisna Bali. All rights reserved.
     </div>
 </footer>

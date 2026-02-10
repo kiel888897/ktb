@@ -207,15 +207,15 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 </h2>
 
                 <p class="text-gray-600 mb-4">
-                    Kusuma Trisna Bali berdiri sejak tahun <strong>2019</strong> dan bergerak
-                    di bidang <strong>distribusi serta authorized service</strong>
-                    berbagai produk elektronik dari merek ternama.
+                    Kusuma Trisna Bali berdiri sejak tahun <strong>2019</strong> dan fokus
+                    pada <strong>distribusi serta layanan perbaikan</strong>
+                    berbagai produk elektronik untuk kebutuhan toko dan pelanggan.
                 </p>
 
                 <p class="text-gray-600 mb-6">
-                    Dengan dukungan teknisi bersertifikat dan standar resmi pabrikan,
-                    kami berkomitmen memberikan layanan yang profesional, terpercaya,
-                    dan berkualitas bagi pelanggan serta mitra bisnis.
+                    Kami didukung oleh tim teknisi berpengalaman yang bekerja
+                    mengikuti prosedur kerja yang baik, sehingga setiap layanan
+                    dilakukan dengan rapi, bertanggung jawab, dan dapat diandalkan.
                 </p>
 
                 <a href="about.php"
@@ -252,20 +252,20 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
                 shadow-lg hover:shadow-xl transition duration-300">
                     <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
-                        Authorized
+                        Layanan Resmi
                     </h3>
                     <p class="text-gray-600 text-xs sm:text-sm">
-                        Service Center
+                        Perbaikan & Dukungan Produk
                     </p>
                 </div>
 
                 <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
                 shadow-lg hover:shadow-xl transition duration-300">
                     <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
-                        Profesional
+                        Berpengalaman
                     </h3>
                     <p class="text-gray-600 text-xs sm:text-sm">
-                        Teknisi Bersertifikat
+                        Tim Teknisi Handal
                     </p>
                 </div>
 
@@ -531,16 +531,16 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             <div data-aos="fade-right">
                 <span class="inline-block mb-3 px-4 py-1 text-sm rounded-full
                          bg-white/20 text-white">
-                    Authorized Service
+                    Layanan Perbaikan Elektronik
                 </span>
 
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                    Promo Service Resmi
+                    Promo Layanan Service Elektronik
                 </h2>
 
                 <p class="text-white/90 mb-6 max-w-md">
-                    Dapatkan layanan perbaikan produk elektronik dengan teknisi
-                    bersertifikat dan standar resmi pabrikan.
+                    Kami melayani perbaikan berbagai produk elektronik dengan
+                    teknisi berpengalaman dan proses kerja yang rapi serta bertanggung jawab.
                 </p>
 
                 <div class="flex flex-wrap gap-4">
@@ -582,8 +582,8 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     Kenapa Memilih Kami
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">
-                    Komitmen kami adalah memberikan layanan resmi yang terpercaya
-                    dengan standar kualitas terbaik.
+                    Kami berupaya memberikan layanan yang rapi, dapat diandalkan,
+                    dan sesuai dengan kebutuhan pelanggan.
                 </p>
             </div>
 
@@ -602,12 +602,12 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <h3 class="text-xl font-semibold mb-3">
-                        Authorized Service
+                        Layanan Perbaikan Terpercaya
                     </h3>
 
                     <p class="text-gray-600">
-                        Layanan resmi yang sesuai standar pabrikan untuk menjamin
-                        keaslian suku cadang dan kualitas perbaikan.
+                        Menangani perbaikan produk elektronik dengan prosedur kerja
+                        yang jelas dan penggunaan suku cadang yang sesuai kebutuhan.
                     </p>
                 </div>
 
@@ -623,12 +623,12 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <h3 class="text-xl font-semibold mb-3">
-                        Teknisi Bersertifikat
+                        Teknisi Berpengalaman
                     </h3>
 
                     <p class="text-gray-600">
-                        Ditangani oleh teknisi berpengalaman dan bersertifikat
-                        untuk memastikan proses perbaikan yang aman dan tepat.
+                        Dikerjakan oleh tim teknisi yang berpengalaman dalam menangani
+                        berbagai jenis produk elektronik secara hati-hati dan rapi.
                     </p>
                 </div>
 
@@ -644,19 +644,19 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <h3 class="text-xl font-semibold mb-3">
-                        Garansi & Standar Pabrikan
+                        Layanan Bertanggung Jawab
                     </h3>
 
                     <p class="text-gray-600">
-                        Setiap layanan diberikan dengan garansi dan mengikuti
-                        standar resmi pabrikan untuk hasil yang maksimal.
+                        Setiap pekerjaan dilakukan dengan tanggung jawab dan pengecekan
+                        hasil untuk memastikan perangkat dapat digunakan dengan baik.
                     </p>
                 </div>
 
             </div>
         </div>
     </section>
-    <!-- KENAPA MEMILIH KAMI -->
+    <!-- BRAND PARTNER -->
     <section class="relative py-24
                 bg-gradient-to-b from-primary/5 via-white to-gray-50
                 overflow-hidden">
@@ -672,107 +672,6 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 </path>
             </svg>
         </div>
-
-        <div class="relative max-w-7xl mx-auto px-6">
-
-            <!-- Heading -->
-            <div class="text-center mb-16">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Keunggulan Kami
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Kenapa Memilih Kami
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Komitmen kami adalah memberikan layanan resmi yang terpercaya
-                    dengan standar kualitas terbaik.
-                </p>
-            </div>
-
-            <!-- Grid -->
-            <div class="grid md:grid-cols-3 gap-8">
-
-                <!-- Authorized Service -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                    data-aos="fade-up">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-certificate"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Authorized Service
-                    </h3>
-
-                    <p class="text-gray-600">
-                        Layanan resmi sesuai standar pabrikan untuk menjamin
-                        keaslian suku cadang dan kualitas perbaikan.
-                    </p>
-                </div>
-
-                <!-- Teknisi Bersertifikat -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                    data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-user-gear"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Teknisi Bersertifikat
-                    </h3>
-
-                    <p class="text-gray-600">
-                        Ditangani oleh teknisi berpengalaman dan bersertifikat
-                        untuk memastikan perbaikan yang aman dan tepat.
-                    </p>
-                </div>
-
-                <!-- Garansi -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                    data-aos="fade-up" data-aos-delay="200">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Garansi & Standar Pabrikan
-                    </h3>
-
-                    <p class="text-gray-600">
-                        Setiap layanan diberikan dengan garansi dan mengikuti
-                        standar resmi pabrikan.
-                    </p>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Bottom Wave -->
-        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-            <svg class="relative block w-full h-[60px]"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1440 90"
-                preserveAspectRatio="none">
-                <path fill="#f9fafb"
-                    d="M0,40 C240,10 480,60 720,50 960,40 1200,20 1440,30 L1440,90 L0,90 Z">
-                </path>
-            </svg>
-        </div>
-
-    </section>
-    <!-- BRAND PARTNER -->
-    <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
 
             <!-- Heading -->

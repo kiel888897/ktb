@@ -76,9 +76,10 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </h1>
             <p class="max-w-2xl mx-auto text-lg text-white"
                 data-aos="fade-up" data-aos-delay="150">
-                Kusuma Trisna Bali adalah perusahaan yang berkomitmen
-                memberikan layanan profesional dengan kualitas terbaik
-                dan pendekatan yang berkelanjutan.
+                Kusuma Trisna Bali merupakan usaha yang bergerak di bidang
+                distribusi dan layanan elektronik, dengan fokus pada
+                pelayanan yang baik, dapat diandalkan, dan berorientasi
+                pada kebutuhan pelanggan.
             </p>
         </div>
     </section>
@@ -92,16 +93,17 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     Who We Are
                 </span>
                 <h2 class="text-3xl font-semibold text-gray-900 mt-3 mb-5">
-                    Profesional & Terpercaya
+                    Distribusi & Layanan Elektronik
                 </h2>
                 <p class="text-gray-600 mb-4 leading-relaxed">
-                    Kami membantu klien menghadirkan solusi terbaik melalui
-                    perencanaan matang, tenaga profesional, dan eksekusi yang
-                    tepat sasaran.
+                    Kami melayani kebutuhan distribusi dan perbaikan produk
+                    elektronik dengan proses kerja yang jelas, rapi,
+                    dan sesuai dengan kebutuhan pelanggan.
                 </p>
                 <p class="text-gray-600 leading-relaxed">
-                    Dengan pengalaman dan komitmen tinggi terhadap kualitas,
-                    kami menjadi mitra yang dapat diandalkan dalam jangka panjang.
+                    Dengan pengalaman yang terus berkembang, kami berupaya
+                    memberikan layanan yang konsisten dan dapat diandalkan
+                    dalam setiap pekerjaan.
                 </p>
             </div>
 
@@ -124,7 +126,7 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </h2>
                 <p class="text-gray-600"
                     data-aos="fade-up" data-aos-delay="100">
-                    Prinsip yang kami pegang dalam setiap layanan
+                    Nilai yang menjadi pedoman kami dalam bekerja dan melayani pelanggan
                 </p>
             </div>
 
@@ -136,11 +138,11 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <i class="fa-solid fa-briefcase"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                        Profesional
+                        Cara Kerja yang Baik
                     </h3>
                     <p class="text-gray-600">
-                        Bekerja dengan standar tinggi dan bertanggung jawab
-                        dalam setiap proyek.
+                        Setiap pekerjaan dilakukan dengan tertib, jelas,
+                        dan penuh tanggung jawab.
                     </p>
                 </div>
 
@@ -150,11 +152,11 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <i class="fa-solid fa-lightbulb"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                        Inovatif
+                        Terus Berkembang
                     </h3>
                     <p class="text-gray-600">
-                        Selalu berkembang dan mengikuti kebutuhan klien
-                        serta tren industri.
+                        Kami terus belajar dan menyesuaikan layanan
+                        sesuai dengan kebutuhan pelanggan.
                     </p>
                 </div>
 
@@ -164,10 +166,11 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <i class="fa-solid fa-handshake"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                        Terpercaya
+                        Dapat Diandalkan
                     </h3>
                     <p class="text-gray-600">
-                        Menjaga kepercayaan klien melalui kualitas dan konsistensi.
+                        Berusaha menjaga kepercayaan pelanggan melalui
+                        hasil kerja yang konsisten dan bertanggung jawab.
                     </p>
                 </div>
 

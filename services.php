@@ -57,8 +57,8 @@
             </h1>
             <p class="max-w-2xl mx-auto text-lg text-white"
                 data-aos="fade-up" data-aos-delay="150">
-                Solusi layanan profesional yang dirancang untuk mendukung
-                kebutuhan bisnis dan pelanggan Anda.
+                Layanan perbaikan dan penanganan produk elektronik
+                yang disesuaikan dengan kebutuhan pelanggan.
             </p>
         </div>
     </section>
@@ -74,7 +74,7 @@
                 </h2>
                 <p class="text-gray-600"
                     data-aos="fade-up" data-aos-delay="100">
-                    Layanan dengan pendekatan profesional dan berkelanjutan
+                    Layanan yang kami sediakan untuk mendukung produk dan pelanggan
                 </p>
             </div>
 
@@ -87,11 +87,11 @@
                         <i class="fa-solid fa-comments"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">
-                        Konsultasi
+                        Konsultasi Produk
                     </h3>
                     <p class="text-gray-600 text-sm leading-relaxed">
-                        Diskusi dan pendampingan profesional untuk memahami
-                        kebutuhan serta menentukan solusi terbaik.
+                        Memberikan informasi dan arahan terkait penggunaan,
+                        perawatan, dan penanganan produk elektronik.
                     </p>
                 </div>
 
@@ -101,11 +101,11 @@
                         <i class="fa-solid fa-briefcase"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">
-                        Manajemen Proyek
+                        Service & Perbaikan
                     </h3>
                     <p class="text-gray-600 text-sm leading-relaxed">
-                        Pengelolaan proyek secara terstruktur untuk memastikan
-                        proses berjalan efektif dan tepat waktu.
+                        Menangani perbaikan produk elektronik dengan proses kerja
+                        yang rapi dan pengecekan sebelum digunakan kembali.
                     </p>
                 </div>
 
@@ -115,11 +115,11 @@
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <h3 class="text-lg font-semibold text-gray-900 mb-3">
-                        Solusi Bisnis
+                        Dukungan Teknis
                     </h3>
                     <p class="text-gray-600 text-sm leading-relaxed">
-                        Penyediaan solusi yang disesuaikan dengan kebutuhan
-                        untuk meningkatkan kinerja dan efisiensi.
+                        Membantu penanganan kendala teknis agar produk
+                        dapat berfungsi dengan baik.
                     </p>
                 </div>
 
