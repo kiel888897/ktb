@@ -100,16 +100,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         }
     </script>
-
-    <style>
-        /* fallback kalau line-clamp belum aktif */
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-    </style>
 </head>
 
 <body class="text-gray-800 bg-gray-50">
