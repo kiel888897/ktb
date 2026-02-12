@@ -95,7 +95,10 @@
         © <?= date('Y'); ?> Kusuma Trisna Bali. All rights reserved.
     </div>
 </footer>
-<button
-    class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition duration-300 ease-in-out">
-    <i class="fa-solid fa-plus text-xl"></i>
-</button>
+<!-- Floating WhatsApp Button -->
+<a
+    href="https://wa.me/6281234567890"
+    target="_blank"
+    class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition duration-300">
+    <i class="fa-brands fa-whatsapp text-2xl"></i>
+</a>
