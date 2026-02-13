@@ -3,7 +3,7 @@
 require 'admin/config/database.php';
 
 $stmt = $pdo->prepare("
-    SELECT name, logo 
+    SELECT name, logo, slug
     FROM partners
     WHERE is_active = 1
     ORDER BY sort_order ASC, id DESC
@@ -201,11 +201,14 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     <?php foreach ($partners as $partner): ?>
                         <div class="swiper-slide flex justify-center">
-                            <img
-                                src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                                alt="<?= htmlspecialchars($partner['name']); ?>"
-                                class="h-14 object-contain grayscale opacity-70
+                            <a href="products.php?partner=<?= $partner['slug']; ?>">
+                                <img
+                                    src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
+                                    alt="<?= htmlspecialchars($partner['name']); ?>"
+                                    class="h-14 object-contain grayscale opacity-70
                            hover:grayscale-0 hover:opacity-100 transition">
+
+                            </a>
                         </div>
                     <?php endforeach; ?>
 
