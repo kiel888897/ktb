@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -39,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -53,59 +51,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
         }
     </script>
 
-    <!-- Custom Style -->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
+<body class="font-['IBM_Plex_Sans'] text-gray-800 leading-relaxed">
 
     <?php include 'header.php'; ?>
 
-    <!-- HERO SERVICE -->
-    <section class="relative py-32">
+    <!-- HERO -->
+    <section class="relative py-20">
         <div class="absolute inset-0">
             <img src="assets/img/slider1.jpg"
-                alt="Layanan Kusuma Trisna Bali"
                 class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
         </div>
 
-        <div class="relative max-w-6xl mx-auto px-6 text-center">
-            <h1 class="text-4xl md:text-5xl font-semibold text-primary mb-6"
-                data-aos="fade-up">
-                Layanan Kami
+        <div class="relative max-w-5xl mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-semibold text-white mb-6">
+                Layanan & Tracking Service
             </h1>
-            <p class="max-w-2xl mx-auto text-lg text-white"
-                data-aos="fade-up" data-aos-delay="150">
-                Layanan perbaikan dan penanganan produk elektronik
-                yang disesuaikan dengan kebutuhan pelanggan.
+            <p class="text-lg text-gray-200">
+                Cek progres perbaikan produk Anda dengan mudah dan cepat.
             </p>
         </div>
     </section>
+
     <!-- TRACK SERVICE -->
-    <section class="py-20 bg-white">
+    <section id="track-service" class="py-24 bg-gray-50 border-t border-gray-100">
         <div class="max-w-3xl mx-auto px-6 text-center">
 
             <h2 class="text-3xl font-semibold text-gray-900 mb-4">
                 Lacak Status Service
             </h2>
-            <p class="text-gray-600 mb-8">
-                Masukkan kode service Anda untuk mengetahui progres terbaru.
+            <p class="text-gray-600 mb-10">
+                Masukkan kode service untuk melihat progres terbaru.
             </p>
 
             <!-- Form -->
-            <form method="POST" class="flex flex-col sm:flex-row gap-4 justify-center">
+            <form method="POST" action="#track-service"
+                class="flex flex-col sm:flex-row gap-4 justify-center">
+
                 <input type="text" name="service_code" required
                     placeholder="Contoh: SRV-20260216-001"
-                    class="flex-1 rounded-lg border border-gray-300 px-4 py-3
+                    class="flex-1 rounded-xl border border-gray-300 px-5 py-3
                        focus:ring-2 focus:ring-primary focus:outline-none">
 
                 <button type="submit"
-                    class="bg-primary text-white px-6 py-3 rounded-lg
+                    class="bg-primary text-white px-8 py-3 rounded-xl
                        hover:bg-darkred transition">
                     Cek Status
                 </button>
             </form>
+
+            <!-- ERROR -->
+            <?php if ($error): ?>
+                <div class="mt-8 text-red-600 font-medium">
+                    <?= $error; ?>
+                </div>
+            <?php endif; ?>
 
             <!-- RESULT -->
             <?php if ($result): ?>
@@ -123,27 +126,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                 $currentIndex = array_search($result['status'], $steps);
                 ?>
 
-                <div class="mt-12 p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
+                <div class="mt-14 p-10 bg-white rounded-3xl shadow-xl border border-gray-100 text-left">
 
-                    <h3 class="text-xl font-semibold text-gray-900 mb-8 text-center">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-10 text-center">
                         Tracking Service
                     </h3>
 
                     <!-- Info -->
-                    <div class="mb-10 text-center space-y-1">
-                        <p class="text-gray-700">
-                            <strong>Customer:</strong> <?= htmlspecialchars($result['customer_name']); ?>
-                        </p>
-                        <p class="text-gray-700">
-                            <strong>Produk:</strong> <?= htmlspecialchars($result['product_name']); ?>
-                        </p>
-                        <p class="text-gray-700">
-                            <strong>Tanggal Masuk:</strong>
+                    <div class="mb-12 text-center space-y-2">
+                        <p><strong>Customer:</strong> <?= htmlspecialchars($result['customer_name']); ?></p>
+                        <p><strong>Produk:</strong> <?= htmlspecialchars($result['product_name']); ?></p>
+                        <p><strong>Tanggal Masuk:</strong>
                             <?= date('d M Y', strtotime($result['created_at'])); ?>
                         </p>
                     </div>
 
-                    <!-- Progress Bar -->
+                    <!-- Progress -->
                     <div class="relative">
 
                         <div class="absolute top-4 left-0 right-0 h-1 bg-gray-200"></div>
@@ -151,22 +149,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         <div class="flex justify-between relative z-10">
 
                             <?php foreach ($steps as $index => $step): ?>
-
-                                <?php
-                                $isActive = $index <= $currentIndex;
-                                ?>
+                                <?php $isActive = $index <= $currentIndex; ?>
 
                                 <div class="flex flex-col items-center w-full text-center">
 
-                                    <!-- Circle -->
-                                    <div class="w-8 h-8 flex items-center justify-center rounded-full
-                        <?= $isActive ? 'bg-primary text-white' : 'bg-gray-300 text-white'; ?>">
+                                    <div class="w-9 h-9 flex items-center justify-center rounded-full
+                                    <?= $isActive ? 'bg-primary text-white' : 'bg-gray-300 text-white'; ?>">
                                         <?= $index + 1; ?>
                                     </div>
 
-                                    <!-- Label -->
                                     <p class="mt-3 text-xs font-medium
-                        <?= $isActive ? 'text-primary' : 'text-gray-400'; ?>">
+                                    <?= $isActive ? 'text-primary' : 'text-gray-400'; ?>">
                                         <?= ucfirst($step); ?>
                                     </p>
 
@@ -177,8 +170,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         </div>
                     </div>
 
-                    <!-- Status Badge -->
-                    <div class="mt-10 text-center">
+                    <!-- Status -->
+                    <div class="mt-12 text-center">
 
                         <?php
                         $badgeClass = match ($result['status']) {
@@ -191,25 +184,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         };
                         ?>
 
-                        <span class="inline-block px-4 py-2 rounded-full text-sm font-semibold <?= $badgeClass ?>">
+                        <span class="inline-block px-6 py-3 rounded-full text-sm font-semibold <?= $badgeClass ?>">
                             Status Saat Ini: <?= ucfirst($result['status']); ?>
                         </span>
-                        <hr class="m-3">
-                        <p class="text-gray-700">
-                            <i>Update Terakhir:</i>
+
+                        <p class="mt-4 text-gray-500 text-sm">
+                            Update Terakhir:
                             <?= date('d M Y', strtotime($result['updated_at'])); ?>
                         </p>
+
                     </div>
 
                 </div>
 
-            <?php endif; ?>
-
-
-            <?php if ($error): ?>
-                <div class="mt-8 text-red-600 font-medium">
-                    <?= $error; ?>
-                </div>
             <?php endif; ?>
 
         </div>
@@ -339,8 +326,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
             </div>
         </div>
     </section>
-
     <?php include 'footer.php'; ?>
+
 
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -354,6 +341,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     </script>
 
     <script src="assets/main.js"></script>
+    <!-- Auto Scroll -->
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+        <script>
+            window.addEventListener("load", function() {
+                document.getElementById("track-service")
+                    .scrollIntoView({
+                        behavior: "smooth"
+                    });
+            });
+        </script>
+    <?php endif; ?>
+
 </body>
 
 </html>
