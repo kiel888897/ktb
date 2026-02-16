@@ -183,6 +183,16 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
                                                dark:border-gray-700 dark:text-white/90" />
                                 </div>
 
+                                <!-- Stock -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Stock
+                                    </label>
+                                    <input name="stock" type="number" min="0"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90" />
+                                </div>
                                 <!-- Short Description -->
                                 <div>
                                     <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">

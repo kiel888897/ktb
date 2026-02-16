@@ -1,6 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require 'auth.php';
-require_role(['admin', 'superadmin']);
+require_role(['admin', 'staff', 'superadmin']);
 require 'config/database.php';
 
 $sql = "
@@ -36,6 +38,58 @@ $products = $stmt->fetchAll();
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet"
         href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <style>
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            top: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #22c55e;
+        }
+
+        .slider.blue {
+            background-color: #ccc;
+        }
+
+        input:checked+.slider.blue {
+            background-color: #3b82f6;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(22px);
+        }
+    </style>
+
 </head>
 
 <body
@@ -95,6 +149,7 @@ $products = $stmt->fetchAll();
                                         <th class="px-5 py-3 sm:px-6">Brand</th>
                                         <th class="px-5 py-3 sm:px-6">Category</th>
                                         <th class="px-5 py-3 sm:px-6">Price</th>
+                                        <th class="px-5 py-3 sm:px-6">Stock</th>
                                         <th class="px-5 py-3 sm:px-6">Featured</th>
                                         <th class="px-5 py-3 sm:px-6">Status</th>
                                         <th class="px-5 py-3 sm:px-6">Aksi</th>
@@ -127,37 +182,43 @@ $products = $stmt->fetchAll();
                                             <td class="px-5 py-4 sm:px-6">
                                                 <?= $p['price'] !== null ? 'Rp ' . number_format($p['price'], 0, ',', '.') : '-' ?>
                                             </td>
+                                            <td class="px-5 py-4 sm:px-6">
+                                                <div class="flex items-center gap-2">
+                                                    <button onclick="updateStock(<?= $p['id']; ?>, -1)"
+                                                        class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
 
-                                            <td class="px-5 py-4 sm:px-6">
-                                                <?php if ($p['is_featured']): ?>
-                                                    <span class="rounded-full bg-success-50 px-2 py-0.5
-                                       text-theme-xs font-medium text-success-700
-                                       dark:bg-success-500/15 dark:text-success-500">
-                                                        Yes
+                                                    <span id="stock-<?= $p['id']; ?>" class="min-w-[30px] text-center font-medium">
+                                                        <?= (int)$p['stock']; ?>
                                                     </span>
-                                                <?php else: ?>
-                                                    <span class="rounded-full bg-error-50 px-2 py-0.5
-                                       text-theme-xs font-medium text-error-700
-                                       dark:bg-error-500/15 dark:text-error-500">
-                                                        No
-                                                    </span>
-                                                <?php endif; ?>
+
+                                                    <button onclick="updateStock(<?= $p['id']; ?>, 1)"
+                                                        class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
                                             </td>
-                                            <td class="px-5 py-4 sm:px-6">
-                                                <?php if ($p['is_active']): ?>
-                                                    <span class="rounded-full bg-success-50 px-2 py-0.5
-                                       text-theme-xs font-medium text-success-700
-                                       dark:bg-success-500/15 dark:text-success-500">
-                                                        Active
-                                                    </span>
-                                                <?php else: ?>
-                                                    <span class="rounded-full bg-error-50 px-2 py-0.5
-                                       text-theme-xs font-medium text-error-700
-                                       dark:bg-error-500/15 dark:text-error-500">
-                                                        Inactive
-                                                    </span>
-                                                <?php endif; ?>
+
+                                            <td class="px-5 py-4 sm:px-6 text-center">
+                                                <label class="switch">
+                                                    <input type="checkbox"
+                                                        <?= $p['is_featured'] ? 'checked' : ''; ?>
+                                                        onchange="toggleField(<?= $p['id']; ?>, 'is_featured', this.checked)">
+                                                    <span class="slider"></span>
+                                                </label>
                                             </td>
+
+                                            <td class="px-5 py-4 sm:px-6 text-center">
+                                                <label class="switch">
+                                                    <input type="checkbox"
+                                                        <?= $p['is_active'] ? 'checked' : ''; ?>
+                                                        onchange="toggleField(<?= $p['id']; ?>, 'is_active', this.checked)">
+                                                    <span class="slider blue"></span>
+                                                </label>
+                                            </td>
+
+
 
                                             <td class="px-5 py-4 sm:px-6">
                                                 <div class="flex gap-2">
@@ -205,8 +266,9 @@ $products = $stmt->fetchAll();
                 lengthChange: false,
                 columnDefs: [{
                     orderable: false,
-                    targets: [5]
+                    targets: [4, 5, 6, 7]
                 }],
+
                 language: {
                     search: "Cari:",
                     zeroRecords: "Data tidak ditemukan",
@@ -220,6 +282,46 @@ $products = $stmt->fetchAll();
     </script>
 
     <script defer src="bundle.js"></script>
+    <script>
+        function updateStock(id, change) {
+
+            fetch('update-stock.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id + '&change=' + change
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('stock-' + id).innerText = data.stock;
+                    }
+                });
+        }
+    </script>
+    <script>
+        function toggleField(id, field, value) {
+
+            fetch('toggle-product.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'id=' + id + '&field=' + field + '&value=' + (value ? 1 : 0)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('Update gagal');
+                    }
+                })
+                .catch(() => {
+                    alert('Terjadi kesalahan server');
+                });
+        }
+    </script>
+
 </body>
 
 </html>

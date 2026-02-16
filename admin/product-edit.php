@@ -185,6 +185,13 @@ $images = $imagesStmt->fetchAll();
                                             value="<?= number_format((float)$product['price'], 2, '.', ''); ?>"
                                             class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
                                     </div>
+
+                                    <div>
+                                        <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">Stock</label>
+                                        <input name="stock" type="number" min="0"
+                                            value="<?= $product['stock']; ?>"
+                                            class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
+                                    </div>
                                 </div>
 
                                 <!-- Short Description -->

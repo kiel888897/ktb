@@ -158,6 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                dark:border-gray-700 dark:text-white/90">
                                         <option value="admin">Admin</option>
                                         <option value="staff">Staff</option>
+                                        <option value="seller">Seller</option>
                                         <option value="superadmin">Superadmin</option>
                                     </select>
                                 </div>

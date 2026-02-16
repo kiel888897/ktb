@@ -17,6 +17,7 @@ $category_id = (int)($_POST['category_id'] ?? 0);
 $subcategory_id = (int)($_POST['subcategory_id'] ?? 0);
 $partner_id = !empty($_POST['partner_id']) ? (int)$_POST['partner_id'] : null;
 $price = ($_POST['price'] !== '' && isset($_POST['price'])) ? (float)$_POST['price'] : null;
+$stock = ($_POST['stock'] !== '' && isset($_POST['stock'])) ? (int)$_POST['stock'] : null;
 $short_description = trim($_POST['short_description'] ?? '');
 $description = trim($_POST['description'] ?? '');
 $specifications = trim($_POST['specifications'] ?? '');
@@ -41,9 +42,9 @@ if ($stmt->fetchColumn() > 0) {
 // ===== INSERT PRODUCT =====
 $stmt = $pdo->prepare("
     INSERT INTO products
-    (name, slug, brand_id, category_id, subcategory_id, partner_id, price,
+    (name, slug, brand_id, category_id, subcategory_id, partner_id, price, stock,
      short_description, description, specifications, is_featured, is_active)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
 $stmt->execute([
@@ -54,6 +55,7 @@ $stmt->execute([
     $subcategory_id,
     $partner_id,
     $price,
+    $stock,
     $short_description ?: null,
     $description ?: null,
     $specifications ?: null,

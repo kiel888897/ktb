@@ -1,6 +1,6 @@
 <?php
 require 'auth.php';
-require_role(['admin', 'superadmin']);
+require_role(['admin', 'staff', 'superadmin']);
 require 'config/database.php';
 
 /*
