@@ -416,13 +416,23 @@ $images = $imagesStmt->fetchAll();
             }
         });
 
-        // 👉 SET VALUE DARI DATABASE
-        specificationQuill.root.innerHTML = document.getElementById('specificationsInput').value;
-        shortQuill.root.innerHTML = document.getElementById('shortInput').value;
-        fullQuill.root.innerHTML = document.getElementById('fullInput').value;
+        const specificationInput = document.getElementById('specificationsInput');
+        const shortInput = document.getElementById('shortInput');
+        const fullInput = document.getElementById('fullInput');
 
-        // 👉 SYNC SAAT SUBMIT
-        document.querySelector('form').addEventListener('submit', () => {
+        // 👉 Set value dari database
+        if (specificationInput.value) {
+            specificationQuill.clipboard.dangerouslyPasteHTML(specificationInput.value);
+        }
+        if (shortInput.value) {
+            shortQuill.clipboard.dangerouslyPasteHTML(shortInput.value);
+        }
+        if (fullInput.value) {
+            fullQuill.clipboard.dangerouslyPasteHTML(fullInput.value);
+        }
+
+        // 👉 Sync saat submit
+        document.querySelector('form').addEventListener('submit', function() {
             specificationInput.value = specificationQuill.root.innerHTML;
             shortInput.value = shortQuill.root.innerHTML;
             fullInput.value = fullQuill.root.innerHTML;

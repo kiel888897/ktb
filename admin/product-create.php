@@ -388,7 +388,11 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
             }
         });
 
-        document.querySelector('form').addEventListener('submit', () => {
+        const specificationInput = document.getElementById('specificationsInput');
+        const shortInput = document.getElementById('shortInput');
+        const fullInput = document.getElementById('fullInput');
+
+        document.querySelector('form').addEventListener('submit', function() {
             specificationInput.value = specificationQuill.root.innerHTML;
             shortInput.value = shortQuill.root.innerHTML;
             fullInput.value = fullQuill.root.innerHTML;
