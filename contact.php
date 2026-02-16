@@ -115,7 +115,7 @@
                         <div>
                             <h4 class="font-medium text-gray-900">Email</h4>
                             <p class="text-gray-600 text-sm">
-                                info@kusumatrishnabali.com
+                                info@kusumatrisnabali.com
                             </p>
                         </div>
                     </div>

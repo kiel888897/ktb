@@ -80,7 +80,26 @@ $userRole = $_SESSION['user']['role'] ?? 'guest';
                             </span>
                         </a>
                     </li>
+                    <!-- service -->
+                    <li>
+                        <a href="service.php"
+                            class="menu-item group"
+                            :class="page === 'service'
+               ? 'menu-item-active'
+               : 'menu-item-inactive'">
 
+                            <i
+                                :class="page === 'service'
+                ? 'fa-solid fa-tools menu-item-icon-active'
+                : 'fa-solid fa-tools menu-item-icon-inactive'"
+                                class="text-lg"></i>
+
+                            <span class="menu-item-text"
+                                :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Services
+                            </span>
+                        </a>
+                    </li>
                     <!-- Master Data -->
                     <li>
                         <a href="#"

@@ -109,79 +109,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
 
             <!-- RESULT -->
             <?php if ($result): ?>
+                <div class="mt-10 p-6 rounded-xl border border-gray-200 bg-gray-50 text-left">
 
-                <?php
-                $steps = [
-                    'barang diterima',
-                    'checking/diagnose',
-                    'on progress',
-                    'pending part',
-                    'pending customer',
-                    'done'
-                ];
-
-                $currentIndex = array_search($result['status'], $steps);
-                ?>
-
-                <div class="mt-12 p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
-
-                    <h3 class="text-xl font-semibold text-gray-900 mb-8 text-center">
-                        Tracking Service
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        Detail Service
                     </h3>
 
-                    <!-- Info -->
-                    <div class="mb-10 text-center space-y-1">
-                        <p class="text-gray-700">
-                            <strong>Customer:</strong> <?= htmlspecialchars($result['customer_name']); ?>
-                        </p>
-                        <p class="text-gray-700">
-                            <strong>Produk:</strong> <?= htmlspecialchars($result['product_name']); ?>
-                        </p>
-                        <p class="text-gray-700">
-                            <strong>Tanggal Masuk:</strong>
-                            <?= date('d M Y', strtotime($result['created_at'])); ?>
-                        </p>
-                    </div>
-
-                    <!-- Progress Bar -->
-                    <div class="relative">
-
-                        <div class="absolute top-4 left-0 right-0 h-1 bg-gray-200"></div>
-
-                        <div class="flex justify-between relative z-10">
-
-                            <?php foreach ($steps as $index => $step): ?>
-
-                                <?php
-                                $isActive = $index <= $currentIndex;
-                                ?>
-
-                                <div class="flex flex-col items-center w-full text-center">
-
-                                    <!-- Circle -->
-                                    <div class="w-8 h-8 flex items-center justify-center rounded-full
-                        <?= $isActive ? 'bg-primary text-white' : 'bg-gray-300 text-white'; ?>">
-                                        <?= $index + 1; ?>
-                                    </div>
-
-                                    <!-- Label -->
-                                    <p class="mt-3 text-xs font-medium
-                        <?= $isActive ? 'text-primary' : 'text-gray-400'; ?>">
-                                        <?= ucfirst($step); ?>
-                                    </p>
-
-                                </div>
-
-                            <?php endforeach; ?>
-
-                        </div>
-                    </div>
-
-                    <!-- Status Badge -->
-                    <div class="mt-10 text-center">
-
-                        <?php
-                        $badgeClass = match ($result['status']) {
+                    <div class="space-y-2 text-sm text-gray-700">
+                        <p><strong>Nama Customer:</strong> <?= htmlspecialchars($result['customer_name']); ?></p>
+                        <p><strong>Produk:</strong> <?= htmlspecialchars($result['product_name']); ?></p>
+                        <p><strong>Status:</strong>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold
+                        <?=
+                        match ($result['status']) {
                             'done' => 'bg-green-100 text-green-700',
                             'cancel' => 'bg-red-100 text-red-700',
                             'on progress' => 'bg-yellow-100 text-yellow-700',
@@ -189,22 +129,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                             'pending customer' => 'bg-purple-100 text-purple-700',
                             default => 'bg-gray-100 text-gray-700'
                         };
-                        ?>
-
-                        <span class="inline-block px-4 py-2 rounded-full text-sm font-semibold <?= $badgeClass ?>">
-                            Status Saat Ini: <?= ucfirst($result['status']); ?>
-                        </span>
-                        <hr class="m-3">
-                        <p class="text-gray-700">
-                            <i>Update Terakhir:</i>
+                        ?>">
+                                <?= ucfirst($result['status']); ?>
+                            </span>
+                        </p>
+                        <p><strong>Tanggal Masuk:</strong>
+                            <?= date('d M Y', strtotime($result['created_at'])); ?>
+                        </p>
+                        <p><strong>Update Terakhir:</strong>
                             <?= date('d M Y', strtotime($result['updated_at'])); ?>
                         </p>
                     </div>
 
                 </div>
-
             <?php endif; ?>
-
 
             <?php if ($error): ?>
                 <div class="mt-8 text-red-600 font-medium">
