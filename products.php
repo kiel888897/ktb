@@ -270,7 +270,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </h3>
 
                             <p class="text-sm text-gray-600 line-clamp-3">
-                                <?= ($p['description']); ?>
+                                <?= ($p['short_description']); ?>
                             </p>
 
                             <div class="flex justify-between items-center mt-2">
