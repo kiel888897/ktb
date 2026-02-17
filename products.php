@@ -33,7 +33,8 @@ $sql = "
         p.id,
         p.name,
         p.slug,
-        p.description,
+        p.tagline,
+        p.model,
         b.name AS brand_name,
         c.name AS category_name,
         s.name AS subcategory_name,
@@ -270,7 +271,11 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </h3>
 
                             <p class="text-sm text-gray-600 line-clamp-3">
-                                <?= ($p['short_description']); ?>
+                                <?= ($p['tagline']); ?>
+                            </p>
+
+                            <p class="text-sm text-gray-600 line-clamp-3">
+                                <?= ($p['model']); ?>
                             </p>
 
                             <div class="flex justify-between items-center mt-2">
