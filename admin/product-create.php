@@ -106,6 +106,17 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
                                                dark:border-gray-700 dark:text-white/90" />
                                 </div>
 
+                                <!-- Tagline -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Tagline
+                                    </label>
+                                    <input name="tagline" type="text"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90" />
+                                </div>
+
                                 <!-- Brand / Category / Subcategory -->
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -189,6 +200,17 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
                                         Stock
                                     </label>
                                     <input name="stock" type="number" min="0"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90" />
+                                </div>
+
+                                <!-- Model -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Model
+                                    </label>
+                                    <input name="model" type="text"
                                         class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
                                                text-gray-800 outline-none focus:border-brand-500
                                                dark:border-gray-700 dark:text-white/90" />

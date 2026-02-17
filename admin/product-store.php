@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // ===== AMBIL & SANITASI INPUT =====
 $name = trim($_POST['name'] ?? '');
 $slug = trim($_POST['slug'] ?? '');
+$tagline = trim($_POST['tagline'] ?? '');
+$model = trim($_POST['model'] ?? '');
 $brand_id = (int)($_POST['brand_id'] ?? 0);
 $category_id = (int)($_POST['category_id'] ?? 0);
 $subcategory_id = (int)($_POST['subcategory_id'] ?? 0);
@@ -42,14 +44,16 @@ if ($stmt->fetchColumn() > 0) {
 // ===== INSERT PRODUCT =====
 $stmt = $pdo->prepare("
     INSERT INTO products
-    (name, slug, brand_id, category_id, subcategory_id, partner_id, price, stock,
+    (name, slug, tagline, model, brand_id, category_id, subcategory_id, partner_id, price, stock,
      short_description, description, specifications, is_featured, is_active)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ");
 
 $stmt->execute([
     $name,
     $slug,
+    $tagline,
+    $model,
     $brand_id,
     $category_id,
     $subcategory_id,

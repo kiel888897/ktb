@@ -128,7 +128,17 @@ $images = $imagesStmt->fetchAll();
                                                text-gray-800 outline-none focus:border-brand-500
                                                dark:border-gray-700 dark:text-white/90">
                                 </div>
-
+                                <!-- Tagline -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Tagline
+                                    </label>
+                                    <input name="tagline" type="text"
+                                        value="<?= htmlspecialchars($product['tagline'] ?? ''); ?>"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90">
+                                </div>
                                 <!-- Brand / Category / Subcategory -->
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <div>
@@ -192,6 +202,18 @@ $images = $imagesStmt->fetchAll();
                                             value="<?= $product['stock']; ?>"
                                             class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 dark:border-gray-700 dark:text-white/90">
                                     </div>
+                                </div>
+
+                                <!-- Model -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
+                                        Model
+                                    </label>
+                                    <input name="model" type="text"
+                                        value="<?= htmlspecialchars($product['model'] ?? ''); ?>"
+                                        class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5
+                                               text-gray-800 outline-none focus:border-brand-500
+                                               dark:border-gray-700 dark:text-white/90">
                                 </div>
 
                                 <!-- Short Description -->

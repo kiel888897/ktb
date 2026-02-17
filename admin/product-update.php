@@ -12,6 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // ===== AMBIL DATA =====
 $id = (int)($_POST['id'] ?? 0);
 $name = trim($_POST['name'] ?? '');
+$tagline = trim($_POST['tagline'] ?? '');
+$model = trim($_POST['model'] ?? '');
 $slug = trim($_POST['slug'] ?? '');
 $brand_id = (int)($_POST['brand_id'] ?? 0);
 $category_id = (int)($_POST['category_id'] ?? 0);
@@ -52,6 +54,8 @@ $stmt = $pdo->prepare("
     UPDATE products SET
         name = ?,
         slug = ?,
+        tagline = ?,
+        model = ?,
         brand_id = ?,
         category_id = ?,
         subcategory_id = ?,
@@ -69,6 +73,8 @@ $stmt = $pdo->prepare("
 $stmt->execute([
     $name,
     $slug,
+    $tagline,
+    $model,
     $brand_id,
     $category_id,
     $subcategory_id,
