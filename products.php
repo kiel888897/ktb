@@ -262,24 +262,35 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </div>
 
                         <div class="p-6">
+                            <!-- Brand & Subcategory -->
                             <div class="text-sm text-primary font-medium mb-1">
                                 <?= htmlspecialchars($p['brand_name']); ?> • <?= htmlspecialchars($p['subcategory_name']); ?>
                             </div>
 
-                            <h3 class="text-lg font-semibold mb-2">
+                            <!-- Product Name -->
+                            <h3 class="text-lg font-semibold mb-1">
                                 <?= htmlspecialchars($p['name']); ?>
                             </h3>
 
-                            <p class="text-sm text-gray-600 line-clamp-3">
-                                <?= ($p['tagline']); ?>
-                            </p>
+                            <!-- Model (jadi badge) -->
+                            <?php if (!empty($p['model'])): ?>
+                                <div class="mb-2">
+                                    <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">
+                                        Model: <?= htmlspecialchars($p['model']); ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
 
-                            <p class="text-sm text-gray-600 line-clamp-3">
-                                <?= ($p['model']); ?>
-                            </p>
+                            <!-- Tagline -->
+                            <?php if (!empty($p['tagline'])): ?>
+                                <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                                    <?= htmlspecialchars($p['tagline']); ?>
+                                </p>
+                            <?php endif; ?>
 
-                            <div class="flex justify-between items-center mt-2">
-                                <span class="text-sm text-gray-500">
+                            <!-- Bottom Section -->
+                            <div class="flex justify-between items-center mt-3">
+                                <span class="text-xs text-gray-500 uppercase tracking-wide">
                                     <?= htmlspecialchars($p['category_name']); ?>
                                 </span>
 
@@ -289,6 +300,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </a>
                             </div>
                         </div>
+
 
                     </div>
                 <?php endforeach; ?>
