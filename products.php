@@ -251,15 +251,35 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     $img = $p['image'] ?? '';
                     $imgPath = $img ? "admin/uploads/products/" . $img : "admin/assets/img/product-placeholder.png";
                     ?>
+                    <!-- <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition"> -->
                     <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">
 
-                        <!-- IMAGE (FIX: jangan dobel) -->
-                        <div class="h-56 flex items-center justify-center bg-gray-50">
+                        <!-- IMAGE WRAPPER -->
+                        <div class="relative h-56 flex items-center justify-center bg-gray-50">
+
+                            <!-- Floating Model Badge -->
+                            <?php if (!empty($p['model'])): ?>
+                                <div class="absolute top-3 right-3">
+                                    <span class="bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+                                        <?= htmlspecialchars($p['model']); ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+
+                            <!-- Product Image -->
                             <img
                                 src="<?= htmlspecialchars($imgPath); ?>"
                                 alt="<?= htmlspecialchars($p['name']); ?>"
                                 class="max-h-44 object-contain">
                         </div>
+
+                        <!-- IMAGE (FIX: jangan dobel) -->
+                        <!-- <div class="h-56 flex items-center justify-center bg-gray-50">
+                            <img
+                                src="<?= htmlspecialchars($imgPath); ?>"
+                                alt="<?= htmlspecialchars($p['name']); ?>"
+                                class="max-h-44 object-contain">
+                        </div> -->
 
                         <div class="p-6">
                             <!-- Brand & Subcategory -->
@@ -273,13 +293,13 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </h3>
 
                             <!-- Model (jadi badge) -->
-                            <?php if (!empty($p['model'])): ?>
+                            <!-- <?php if (!empty($p['model'])): ?>
                                 <div class="mb-2">
                                     <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">
                                         Model: <?= htmlspecialchars($p['model']); ?>
                                     </span>
                                 </div>
-                            <?php endif; ?>
+                            <?php endif; ?> -->
 
                             <!-- Tagline -->
                             <?php if (!empty($p['tagline'])): ?>
