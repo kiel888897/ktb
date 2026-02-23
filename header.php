@@ -25,7 +25,7 @@
              class="hidden md:inline-block px-5 py-2 rounded-lg font-semibold transition
       border border-white text-white hover:bg-white hover:text-primary">
              <i class="fa-solid fa-phone-volume"></i>
-             0812-3456-7890
+             +62877-7992-8897
          </a>
 
          <!-- MOBILE BUTTON -->

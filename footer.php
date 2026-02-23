@@ -59,9 +59,9 @@
                 Bali 82113
             </p>
             <p class="text-sm">
-                <a href="tel:085215291012"
+                <a href="tel:087779928897"
                     class="hover:text-primary transition">
-                    📞 0852-1529-1012
+                    📞 +62 877-7992-8897
                 </a>
             </p>
         </div>
@@ -71,7 +71,7 @@
             <h4 class="font-semibold text-white mb-4">
                 Lokasi
             </h4>
-            <a href="https://share.google/GXLSKryh0bfsy3vYe"
+            <a href="https://share.google/LNnFVBGg7wU9klqp3"
                 target="_blank"
                 class="inline-flex items-center gap-2 text-sm
                       hover:text-primary transition mb-4">
@@ -97,7 +97,7 @@
 </footer>
 <!-- Floating WhatsApp Button -->
 <a
-    href="https://wa.me/6281234567890"
+    href="https://wa.me/6287779928897"
     target="_blank"
     class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition duration-300">
     <i class="fa-brands fa-whatsapp text-2xl"></i>

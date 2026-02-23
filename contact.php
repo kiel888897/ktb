@@ -91,7 +91,7 @@
                         <div>
                             <h4 class="font-medium text-gray-900">Alamat</h4>
                             <p class="text-gray-600 text-sm">
-                                Bali, Indonesia
+                                Jl By Pass Jl. Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken,<br> Kec. Tabanan, Kabupaten Tabanan, Bali 82113
                             </p>
                         </div>
                     </div>
@@ -101,13 +101,23 @@
                             <i class="fa-solid fa-phone"></i>
                         </div>
                         <div>
-                            <h4 class="font-medium text-gray-900">Telepon</h4>
+                            <h4 class="font-medium text-gray-900">Sales</h4>
                             <p class="text-gray-600 text-sm">
-                                +62 812-3456-7890
+                                +62 877-7992-8897
                             </p>
                         </div>
                     </div>
-
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-900">Services</h4>
+                            <p class="text-gray-600 text-sm">
+                                +62 812-3830-0513
+                            </p>
+                        </div>
+                    </div>
                     <div class="flex items-start gap-4">
                         <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
                             <i class="fa-solid fa-envelope"></i>
