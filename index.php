@@ -286,95 +286,66 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     Layanan Utama
                 </h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">
-                    Layanan resmi dengan standar pabrikan untuk memastikan performa
-                    dan keandalan produk elektronik Anda.
+                    Kami menyediakan layanan penjualan produk elektronik resmi
+                    serta layanan perbaikan profesional dengan standar kerja
+                    yang terpercaya dan bergaransi.
                 </p>
             </div>
 
             <!-- Grid -->
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-2 gap-8">
 
-                <!-- Service TV -->
+                <!-- Sales -->
                 <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg
-                        transition duration-300 text-center"
+                    shadow-md hover:shadow-lg
+                    transition duration-300 text-center"
                     data-aos="fade-up">
+
                     <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary">
-                        <!-- TV Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-8 h-8"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="1.8">
-                            <rect x="3" y="5" width="18" height="12" rx="2" />
-                            <path d="M8 21h8" />
-                        </svg>
+                        flex items-center justify-center
+                        rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-cart-shopping"></i>
                     </div>
+
                     <h3 class="text-xl font-semibold mb-3">
-                        Service TV
+                        Sales
                     </h3>
 
                     <p class="text-gray-600 mb-6">
-                        Layanan perbaikan TV LED, LCD, dan Smart TV dengan dukungan
-                        teknisi bersertifikat serta suku cadang resmi.
+                        Menyediakan berbagai produk elektronik resmi dari brand terpercaya
+                        untuk kebutuhan toko dan pelanggan. Kami memastikan setiap produk
+                        yang kami distribusikan adalah produk original dengan kualitas terjamin.
                     </p>
 
-                    <a href="service.php"
+                    <a href="products.php"
                         class="font-semibold text-primary hover:underline">
                         Selengkapnya →
                     </a>
                 </div>
 
-                <!-- Service AC -->
+                <!-- Service -->
                 <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg
-                        transition duration-300 text-center"
+                    shadow-md hover:shadow-lg
+                    transition duration-300 text-center"
                     data-aos="fade-up" data-aos-delay="100">
 
-
                     <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-snowflake"></i>
+                        flex items-center justify-center
+                        rounded-full bg-primary/10 text-primary text-2xl">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
                     </div>
 
                     <h3 class="text-xl font-semibold mb-3">
-                        Service AC
+                        Service
                     </h3>
 
                     <p class="text-gray-600 mb-6">
-                        Perawatan dan perbaikan AC untuk menjaga kenyamanan serta
-                        efisiensi pendingin ruangan Anda.
+                        Layanan perbaikan dan perawatan produk elektronik dengan teknisi
+                        berpengalaman dan prosedur kerja profesional. Setiap proses dilakukan
+                        secara teliti untuk memastikan hasil yang optimal dan dapat diandalkan.
                     </p>
 
-                    <a href="service.php"
-                        class="font-semibold text-primary hover:underline">
-                        Selengkapnya →
-                    </a>
-                </div>
-
-                <!-- Elektronik Rumah Tangga -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg
-                        transition duration-300 text-center"
-                    data-aos="fade-up" data-aos-delay="200">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-plug"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-3">
-                        Elektronik Rumah Tangga
-                    </h3>
-
-                    <p class="text-gray-600 mb-6">
-                        Layanan perbaikan berbagai produk elektronik rumah tangga
-                        dengan standar layanan resmi dan terpercaya.
-                    </p>
-
-                    <a href="service.php"
+                    <a href="services.php"
                         class="font-semibold text-primary hover:underline">
                         Selengkapnya →
                     </a>
@@ -698,8 +669,10 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             <img
                                 src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
                                 alt="<?= htmlspecialchars($partner['name']); ?>"
-                                class="h-14 object-contain grayscale opacity-70
-                           hover:grayscale-0 hover:opacity-100 transition">
+                                class="h-12 sm:h-14 object-contain
+           sm:grayscale sm:opacity-70
+           sm:hover:grayscale-0 sm:hover:opacity-100
+           transition duration-300">
                         </div>
                     <?php endforeach; ?>
 
