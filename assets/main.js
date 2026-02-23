@@ -75,13 +75,13 @@ const brandSwiper = new Swiper(".brandSwiper", {
   spaceBetween: 30,
   breakpoints: {
     640: {
-      slidesPerView: 3,
+      slidesPerView: 2,
     },
     768: {
-      slidesPerView: 4,
+      slidesPerView: 3,
     },
     1024: {
-      slidesPerView: 6,
+      slidesPerView: 4,
     },
   },
 });

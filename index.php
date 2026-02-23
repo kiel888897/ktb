@@ -669,7 +669,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             <img
                                 src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
                                 alt="<?= htmlspecialchars($partner['name']); ?>"
-                                class="h-12 sm:h-14 object-contain
+                                class="h-16 sm:h-18 object-contain
            sm:grayscale sm:opacity-70
            sm:hover:grayscale-0 sm:hover:opacity-100
            transition duration-300">
