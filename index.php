@@ -628,7 +628,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
     <!-- BRAND PARTNER -->
-    <section class="relative py-24
+    <section class="relative pt-24
                 bg-gradient-to-b from-primary/5 via-white to-gray-50
                 overflow-hidden">
 
@@ -669,7 +669,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             <img
                                 src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
                                 alt="<?= htmlspecialchars($partner['name']); ?>"
-                                class="h-16 sm:h-18 object-contain
+                                class="object-contain
            sm:grayscale sm:opacity-70
            sm:hover:grayscale-0 sm:hover:opacity-100
            transition duration-300">
