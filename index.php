@@ -515,13 +515,13 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 </p>
 
                 <div class="flex flex-wrap gap-4">
-                    <a href="#"
+                    <a href="services.php"
                         class="px-6 py-3 rounded-lg bg-white text-primary
                           font-semibold hover:bg-gray-100 transition">
                         Ajukan Service
                     </a>
 
-                    <a href="#"
+                    <a href="contact.php"
                         class="px-6 py-3 rounded-lg border border-white
                           text-white font-semibold
                           hover:bg-white hover:text-primary transition">
