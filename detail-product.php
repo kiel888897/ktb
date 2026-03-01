@@ -187,8 +187,11 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <?php foreach ($images as $img): ?>
                                 <div class="swiper-slide">
-                                    <div class="swiper-zoom-container">
-                                        <img src="admin/uploads/products/<?= htmlspecialchars($img['image']); ?>" alt="<?= htmlspecialchars($product['name']); ?>">
+                                    <div class="swiper-zoom-container flex items-center justify-center">
+                                        <img
+                                            src="admin/uploads/products/<?= htmlspecialchars($img['image']); ?>"
+                                            alt="<?= htmlspecialchars($product['name']); ?>"
+                                            class="w-full h-[300px] md:h-[420px] object-contain">
                                     </div>
                                 </div>
                             <?php endforeach; ?>
@@ -208,7 +211,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php foreach ($images as $img): ?>
                                 <div class="swiper-slide cursor-pointer">
                                     <img src="admin/uploads/products/<?= htmlspecialchars($img['image']); ?>"
-                                        class="h-20 object-contain mx-auto">
+                                        class="h-16 md:h-20 object-contain mx-auto">
                                 </div>
                             <?php endforeach; ?>
 
@@ -220,7 +223,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- PRODUCT INFO -->
-            <div data-aos="fade-left">
+            <div data-aos=" fade-left">
                 <span class="text-sm text-primary font-medium">
                     <?= htmlspecialchars($product['brand_name']); ?> • <?= htmlspecialchars($product['subcategory_name']); ?>
                 </span>
@@ -228,6 +231,13 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                 <h1 class="text-3xl md:text-4xl font-semibold text-gray-900 mt-3 mb-5">
                     <?= htmlspecialchars($product['name']); ?>
                 </h1>
+
+                <!-- Tagline -->
+                <?php if (!empty($product['tagline'])): ?>
+                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                        <?= htmlspecialchars($product['tagline']); ?>
+                    </p>
+                <?php endif; ?>
 
                 <p class="text-gray-600 mb-6 leading-relaxed">
                     <?= nl2br($product['short_description']); ?>
@@ -360,6 +370,14 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
             slidesPerView: 3,
             freeMode: true,
             watchSlidesProgress: true,
+            breakpoints: {
+                640: {
+                    slidesPerView: 4
+                },
+                1024: {
+                    slidesPerView: 5
+                }
+            }
         });
 
         const mainSwiper = new Swiper('.productMain', {
