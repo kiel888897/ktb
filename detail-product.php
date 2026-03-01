@@ -126,9 +126,23 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Custom Style -->
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+        .swiper {
+            width: 100% !important;
+            max-width: 100%;
+        }
+
+        .swiper-slide {
+            width: 100% !important;
+        }
+
+        .swiper-wrapper {
+            max-width: 100%;
+        }
+    </style>
 </head>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
+<body class="overflow-x-hidden font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
     <?php include 'header.php'; ?>
 
     <!-- HERO -->
@@ -177,11 +191,10 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
             <!-- PRODUCT IMAGE -->
             <div data-aos="fade-right">
-
-                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6">
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 overflow-hidden w-full max-w-full">
 
                     <!-- MAIN SLIDER -->
-                    <div class="swiper productMain mb-4">
+                    <div class="swiper productMain mb-4 w-full max-w-full">
                         <div class="swiper-wrapper">
 
 
@@ -383,9 +396,9 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
         const mainSwiper = new Swiper('.productMain', {
             loop: true,
             spaceBetween: 20,
-            zoom: {
+            zoom: window.innerWidth > 768 ? {
                 maxRatio: 2.5
-            },
+            } : false,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
