@@ -349,6 +349,13 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                                 <h3 class="font-medium text-gray-900 mb-2">
                                     <?= htmlspecialchars($r['name']); ?>
                                 </h3>
+
+                                <!-- Tagline -->
+                                <?php if (!empty($product['tagline'])): ?>
+                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                                        <?= htmlspecialchars($product['tagline']); ?>
+                                    </p>
+                                <?php endif; ?>
                                 <a href="detail-product.php?slug=<?= urlencode($r['slug']); ?>"
                                     class="text-primary text-sm font-medium hover:underline">
                                     Lihat Detail
