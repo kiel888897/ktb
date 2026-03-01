@@ -425,9 +425,18 @@ $partners = $pdo->query("SELECT id, name FROM partners WHERE is_active = 1 ORDER
         const fullInput = document.getElementById('fullInput');
 
         document.querySelector('form').addEventListener('submit', function() {
-            specificationInput.value = specificationQuill.root.innerHTML;
-            shortInput.value = shortQuill.root.innerHTML;
-            fullInput.value = fullQuill.root.innerHTML;
+
+            function cleanQuill(quill) {
+                const html = quill.root.innerHTML.trim();
+                const text = quill.getText().trim();
+
+                // kalau tidak ada teks, anggap kosong
+                return text === '' ? '' : html;
+            }
+
+            specificationInput.value = cleanQuill(specificationQuill);
+            shortInput.value = cleanQuill(shortQuill);
+            fullInput.value = cleanQuill(fullQuill);
         });
     </script>
 

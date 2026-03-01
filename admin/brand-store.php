@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $name = trim($_POST['name'] ?? '');
 $slug = trim($_POST['slug'] ?? '');
+$description = trim($_POST['description'] ?? '');
 
 if ($name === '' || $slug === '') {
     die('Nama dan slug wajib diisi.');
@@ -56,13 +57,14 @@ if (!empty($_FILES['logo']['name'])) {
 
 // ===== INSERT DATABASE =====
 $stmt = $pdo->prepare("
-    INSERT INTO brands (name, slug, logo)
-    VALUES (:name, :slug, :logo)
+    INSERT INTO brands (name, slug, description, logo)
+    VALUES (:name, :slug, :description, :logo)
 ");
 
 $stmt->execute([
     ':name' => $name,
     ':slug' => $slug,
+    ':description' => $description,
     ':logo' => $logoName
 ]);
 

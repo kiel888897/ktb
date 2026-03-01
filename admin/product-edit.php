@@ -226,8 +226,7 @@ $images = $imagesStmt->fetchAll();
                                         <div id="shortEditor"></div>
                                     </div>
 
-                                    <input type="hidden" name="short_description" id="shortInput"
-                                        value="<?= htmlspecialchars($product['short_description'], ENT_QUOTES); ?>">
+                                    <input type="hidden" name="short_description" id="shortInput">
                                 </div>
 
 
@@ -240,9 +239,7 @@ $images = $imagesStmt->fetchAll();
                                     <div class="quill-wrapper">
                                         <div id="fullEditor"></div>
                                     </div>
-
-                                    <input type="hidden" name="description" id="fullInput"
-                                        value="<?= htmlspecialchars($product['description'], ENT_QUOTES); ?>">
+                                    <input type="hidden" name="description" id="fullInput">
                                 </div>
                                 <!-- specifications -->
                                 <div>
@@ -254,8 +251,7 @@ $images = $imagesStmt->fetchAll();
                                         <div id="specificationsEditor"></div>
                                     </div>
 
-                                    <input type="hidden" name="specifications" id="specificationsInput"
-                                        value="<?= htmlspecialchars($product['specifications'], ENT_QUOTES); ?>">
+                                    <input type="hidden" name="specifications" id="specificationsInput">
                                 </div>
 
 
@@ -400,6 +396,11 @@ $images = $imagesStmt->fetchAll();
         });
     </script>
     <script>
+        const oldShort = <?= json_encode($product['short_description'] ?? ''); ?>;
+        const oldFull = <?= json_encode($product['description'] ?? ''); ?>;
+        const oldSpec = <?= json_encode($product['specifications'] ?? ''); ?>;
+    </script>
+    <script>
         const specificationQuill = new Quill('#specificationsEditor', {
             theme: 'snow',
             modules: {
@@ -450,21 +451,27 @@ $images = $imagesStmt->fetchAll();
         const fullInput = document.getElementById('fullInput');
 
         // 👉 Set value dari database
-        if (specificationInput.value) {
-            specificationQuill.clipboard.dangerouslyPasteHTML(specificationInput.value);
+        function loadQuill(quill, value) {
+            if (value && value !== '<p><br></p>') {
+                quill.clipboard.dangerouslyPasteHTML(value);
+            }
         }
-        if (shortInput.value) {
-            shortQuill.clipboard.dangerouslyPasteHTML(shortInput.value);
-        }
-        if (fullInput.value) {
-            fullQuill.clipboard.dangerouslyPasteHTML(fullInput.value);
-        }
+
+        loadQuill(shortQuill, oldShort);
+        loadQuill(fullQuill, oldFull);
+        loadQuill(specificationQuill, oldSpec);
 
         // 👉 Sync saat submit
         document.querySelector('form').addEventListener('submit', function() {
-            specificationInput.value = specificationQuill.root.innerHTML;
-            shortInput.value = shortQuill.root.innerHTML;
-            fullInput.value = fullQuill.root.innerHTML;
+
+            function cleanQuill(quill) {
+                const text = quill.getText().trim();
+                return text === '' ? '' : quill.root.innerHTML;
+            }
+
+            shortInput.value = cleanQuill(shortQuill);
+            fullInput.value = cleanQuill(fullQuill);
+            specificationInput.value = cleanQuill(specificationQuill);
         });
     </script>
 

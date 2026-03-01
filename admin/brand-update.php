@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id   = (int)($_POST['id'] ?? 0);
 $name = trim($_POST['name'] ?? '');
 $slug = trim($_POST['slug'] ?? '');
+$description = trim($_POST['description'] ?? '');
 
 if ($id <= 0 || $name === '' || $slug === '') {
     die('Data tidak valid.');
@@ -89,6 +90,7 @@ $stmt = $pdo->prepare("
     UPDATE brands
     SET name = :name,
         slug = :slug,
+        description = :description,
         logo = :logo
     WHERE id = :id
 ");
@@ -96,6 +98,7 @@ $stmt = $pdo->prepare("
 $stmt->execute([
     ':name' => $name,
     ':slug' => $slug,
+    ':description' => $description,
     ':logo' => $logoName,
     ':id'   => $id
 ]);

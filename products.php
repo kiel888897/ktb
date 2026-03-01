@@ -7,26 +7,50 @@ require 'admin/config/database.php';
 |--------------------------------------------------------------------------
 */
 $search = trim($_GET['search'] ?? '');
-$brand_id = (int)($_GET['brand'] ?? 0);
-$category_id = (int)($_GET['category'] ?? 0);
-$subcategory_id = (int)($_GET['subcategory'] ?? 0);
+$brand_slug = $_GET['brand'] ?? '';
+$category_slug = $_GET['category'] ?? '';
+$subcategory_slug = $_GET['subcategory'] ?? '';
 
 /*
 |--------------------------------------------------------------------------
-| DATA FILTER
+| DATA FILTER LIST
 |--------------------------------------------------------------------------
 */
-$brands = $pdo->query("SELECT id, name FROM brands ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
-$categories = $pdo->query("SELECT id, name FROM categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
-$subcategories = $pdo->query("SELECT id, name FROM subcategories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+$brands = $pdo->query("SELECT id, slug, name FROM brands ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+$categories = $pdo->query("SELECT id, slug, name FROM categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+$subcategories = $pdo->query("SELECT id, slug, name FROM subcategories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 
 /*
 |--------------------------------------------------------------------------
-| QUERY PRODUCTS (FIX)
+| CONVERT SLUG TO ID
 |--------------------------------------------------------------------------
-| - BUG kamu: WHERE sudah ditutup lalu kamu tambah AND (jadi salah)
-| - BUG kamu: ORDER BY dobel
-| - FIX: WHERE 1=1 supaya aman nambah filter
+*/
+function getIdBySlug($pdo, $table, $slug)
+{
+    if ($slug === '') return 0;
+
+    $stmt = $pdo->prepare("SELECT id FROM {$table} WHERE slug = ? LIMIT 1");
+    $stmt->execute([$slug]);
+    return (int) $stmt->fetchColumn();
+}
+
+$brand_id = getIdBySlug($pdo, 'brands', $brand_slug);
+$category_id = getIdBySlug($pdo, 'categories', $category_slug);
+$subcategory_id = getIdBySlug($pdo, 'subcategories', $subcategory_slug);
+
+/*
+|--------------------------------------------------------------------------
+| PAGINATION
+|--------------------------------------------------------------------------
+*/
+$perPage = 9;
+$page = max(1, (int)($_GET['page'] ?? 1));
+$offset = ($page - 1) * $perPage;
+
+/*
+|--------------------------------------------------------------------------
+| BASE QUERY
+|--------------------------------------------------------------------------
 */
 $sql = "
     SELECT
@@ -49,31 +73,83 @@ $sql = "
     JOIN brands b ON b.id = p.brand_id
     JOIN categories c ON c.id = p.category_id
     JOIN subcategories s ON s.id = p.subcategory_id
-    WHERE 1=1
-      AND p.is_active = 1
+    WHERE p.is_active = 1
+";
+
+$countSql = "
+    SELECT COUNT(*)
+    FROM products p
+    WHERE p.is_active = 1
 ";
 
 $params = [];
+$countParams = [];
 
+/*
+|--------------------------------------------------------------------------
+| APPLY FILTER
+|--------------------------------------------------------------------------
+*/
 if ($search !== '') {
     $sql .= " AND p.name LIKE ?";
+    $countSql .= " AND p.name LIKE ?";
     $params[] = "%{$search}%";
+    $countParams[] = "%{$search}%";
 }
+
 if ($brand_id > 0) {
     $sql .= " AND p.brand_id = ?";
+    $countSql .= " AND p.brand_id = ?";
     $params[] = $brand_id;
+    $countParams[] = $brand_id;
 }
+
 if ($category_id > 0) {
     $sql .= " AND p.category_id = ?";
+    $countSql .= " AND p.category_id = ?";
     $params[] = $category_id;
+    $countParams[] = $category_id;
 }
+
 if ($subcategory_id > 0) {
     $sql .= " AND p.subcategory_id = ?";
+    $countSql .= " AND p.subcategory_id = ?";
     $params[] = $subcategory_id;
+    $countParams[] = $subcategory_id;
 }
 
-$sql .= " ORDER BY p.sort_order ASC, p.id DESC";
+/*
+|--------------------------------------------------------------------------
+| EXECUTE COUNT
+|--------------------------------------------------------------------------
+*/
+$stmt = $pdo->prepare($countSql);
+$stmt->execute($countParams);
+$totalData = (int) $stmt->fetchColumn();
+$totalPages = max(1, ceil($totalData / $perPage));
 
+/* 
+| Fix jika page melebihi total halaman
+*/
+if ($page > $totalPages) {
+    $page = $totalPages;
+    $offset = ($page - 1) * $perPage;
+}
+
+/*
+|--------------------------------------------------------------------------
+| ADD ORDER + LIMIT
+|--------------------------------------------------------------------------
+*/
+$sql .= " ORDER BY p.sort_order ASC, p.id DESC LIMIT ? OFFSET ?";
+$params[] = $perPage;
+$params[] = $offset;
+
+/*
+|--------------------------------------------------------------------------
+| EXECUTE MAIN QUERY
+|--------------------------------------------------------------------------
+*/
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -115,7 +191,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="relative max-w-6xl mx-auto px-6 text-center">
             <h1 class="text-4xl font-semibold text-primary mb-4">Produk Kami</h1>
-            <p class="text-white max-w-xl mx-auto">
             <p class="text-white max-w-xl mx-auto">
                 Berbagai pilihan produk elektronik untuk kebutuhan bisnis dan pelanggan Anda.
             </p>
@@ -164,10 +239,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                        px-4 py-3
                        focus:ring-2 focus:ring-primary/30
                        focus:border-primary transition">
-                            <option value="0">Semua Brand</option>
+                            <option value="">Semua Brand</option>
                             <?php foreach ($brands as $b): ?>
-                                <option value="<?= (int)$b['id']; ?>"
-                                    <?= $brand_id == (int)$b['id'] ? 'selected' : ''; ?>>
+                                <option value="<?= htmlspecialchars($b['slug']); ?>"
+                                    <?= $brand_slug === $b['slug'] ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($b['name']); ?>
                                 </option>
                             <?php endforeach; ?>
@@ -181,10 +256,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                        px-4 py-3
                        focus:ring-2 focus:ring-primary/30
                        focus:border-primary transition">
-                            <option value="0">Semua Kategori</option>
+                            <option value="">Semua Kategori</option>
                             <?php foreach ($categories as $c): ?>
-                                <option value="<?= (int)$c['id']; ?>"
-                                    <?= $category_id == (int)$c['id'] ? 'selected' : ''; ?>>
+                                <option value="<?= htmlspecialchars($c['slug']); ?>"
+                                    <?= $category_slug === $c['slug'] ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($c['name']); ?>
                                 </option>
                             <?php endforeach; ?>
@@ -198,10 +273,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                        px-4 py-3
                        focus:ring-2 focus:ring-primary/30
                        focus:border-primary transition">
-                            <option value="0">Semua</option>
+                            <option value="">Semua</option>
                             <?php foreach ($subcategories as $s): ?>
-                                <option value="<?= (int)$s['id']; ?>"
-                                    <?= $subcategory_id == (int)$s['id'] ? 'selected' : ''; ?>>
+                                <option value="<?= htmlspecialchars($s['slug']); ?>"
+                                    <?= $subcategory_slug === $s['slug'] ? 'selected' : ''; ?>>
                                     <?= htmlspecialchars($s['name']); ?>
                                 </option>
                             <?php endforeach; ?>
@@ -209,29 +284,15 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <!-- ACTION -->
-                    <div class="flex items-center gap-2">
 
-                        <!-- FILTER -->
-                        <button type="submit"
-                            class="w-11 h-11 flex items-center justify-center
+                    <!-- FILTER -->
+                    <button type="submit"
+                        class="w-auto h-11 flex items-center justify-center
                        rounded-xl bg-primary text-white
                        hover:bg-darkred hover:scale-105
-                       transition-all duration-300 shadow">
-                            <i class="fa-solid fa-filter"></i>
-                        </button>
-                        <!-- RESET -->
-                        <a href="products.php"
-                            class="w-11 h-11 flex items-center justify-center
-                       rounded-xl border border-gray-300
-                       text-gray-600
-                       hover:bg-gray-100 hover:rotate-180
-                       transition-all duration-300">
-                            <i class="fa-solid fa-rotate-left"></i>
-                        </a>
-
-
-                    </div>
-
+                       transition-all duration-300 shadow px-2">
+                        <i class="fa-solid fa-search p-2"></i> Search
+                    </button>
                 </div>
             </form>
 
@@ -326,6 +387,52 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php endforeach; ?>
 
             </div>
+            <!-- PAGINATION -->
+            <?php if ($totalPages > 1): ?>
+                <div class="flex justify-center mt-12">
+                    <nav class="flex items-center gap-2">
+
+                        <?php
+                        $queryString = $_GET;
+                        ?>
+
+                        <!-- Previous -->
+                        <?php if ($page > 1): ?>
+                            <?php
+                            $queryString['page'] = $page - 1;
+                            ?>
+                            <a href="?<?= http_build_query($queryString); ?>"
+                                class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+                                <i class="fa-solid fa-angles-left"></i>
+                            </a>
+                        <?php endif; ?>
+
+                        <!-- Page Numbers -->
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <?php
+                            $queryString['page'] = $i;
+                            ?>
+                            <a href="?<?= http_build_query($queryString); ?>"
+                                class="px-4 py-2 border rounded-lg 
+                        <?= $i == $page ? 'bg-primary text-white border-primary' : 'hover:bg-gray-100'; ?>">
+                                <?= $i; ?>
+                            </a>
+                        <?php endfor; ?>
+
+                        <!-- Next -->
+                        <?php if ($page < $totalPages): ?>
+                            <?php
+                            $queryString['page'] = $page + 1;
+                            ?>
+                            <a href="?<?= http_build_query($queryString); ?>"
+                                class="px-4 py-2 border rounded-lg hover:bg-gray-100">
+                                <i class="fa-solid fa-angles-right"></i>
+                            </a>
+                        <?php endif; ?>
+
+                    </nav>
+                </div>
+            <?php endif; ?>
         </div>
     </section>
 

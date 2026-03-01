@@ -2,6 +2,13 @@
 
 require 'admin/config/database.php';
 
+$stmt1 = $pdo->prepare("
+    SELECT * 
+    FROM brands
+    ORDER BY id asc
+");
+$stmt1->execute();
+$brands = $stmt1->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $pdo->prepare("
     SELECT name, logo 
     FROM partners
@@ -16,6 +23,7 @@ $stmt1 = $pdo->prepare("
         p.id,
         p.name,
         p.slug,
+        p.model,
         p.short_description,
         pi.image
     FROM products p
@@ -37,6 +45,7 @@ $stmt2 = $pdo->prepare("
         p.id,
         p.name,
         p.slug,
+        p.model,
         p.short_description,
         pi.image
     FROM products p
@@ -354,6 +363,49 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </section>
+    <!-- BRAND -->
+    <section class="relative pt-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-14">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                    Brand
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Brand produk kami
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Berikut adalah brand resmi yang produknya kami sediakan untuk memenuhi kebutuhan Anda.
+                </p>
+            </div>
+
+
+            <!-- Slider -->
+            <div class="swiper brandSwiper">
+                <div class="swiper-wrapper items-center">
+
+                    <?php foreach ($brands as $brand): ?>
+                        <div class="swiper-slide flex justify-center">
+
+                            <a href="brand-product.php?brand=<?= $brand['slug']; ?>">
+                                <img
+                                    src="admin/uploads/brands/<?= htmlspecialchars($brand['logo']); ?>"
+                                    alt="<?= htmlspecialchars($brand['name']); ?>"
+                                    class="object-contain
+           
+           sm:hover:grayscale-0 sm:hover:opacity-100
+           transition duration-300">
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
+            </div>
+
+
+        </div>
+    </section>
     <!-- PRODUK UNGGULAN -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
@@ -379,12 +431,20 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($featuredProducts as $product): ?>
 
                         <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                            <div class="aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                            <div class="relative aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
                                 <img
                                     src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
                                     alt="<?= htmlspecialchars($product['name']); ?>"
                                     class="max-h-full object-contain">
 
+                                <!-- Floating Model Badge -->
+                                <?php if (!empty($product['model'])): ?>
+                                    <div class="absolute top-2 right-3">
+                                        <span class="text-primary text-xs font-semibold">
+                                            <?= htmlspecialchars($product['model']); ?>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="p-5">
@@ -457,6 +517,15 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                     src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
                                     class="w-full h-48 object-contain bg-white p-4"
                                     alt="<?= htmlspecialchars($product['name']); ?>">
+
+                                <!-- Floating Model Badge -->
+                                <?php if (!empty($product['model'])): ?>
+                                    <div class="absolute top-2 right-3">
+                                        <span class="text-primary text-xs font-semibold">
+                                            <?= htmlspecialchars($product['model']); ?>
+                                        </span>
+                                    </div>
+                                <?php endif; ?>
                             </div>
 
                             <div class="p-5">
@@ -494,11 +563,75 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
     </section>
+    <!-- BRAND PARTNER -->
+    <section class="relative py-24 
+                bg-gradient-to-b from-primary/5 via-white to-gray-50 
+                overflow-hidden">
+
+        <!-- Top Wave -->
+        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[60px]"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 1440 90"
+                preserveAspectRatio="none">
+                <path fill="#ffffff"
+                    d="M0,30 C240,70 480,10 720,20 960,30 1200,60 1440,40 L1440,0 L0,0 Z">
+                </path>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <!-- Heading -->
+            <div class="text-center mb-16">
+                <span class="inline-block mb-3 text-sm font-semibold text-primary tracking-wide uppercase">
+                    Brand Partner
+                </span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Authorized Brand Partner
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Kami merupakan mitra resmi dan authorized service untuk berbagai
+                    merek elektronik terpercaya.
+                </p>
+            </div>
+
+            <!-- GRID -->
+            <div class="grid 
+                    grid-cols-2 
+                    lg:grid-cols-3 
+                    gap-8 md:gap-10 
+                    max-w-5xl 
+                    mx-auto">
+
+                <?php foreach ($partners as $partner): ?>
+                    <div class="group flex items-center justify-center
+                            bg-white 
+                            rounded-2xl 
+                            p-4 md:p-5
+                            shadow-sm 
+                            hover:shadow-xl 
+                            hover:-translate-y-2
+                            transition duration-300 ease-in-out">
+
+                        <img
+                            src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
+                            alt="<?= htmlspecialchars($partner['name']); ?>"
+                            class="h-auto object-contain 
+                               group-hover:grayscale-0 
+                               group-hover:opacity-100
+                               transition duration-300">
+                    </div>
+                <?php endforeach; ?>
+
+            </div>
+
+        </div>
+    </section>
     <!-- IKLAN / PROMO -->
-    <section class="py-20 bg-primary text-white relative overflow-hidden">
+    <!-- <section class="py-20 bg-primary text-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">
 
-            <!-- Content -->
             <div data-aos="fade-right">
                 <span class="inline-block mb-3 px-4 py-1 text-sm rounded-full
                          bg-white/20 text-white">
@@ -530,7 +663,6 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             </div>
 
-            <!-- Image -->
             <div class="rounded-2xl overflow-hidden shadow-xl h-[320px] md:h-[380px] relative">
                 <img src="assets/img/promo1.jpg"
                     class="w-full h-full object-cover">
@@ -539,7 +671,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 
         </div>
-    </section>
+    </section> -->
     <!-- KENAPA MEMILIH KAMI -->
     <section class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
@@ -627,61 +759,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </section>
-    <!-- BRAND PARTNER -->
-    <section class="relative pt-24
-                bg-gradient-to-b from-primary/5 via-white to-gray-50
-                overflow-hidden">
 
-        <!-- Top Wave -->
-        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
-            <svg class="relative block w-full h-[60px]"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1440 90"
-                preserveAspectRatio="none">
-                <path fill="#ffffff"
-                    d="M0,30 C240,70 480,10 720,20 960,30 1200,60 1440,40 L1440,0 L0,0 Z">
-                </path>
-            </svg>
-        </div>
-        <div class="max-w-7xl mx-auto px-6">
-
-            <!-- Heading -->
-            <div class="text-center mb-14">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Brand Partner
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Authorized Brand Partner
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Kami merupakan mitra resmi dan authorized service untuk berbagai
-                    merek elektronik terpercaya.
-                </p>
-            </div>
-
-
-            <!-- Slider -->
-            <div class="swiper brandSwiper">
-                <div class="swiper-wrapper items-center">
-
-                    <?php foreach ($partners as $partner): ?>
-                        <div class="swiper-slide flex justify-center">
-                            <img
-                                src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                                alt="<?= htmlspecialchars($partner['name']); ?>"
-                                class="object-contain
-           sm:grayscale sm:opacity-70
-           sm:hover:grayscale-0 sm:hover:opacity-100
-           transition duration-300">
-                        </div>
-                    <?php endforeach; ?>
-
-                </div>
-            </div>
-
-
-        </div>
-    </section>
     <!-- FOOTER -->
     <?php include 'footer.php'; ?>
 

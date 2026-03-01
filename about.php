@@ -205,8 +205,7 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <img
                                     src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
                                     alt="<?= htmlspecialchars($partner['name']); ?>"
-                                    class="h-14 object-contain grayscale opacity-70
-                           hover:grayscale-0 hover:opacity-100 transition">
+                                    class="h-auto object-contain                            hover:grayscale-0 hover:opacity-100 transition">
 
                             </a>
                         </div>

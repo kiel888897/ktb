@@ -17,6 +17,7 @@ require 'config/database.php'; // aman walau belum dipakai, untuk konsistensi
     <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 </head>
 
 <body
@@ -104,6 +105,18 @@ require 'config/database.php'; // aman walau belum dipakai, untuk konsistensi
                                     <p class="mt-2 text-gray-500 text-theme-xs dark:text-gray-400">
                                         Otomatis dari nama, bisa kamu edit manual.
                                     </p>
+                                </div>
+                                <!-- Description -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Description
+                                    </label>
+
+                                    <div class="quill-wrapper">
+                                        <div id="fullEditor"></div>
+                                    </div>
+
+                                    <input type="hidden" name="description" id="fullInput">
                                 </div>
 
                                 <!-- Logo -->
@@ -198,6 +211,8 @@ require 'config/database.php'; // aman walau belum dipakai, untuk konsistensi
     </div>
 
     <script defer src="bundle.js"></script>
+
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
     <script>
         /* ===============================
          * SLUG GENERATOR
@@ -266,6 +281,33 @@ require 'config/database.php'; // aman walau belum dipakai, untuk konsistensi
         }
     </script>
 
+    <script>
+        const fullQuill = new Quill('#fullEditor', {
+            theme: 'snow',
+            placeholder: 'Brand description...',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{
+                        header: [1, 2, false]
+                    }],
+                    [{
+                        list: 'ordered'
+                    }, {
+                        list: 'bullet'
+                    }],
+                    ['link'],
+                    ['clean']
+                ]
+            }
+        });
+
+        const fullInput = document.getElementById('fullInput');
+
+        document.querySelector('form').addEventListener('submit', function() {
+            fullInput.value = fullQuill.root.innerHTML;
+        });
+    </script>
 
 </body>
 

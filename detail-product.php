@@ -230,7 +230,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                 </h1>
 
                 <p class="text-gray-600 mb-6 leading-relaxed">
-                    <?= nl2br($product['description']); ?>
+                    <?= nl2br($product['short_description']); ?>
                 </p>
 
                 <!-- PRODUCT META -->
@@ -238,9 +238,11 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                     <div><span class="font-medium">Brand:</span> <?= htmlspecialchars($product['brand_name']); ?></div>
                     <div><span class="font-medium">Kategori:</span> <?= htmlspecialchars($product['category_name']); ?></div>
                     <div><span class="font-medium">Subkategori:</span> <?= htmlspecialchars($product['subcategory_name']); ?></div>
-
                 </div>
-
+                <!-- Floating Model Badge -->
+                <?php if (!empty($product['model'])): ?>
+                    <p class="text-primary mb-8"><?= htmlspecialchars($product['model']); ?></p>
+                <?php endif; ?>
                 <!-- CTA -->
                 <div class="flex flex-wrap gap-4">
 
@@ -253,7 +255,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                     </a>
 
                     <!-- WHATSAPP -->
-                    <a href="https://wa.me/6281234567890"
+                    <a href="https://wa.me/6287779928897?text=Halo%20Kusuma%20Trisna%20Bali%2C%20saya%20tertarik%20dengan%20produk%20<?= urlencode($product['name']); ?>.%20Bisakah%20saya%20mendapatkan%20informasi%20lebih%20lanjut%3F"
                         target="_blank"
                         class="inline-flex items-center px-6 py-3 bg-green-600 text-white
                           rounded-lg font-medium hover:bg-green-700 transition">
@@ -267,35 +269,35 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
     <!-- PRODUCT DESCRIPTION -->
-    <section class="bg-gray-50 py-20">
-        <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
+    <?php if (!empty($product['description']) || !empty($product['specifications'])): ?>
+        <section class="bg-gray-50 py-20">
+            <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
 
-            <div data-aos="fade-up">
-                <h2 class="text-2xl font-semibold text-gray-900 mb-4">
-                    Deskripsi Produk
-                </h2>
-                <p class="text-gray-600 leading-relaxed">
-                    <?= ($product['description']); ?>
-                </p>
+                <?php if (!empty($product['description'])): ?>
+                    <div data-aos="fade-up">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                            Deskripsi Produk
+                        </h2>
+                        <p class="text-gray-600 leading-relaxed">
+                            <?= $product['description']; ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($product['specifications'])): ?>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                            Spesifikasi
+                        </h2>
+                        <p class="text-gray-600">
+                            <?= $product['specifications']; ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
             </div>
-
-            <div data-aos="fade-up" data-aos-delay="100">
-                <h2 class="text-2xl font-semibold text-gray-900 mb-4">
-                    Spesifikasi
-                </h2>
-                <p class="text-gray-600"><?= ($product['specifications']); ?></p>
-                <!-- <ul class="space-y-3 text-gray-600">
-                    <li>• Ukuran Layar: 55 Inch</li>
-                    <li>• Resolusi: 4K Ultra HD</li>
-                    <li>• Sistem Operasi: Smart TV</li>
-                    <li>• Konektivitas: HDMI, USB, WiFi</li>
-                    <li>• Konsumsi Daya: Hemat Energi</li>
-                </ul> -->
-            </div>
-
-        </div>
-    </section>
-
+        </section>
+    <?php endif; ?>
     <!-- RELATED PRODUCTS -->
     <?php if ($related): ?>
         <section class="py-20">

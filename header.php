@@ -12,7 +12,7 @@
 
          <!-- DESKTOP NAV -->
          <nav id="desktopNav"
-             class="hidden md:flex gap-10 font-medium text-white transition-colors duration-300">
+             class="hidden lg:flex gap-10 font-medium text-white transition-colors duration-300">
              <a href="index.php" class="hover:text-primary">Home</a>
              <a href="about.php" class="hover:text-primary">About</a>
              <a href="products.php" class="hover:text-primary">Produk</a>
@@ -22,7 +22,7 @@
 
          <!-- CTA -->
          <a id="desktopCTA"
-             class="hidden md:inline-block px-5 py-2 rounded-lg font-semibold transition
+             class="hidden lg:inline-block px-5 py-2 rounded-lg font-semibold transition
       border border-white text-white hover:bg-white hover:text-primary">
              <i class="fa-solid fa-phone-volume"></i>
              +62877-7992-8897
@@ -30,7 +30,7 @@
 
          <!-- MOBILE BUTTON -->
          <button id="openMenu"
-             class="md:hidden text-2xl text-white transition">
+             class="lg:hidden text-2xl text-white transition">
              <i class="fa fa-bars"></i>
          </button>
 

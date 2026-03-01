@@ -34,6 +34,7 @@ if (!$brand) {
     <!-- Font Awesome -->
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 </head>
 
 <body
@@ -121,8 +122,19 @@ if (!$brand) {
                                         Pastikan slug tetap unik.
                                     </p>
                                 </div>
+                                <!-- Description -->
+                                <div>
+                                    <label class="mb-2 block font-medium text-gray-700 dark:text-gray-300">
+                                        Description
+                                    </label>
 
-                                <!-- Logo -->
+                                    <div class="quill-wrapper">
+                                        <div id="fullEditor"></div>
+                                    </div>
+
+                                    <input type="hidden" name="description" id="fullInput"
+                                        value="<?= htmlspecialchars($brand['description'], ENT_QUOTES); ?>">
+                                </div>
                                 <!-- Logo -->
                                 <div>
                                     <label class="mb-2 block font-medium text-gray-700 text-theme-sm dark:text-gray-300">
@@ -218,6 +230,7 @@ if (!$brand) {
 
     <script defer src="bundle.js"></script>
 
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
     <script>
         function slugify(text) {
             return text
@@ -255,7 +268,39 @@ if (!$brand) {
             previewEl.src = url;
             previewEl.onload = () => URL.revokeObjectURL(url);
         });
+
+        const fullQuill = new Quill('#fullEditor', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{
+                        header: [1, 2, false]
+                    }],
+                    [{
+                        list: 'ordered'
+                    }, {
+                        list: 'bullet'
+                    }],
+                    ['link'],
+                    ['clean']
+                ]
+            }
+        });
+
+        const fullInput = document.getElementById('fullInput');
+
+        // 👉 Set value dari database
+        if (fullInput.value) {
+            fullQuill.clipboard.dangerouslyPasteHTML(fullInput.value);
+        }
+
+        // 👉 Sync saat submit
+        document.querySelector('form').addEventListener('submit', function() {
+            fullInput.value = fullQuill.root.innerHTML;
+        });
     </script>
+
 </body>
 
 </html>
