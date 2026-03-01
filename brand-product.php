@@ -139,7 +139,7 @@ $page_title = $current_brand
             <div class="flex flex-wrap justify-center gap-3 mb-12">
                 <?php foreach ($brands as $b): ?>
                     <?php $active = ($b['id'] == $brand_id); ?>
-                    <a href="ktb-brand.php?brand=<?= $b['slug']; ?>"
+                    <a href="brand-product.php?brand=<?= $b['slug']; ?>"
                         class="px-5 py-2 rounded-full text-sm font-medium transition
                    <?= $active
                         ? 'bg-primary text-white shadow-md'
