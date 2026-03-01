@@ -24,6 +24,7 @@ $stmt1 = $pdo->prepare("
         p.name,
         p.slug,
         p.model,
+        p.tagline,
         p.short_description,
         pi.image
     FROM products p
@@ -46,6 +47,7 @@ $stmt2 = $pdo->prepare("
         p.name,
         p.slug,
         p.model,
+        p.tagline,
         p.short_description,
         pi.image
     FROM products p
@@ -452,10 +454,12 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                     <?= htmlspecialchars($product['name']); ?>
                                 </h3>
 
-                                <p class="text-sm text-gray-600 mb-4 line-clamp-2">
-                                    <?= $product['short_description']; ?>
-                                </p>
-
+                                <!-- Tagline -->
+                                <?php if (!empty($product['tagline'])): ?>
+                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                                        <?= htmlspecialchars($product['tagline']); ?>
+                                    </p>
+                                <?php endif; ?>
                                 <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
                                     class="inline-flex items-center font-semibold text-primary hover:underline mt-2">
                                     Lihat Detail
@@ -533,9 +537,13 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                     <?= htmlspecialchars($product['name']); ?>
                                 </h3>
 
-                                <p class="text-sm text-gray-600 mb-3 line-clamp-2">
-                                    <?= $product['short_description']; ?>
-                                </p>
+
+                                <!-- Tagline -->
+                                <?php if (!empty($product['tagline'])): ?>
+                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                                        <?= htmlspecialchars($product['tagline']); ?>
+                                    </p>
+                                <?php endif; ?>
 
                                 <ul class="text-sm text-gray-500 mb-4 space-y-1">
                                     <!-- <li>✔ Garansi Resmi</li>
