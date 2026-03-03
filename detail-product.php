@@ -217,7 +217,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
 
                     <!-- THUMBNAIL -->
-                    <div class="swiper productThumbs">
+                    <!-- <div class="swiper productThumbs">
                         <div class="swiper-wrapper">
 
 
@@ -229,7 +229,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php endforeach; ?>
 
                         </div>
-                    </div>
+                    </div> -->
 
 
                 </div>
