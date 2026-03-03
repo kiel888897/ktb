@@ -142,7 +142,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 
-<body class="overflow-x-hidden font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
+<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
     <?php include 'header.php'; ?>
 
     <!-- HERO -->
@@ -349,13 +349,6 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                                 <h3 class="font-medium text-gray-900 mb-2">
                                     <?= htmlspecialchars($r['name']); ?>
                                 </h3>
-
-                                <!-- Tagline -->
-                                <?php if (!empty($product['tagline'])): ?>
-                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                        <?= htmlspecialchars($product['tagline']); ?>
-                                    </p>
-                                <?php endif; ?>
                                 <a href="detail-product.php?slug=<?= urlencode($r['slug']); ?>"
                                     class="text-primary text-sm font-medium hover:underline">
                                     Lihat Detail
@@ -403,9 +396,9 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
         const mainSwiper = new Swiper('.productMain', {
             loop: true,
             spaceBetween: 20,
-            zoom: window.innerWidth > 768 ? {
+            zoom: {
                 maxRatio: 2.5
-            } : false,
+            },
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',
