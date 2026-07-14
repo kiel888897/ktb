@@ -72,8 +72,38 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kusuma Trisna Bali</title>
+
+    <title>Kusuma Trisna Bali | Distributor & Service Elektronik di Tabanan Bali</title>
+
+    <meta name="description" content="Kusuma Trisna Bali merupakan distributor dan pusat layanan perbaikan elektronik di Tabanan, Bali. Menyediakan berbagai produk elektronik resmi dari brand ternama dengan harga terbaik, layanan teknis profesional, dan garansi resmi.">
+
+    <meta name="keywords" content="Kusuma Trisna Bali, elektronik Tabanan, toko elektronik Bali, distributor elektronik Bali, service elektronik Bali, elektronik murah Tabanan, elektronik murah Bali, perbaikan elektronik, servis elektronik, sparepart elektronik, produk elektronik resmi, toko elektronik terpercaya, Tabanan Bali">
+
+    <meta name="author" content="Kusuma Trisna Bali">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="id">
+    <meta name="revisit-after" content="7 days">
+
+    <link rel="canonical" href="https://www.kusumatrisnabali.com/">
+
     <link rel="icon" href="admin/favicon.ico">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kusuma Trisna Bali | Distributor & Service Elektronik di Tabanan Bali">
+    <meta property="og:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali sejak 2019. Menyediakan berbagai produk elektronik resmi dengan harga terbaik dan dukungan teknis profesional.">
+    <meta property="og:url" content="https://www.kusumatrisnabali.com/">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kusuma Trisna Bali | Distributor & Service Elektronik">
+    <meta name="twitter:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali sejak 2019.">
+    <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
+
+    <meta name="theme-color" content="#0056b3">
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
