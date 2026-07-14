@@ -143,7 +143,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <img
                         src="assets/img/slider3.jpg"
                         class="w-full h-full object-cover"
-                        alt="Authorized Service">
+                        alt="Authorized Service kusuma trisna bali">
 
                     <!-- Overlay -->
                     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
@@ -192,7 +192,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <img
                         src="assets/img/slider2.jpg"
                         class="w-full h-full object-cover"
-                        alt="Produk Terlaris">
+                        alt="Produk Terlaris kusuma trisna bali">
 
                     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
 
@@ -703,7 +703,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="rounded-2xl overflow-hidden shadow-xl h-[320px] md:h-[380px] relative">
                 <img src="assets/img/promo1.jpg"
-                    class="w-full h-full object-cover">
+                    class="w-full h-full object-cover" alt="Toko Elektronik Kusuma Trisna Bali di Tabanan">
                 <div class="absolute inset-0 bg-black/10"></div>
             </div>
 
