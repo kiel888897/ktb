@@ -104,6 +104,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
 
     <meta name="theme-color" content="#0056b3">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
