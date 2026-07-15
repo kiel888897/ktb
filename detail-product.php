@@ -133,6 +133,10 @@ $keywords = [
 
     "Elektronik Bali",
     "Electrical Bali",
+    "Service Elektronik Bali",
+    "Service Elektronik Tabanan",
+    "service elektronik Denpasar",
+    "service elektronik Badung",
     "Industrial Equipment Bali",
     "Power Tools Bali",
     "Supplier Bali",
