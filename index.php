@@ -95,6 +95,9 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta property="og:url" content="https://www.kusumatrisnabali.com/">
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
+    <meta property="og:image:alt" content="Elektonik Kusuma Trisna Bali Tabanan">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter Card -->

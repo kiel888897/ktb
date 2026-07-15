@@ -174,6 +174,8 @@ $seoUrl = 'https://kusumatrismabali.com/product-detail.php?slug=' . urlencode($p
     <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
     <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
     <meta property="og:image" content="<?= htmlspecialchars($seoImage) ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="<?= htmlspecialchars($seoUrl) ?>">
     <link rel="icon" href="admin/favicon.ico">
     <meta name="robots" content="index, follow">
