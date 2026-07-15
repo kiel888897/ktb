@@ -87,6 +87,29 @@ $relStmt->execute([
 
 $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
+$seoTitle = !empty($product['meta_title'])
+    ? $product['meta_title']
+    : $product['name'] . ' | Kusuma Trisna Bali';
+
+$seoDescription = !empty($product['meta_description'])
+    ? $product['meta_description']
+    : strip_tags(substr($product['short_description'], 0, 155));
+
+$seoKeywords = !empty($product['meta_keywords'])
+    ? $product['meta_keywords']
+    : implode(', ', [
+        $product['name'],
+        $product['brand_name'],
+        $product['category_name'],
+        $product['subcategory_name'],
+        'Kusuma Trisna Bali'
+    ]);
+
+$seoImage = !empty($images[0]['image'])
+    ? 'https://kusumatrismabali.com/admin/uploads/products/' . $images[0]['image']
+    : 'https://kusumatrismabali.com/assets/images/logo.png';
+
+$seoUrl = 'https://kusumatrismabali.com/product-detail.php?slug=' . urlencode($product['slug']);
 ?>
 <!DOCTYPE html>
 <html lang="id">

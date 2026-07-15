@@ -87,6 +87,80 @@ $relStmt->execute([
 
 $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Nama perusahaan
+$company = "Kusuma Trisna Bali";
+
+// Lokasi SEO
+$location = "Tabanan, Bali";
+
+// Judul SEO
+$seoTitle = $product['name'];
+
+if (!empty($product['model'])) {
+    $seoTitle .= " " . $product['model'];
+}
+
+$seoTitle .= " | " . $product['brand_name'] . " | " . $company;
+
+
+// Description
+$seoDescription = '';
+
+if (!empty($product['tagline'])) {
+    $seoDescription .= trim(strip_tags($product['tagline'])) . '. ';
+}
+
+$seoDescription .= trim(strip_tags($product['short_description'])) . ' ';
+
+$seoDescription .= "Tersedia di $company, supplier dan distributor "
+    . strtolower($product['category_name'])
+    . " serta "
+    . strtolower($product['subcategory_name'])
+    . " di $location. "
+    . "Melayani kebutuhan proyek, industri, hotel, villa, kontraktor, dan rumah tangga di seluruh Bali.";
+
+$seoDescription = substr($seoDescription, 0, 160);
+
+
+// Keywords
+$keywords = [
+    $product['name'],
+    $product['model'],
+    $product['brand_name'],
+    $product['category_name'],
+    $product['subcategory_name'],
+    $product['tagline'],
+
+    "Elektronik Bali",
+    "Electrical Bali",
+    "Industrial Equipment Bali",
+    "Power Tools Bali",
+    "Supplier Bali",
+    "Distributor Bali",
+    "Tabanan",
+    "Denpasar",
+    "Badung",
+    "Gianyar",
+    "Ubud",
+    "Sanur",
+    "Nusa Dua",
+    "Jimbaran",
+    "Kusuma Trisna Bali"
+];
+
+// Hapus yang kosong
+$keywords = array_filter($keywords);
+
+// Hapus duplikat
+$keywords = array_unique($keywords);
+
+$seoKeywords = implode(', ', $keywords);
+
+$seoImage = !empty($images[0]['image'])
+    ? 'https://kusumatrismabali.com/admin/uploads/products/' . $images[0]['image']
+    : 'https://kusumatrismabali.com/assets/images/logo.png';
+
+$seoUrl = 'https://kusumatrismabali.com/product-detail.php?slug=' . urlencode($product['slug']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -94,9 +168,27 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($product['name']); ?> | Kusuma Trisna Bali</title>
+    <title><?= htmlspecialchars($seoTitle) ?></title>
+    <meta name="description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta name="keywords" content="<?= htmlspecialchars($seoKeywords) ?>">
+    <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($seoImage) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($seoUrl) ?>">
     <link rel="icon" href="admin/favicon.ico">
-
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="product">
+    <!-- open graph meta tags -->
+    <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta property="og:image" content="<?= $seoImage ?>">
+    <meta property="og:url" content="<?= $seoUrl ?>">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <!-- twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($seoTitle) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($seoDescription) ?>">
+    <meta name="twitter:image" content="<?= $seoImage ?>">
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -140,6 +232,23 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
             max-width: 100%;
         }
     </style>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "<?= addslashes($product['name']) ?>",
+            "image": [
+                "<?= $seoImage ?>"
+            ],
+            "description": "<?= addslashes(strip_tags($seoDescription)) ?>",
+            "brand": {
+                "@type": "Brand",
+                "name": "<?= addslashes($product['brand_name']) ?>"
+            },
+            "category": "<?= addslashes($product['category_name']) ?>",
+            "url": "<?= $seoUrl ?>"
+        }
+    </script>
 </head>
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
@@ -215,23 +324,6 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="swiper-button-next text-primary"></div>
                         <div class="swiper-button-prev text-primary"></div>
                     </div>
-
-                    <!-- THUMBNAIL -->
-                    <!-- <div class="swiper productThumbs">
-                        <div class="swiper-wrapper">
-
-
-                            <?php foreach ($images as $img): ?>
-                                <div class="swiper-slide cursor-pointer">
-                                    <img src="admin/uploads/products/<?= htmlspecialchars($img['image']); ?>"
-                                        class="h-16 md:h-20 object-contain mx-auto">
-                                </div>
-                            <?php endforeach; ?>
-
-                        </div>
-                    </div> -->
-
-
                 </div>
             </div>
 
