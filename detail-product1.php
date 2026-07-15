@@ -144,7 +144,46 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
     <?php include 'header.php'; ?>
+    <!-- HERO -->
+    <section class="relative pt-40 pb-32">
+        <!-- Background -->
+        <div class="absolute inset-0">
+            <img src="assets/img/slider8.jpg"
+                class="w-full h-full object-cover"
+                alt="Produk Kusuma Trisna Bali">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20"></div>
+        </div>
 
+        <!-- Content -->
+        <div class="relative max-w-6xl mx-auto px-6 text-center">
+
+            <!-- Breadcrumb -->
+            <div class="inline-flex items-center gap-2 px-4 py-2 text-white mb-6"
+                data-aos="fade-up">
+
+                <a href="index.php"
+                    class="hover:text-primary transition">
+                    Home
+                </a>
+
+                <span class="opacity-70">/</span>
+
+                <a href="produk.php"
+                    class="hover:text-primary transition">
+                    Produk
+                </a>
+
+                <span class="opacity-70">/</span>
+
+                <span class="font-semibold text-primary">
+                    Detail Produk
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
 
     <!-- PRODUCT DETAIL -->
     <section class="py-20">
@@ -252,7 +291,76 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
     </section>
+    <!-- PRODUCT DESCRIPTION -->
+    <?php if (!empty($product['description']) || !empty($product['specifications'])): ?>
+        <section class="bg-gray-50 py-20">
+            <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
 
+                <?php if (!empty($product['description'])): ?>
+                    <div data-aos="fade-up">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                            Deskripsi Produk
+                        </h2>
+                        <p class="text-gray-600 leading-relaxed">
+                            <?= $product['description']; ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($product['specifications'])): ?>
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <h2 class="text-2xl font-semibold text-gray-900 mb-4">
+                            Spesifikasi
+                        </h2>
+                        <p class="text-gray-600">
+                            <?= $product['specifications']; ?>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </section>
+    <?php endif; ?>
+    <!-- RELATED PRODUCTS -->
+    <?php if ($related): ?>
+        <section class="py-20">
+            <div class="max-w-6xl mx-auto px-6">
+
+                <div class="mb-12">
+                    <h2 class="text-2xl font-semibold text-gray-900"
+                        data-aos="fade-up">
+                        Produk Terkait
+                    </h2>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <?php foreach ($related as $r): ?>
+                        <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
+                            data-aos="fade-up">
+                            <div class="h-48 flex items-center justify-center bg-gray-50">
+                                <img
+                                    src="admin/uploads/products/<?= htmlspecialchars($r['image'] ?? 'default.png'); ?>"
+                                    alt="<?= htmlspecialchars($r['name']); ?>"
+                                    class="object-contain">
+
+                            </div>
+
+                            <div class="p-5 mt-2">
+                                <h3 class="font-medium text-gray-900 mb-2">
+                                    <?= htmlspecialchars($r['name']); ?>
+                                </h3>
+                                <a href="detail-product.php?slug=<?= urlencode($r['slug']); ?>"
+                                    class="text-primary text-sm font-medium hover:underline">
+                                    Lihat Detail
+                                </a>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </section>
+
+    <?php endif; ?>
     <?php include 'footer.php'; ?>
 
     <!-- Script -->
