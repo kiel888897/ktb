@@ -91,7 +91,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Kusuma Trisna Bali | Distributor & Service Elektronik di Tabanan Bali">
-    <meta property="og:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali sejak 2019. Menyediakan berbagai produk elektronik resmi dengan harga terbaik dan dukungan teknis profesional.">
+    <meta property="og:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali. Menyediakan berbagai produk elektronik resmi dengan harga terbaik dan dukungan teknis profesional.">
     <meta property="og:url" content="https://www.kusumatrisnabali.com/">
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
@@ -103,7 +103,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Kusuma Trisna Bali | Distributor & Service Elektronik">
-    <meta name="twitter:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali sejak 2019.">
+    <meta name="twitter:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
 
     <meta name="theme-color" content="#0056b3">
