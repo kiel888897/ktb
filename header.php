@@ -6,7 +6,7 @@
 
          <!-- LOGO -->
          <div class="flex items-center gap-3">
-             <img src="assets/img/logo.png" class="h-9">
+             <img src="assets/img/logo.png" class="h-9" alt="Kusuma Trisna Bali">
              <span id="logoNav" class="font-bold text-lg text-white transition-colors">Kusuma Trisna Bali</span>
          </div>
 
@@ -47,7 +47,7 @@
 
          <!-- HEADER MENU -->
          <div class="flex items-center justify-between p-6 border-b">
-             <img src="assets/img/logo.png" class="h-9">
+             <img src="assets/img/logo.png" class="h-9" alt="Kusuma Trisna Bali">
              <button id="closeMenu" class="text-2xl text-gray-700">
                  <i class="fa fa-xmark"></i>
              </button>

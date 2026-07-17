@@ -133,8 +133,8 @@ require 'config/database.php'; // aman walau belum dipakai, untuk konsistensi
              border border-gray-200 bg-white
              dark:border-gray-800 dark:bg-white/[0.03]">
                                             <img id="logoPreview"
-                                                src="uploads/brands/default.png"
-                                                alt="Preview"
+                                                src="admin/uploads/brands/default.png"
+                                                alt="Preview Brand Logo"
                                                 class="h-full w-full object-contain">
                                         </div>
 

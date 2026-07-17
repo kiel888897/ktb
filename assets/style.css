@@ -61,3 +61,88 @@
         .swiper-button-prev {
             left: 1px;
         }
+        
+        /* Susunan pagination */
+.heroSwiper .swiper-pagination {
+    bottom: 24px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+}
+
+/* Area klik setiap bullet */
+.heroSwiper .swiper-pagination-bullet {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: 40px;
+    height: 40px;
+    margin: 0 !important;
+
+    background: transparent;
+    opacity: 1;
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+/* Titik yang terlihat */
+.heroSwiper .swiper-pagination-bullet::before {
+    content: "";
+    width: 15px;
+    height: 15px;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.65);
+
+    transition:
+        width 0.3s ease,
+        height 0.3s ease,
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+}
+
+/* Bullet aktif */
+.heroSwiper .swiper-pagination-bullet-active::before {
+    width: 14px;
+    height: 14px;
+    opacity: 1;
+    background-color: #dc2626;
+}
+
+/* Fokus keyboard */
+.heroSwiper .swiper-pagination-bullet:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: -6px;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .heroSwiper .swiper-pagination {
+        bottom: 20px !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .heroSwiper .swiper-pagination {
+        bottom: 14px !important;
+    }
+
+    .heroSwiper .swiper-pagination-bullet {
+        width: 44px;
+        height: 44px;
+    }
+
+    .heroSwiper .swiper-pagination-bullet::before {
+        width: 8px;
+        height: 8px;
+    }
+
+    .heroSwiper .swiper-pagination-bullet-active::before {
+        width: 20px;
+        height: 8px;
+    }
+}

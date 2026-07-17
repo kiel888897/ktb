@@ -91,7 +91,7 @@
     </div>
 
     <!-- Bottom -->
-    <div class="border-t border-gray-800 mt-12 pt-6 text-center text-sm text-gray-500">
+    <div class="border-t border-gray-800 mt-12 pt-6 text-center text-sm text-gray-300">
         © <?= date('Y'); ?> Kusuma Trisna Bali. All rights reserved.
     </div>
 </footer>
@@ -99,6 +99,10 @@
 <a
     href="https://wa.me/6287779928897"
     target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Hubungi kami melalui WhatsApp"
     class="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition duration-300">
-    <i class="fa-brands fa-whatsapp text-2xl"></i>
+    <i
+        class="fa-brands fa-whatsapp text-2xl"
+        aria-hidden="true"></i>
 </a>

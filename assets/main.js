@@ -59,7 +59,7 @@ new Swiper(".heroSwiper", {
     disableOnInteraction: false,
   },
   pagination: {
-    el: ".swiper-pagination",
+    el: ".heroSwiper .swiper-pagination",
     clickable: true,
   },
 });

@@ -364,7 +364,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
                     <a href="products.php"
                         class="font-semibold text-primary hover:underline">
-                        Selengkapnya →
+                        Lihat semua produk →
                     </a>
                 </div>
 
@@ -392,7 +392,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
                     <a href="services.php"
                         class="font-semibold text-primary hover:underline">
-                        Selengkapnya →
+                        Lihat layanan service →
                     </a>
                 </div>
 
