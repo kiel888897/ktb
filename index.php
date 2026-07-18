@@ -87,6 +87,9 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <link rel="canonical" href="https://www.kusumatrisnabali.com/">
 
     <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -106,7 +109,12 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta name="twitter:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
 
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
     <meta name="theme-color" content="#0056b3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kusuma Trisna Bali">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -129,6 +137,23 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         }
     </script>
     <link rel="stylesheet" href="assets/style.css">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ElectronicsStore",
+            "name": "Kusuma Trisna Bali",
+            "url": "https://www.kusumatrisnabali.com/",
+            "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
+            "image": "https://www.kusumatrisnabali.com/assets/og-image.jpg",
+            "telephone": "+628xxxxxxxx",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Tabanan",
+                "addressRegion": "Bali",
+                "addressCountry": "ID"
+            }
+        }
+    </script>
 </head>
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">

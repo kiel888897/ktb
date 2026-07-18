@@ -82,7 +82,7 @@
                 <a href="#" class="hover:text-primary transition">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="hover:text-primary transition">
+                <a target="_blank" href="https://www.facebook.com/kusumatrisnabali.ktb/" class="hover:text-primary transition">
                     <i class="fab fa-facebook"></i>
                 </a>
             </div>
