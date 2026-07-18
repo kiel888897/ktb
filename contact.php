@@ -4,9 +4,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | Kusuma Trisna Bali</title>
+
+    <title>Hubungi Kami | Kusuma Trisna Bali - Tabanan Bali</title>
+
+    <meta name="description" content="Hubungi Kusuma Trisna Bali untuk informasi produk elektronik, layanan service, konsultasi teknis, atau penawaran terbaik. Kami siap melayani pelanggan di Tabanan dan seluruh Bali.">
+
+    <meta name="keywords" content="Kontak Kusuma Trisna Bali, Hubungi Toko Elektronik Bali, Service Elektronik Tabanan, Distributor Elektronik Bali, Kontak Elektronik Bali">
+
+    <meta name="author" content="Kusuma Trisna Bali">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+    <link rel="canonical" href="https://www.kusumatrisnabali.com/contact.php">
 
     <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <meta name="theme-color" content="#0056b3">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hubungi Kami | Kusuma Trisna Bali">
+    <meta property="og:description" content="Hubungi Kusuma Trisna Bali untuk informasi produk elektronik dan layanan service di Tabanan, Bali.">
+    <meta property="og:url" content="https://www.kusumatrisnabali.com/contact.php">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/contact-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Hubungi Kusuma Trisna Bali">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hubungi Kami | Kusuma Trisna Bali">
+    <meta name="twitter:description" content="Hubungi Kusuma Trisna Bali untuk informasi produk dan layanan elektronik di Bali.">
+    <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/contact-og.jpg">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Hubungi Kusuma Trisna Bali",
+            "url": "https://www.kusumatrisnabali.com/contact.php",
+            "description": "Halaman kontak resmi Kusuma Trisna Bali.",
+            "mainEntity": {
+                "@type": "ElectronicsStore",
+                "name": "Kusuma Trisna Bali",
+                "url": "https://www.kusumatrisnabali.com/",
+                "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
+                "image": "https://www.kusumatrisnabali.com/assets/contact-og.jpg",
+                "telephone": "+6287779928897",
+                "email": "info@kusumatrisnabali.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Jl. Jl By Pass Jl. Dr. Ir. Soekarno, Banjar Tegal Belodan",
+                    "addressLocality": "Tabanan",
+                    "addressRegion": "Bali",
+                    "postalCode": "82113",
+                    "addressCountry": "ID"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": "-8.54850399878213",
+                    "longitude": "115.12117655767516"
+                },
+                "openingHoursSpecification": [{
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday"
+                    ],
+                    "opens": "08:00",
+                    "closes": "17:00"
+                }],
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "telephone": "+6287779928897",
+                    "contactType": "customer service",
+                    "areaServed": "ID",
+                    "availableLanguage": [
+                        "Indonesian",
+                        "English"
+                    ]
+                },
+                "sameAs": [
+                    "https://www.facebook.com/kusumatrisnabali.ktb",
+                    "https://www.instagram.com/kusumatrisnabali"
+                ]
+            }
+        }
+    </script>
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

@@ -145,7 +145,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             "url": "https://www.kusumatrisnabali.com/",
             "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
             "image": "https://www.kusumatrisnabali.com/assets/og-image.jpg",
-            "telephone": "+628xxxxxxxx",
+            "telephone": "+6287779928897",
             "address": {
                 "@type": "PostalAddress",
                 "addressLocality": "Tabanan",

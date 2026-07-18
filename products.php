@@ -159,9 +159,84 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <head>
     <meta charset="UTF-8">
-    <title>Produk | Kusuma Trisna Bali</title>
-    <link rel="icon" href="admin/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Produk Elektronik | Kusuma Trisna Bali - Distributor Elektronik di Bali</title>
+
+    <meta name="description" content="Temukan berbagai produk elektronik resmi dari brand ternama di Kusuma Trisna Bali. Menyediakan TV, mesin cuci, kulkas, audio, peralatan rumah tangga, sparepart elektronik, dan berbagai kebutuhan elektronik dengan harga kompetitif di Tabanan, Bali.">
+
+    <meta name="keywords" content="Produk Elektronik Bali, Distributor Elektronik Bali, Toko Elektronik Tabanan, Elektronik Murah Bali, TV LED, Mesin Cuci, Kulkas, Audio, Sparepart Elektronik, Kusuma Trisna Bali">
+
+    <meta name="author" content="Kusuma Trisna Bali">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+    <link rel="canonical" href="https://www.kusumatrisnabali.com/products.php">
+
+    <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <meta name="theme-color" content="#0056b3">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Produk Elektronik | Kusuma Trisna Bali">
+    <meta property="og:description" content="Berbagai produk elektronik resmi dari brand ternama dengan harga terbaik dan garansi resmi di Bali.">
+    <meta property="og:url" content="https://www.kusumatrisnabali.com/products.php">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/products-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Produk Elektronik Kusuma Trisna Bali">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Produk Elektronik | Kusuma Trisna Bali">
+    <meta name="twitter:description" content="Distributor berbagai produk elektronik resmi dengan harga terbaik di Bali.">
+    <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/products-og.jpg">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Produk Elektronik Kusuma Trisna Bali",
+            "url": "https://www.kusumatrisnabali.com/products.php",
+            "description": "Halaman katalog produk elektronik resmi yang tersedia di Kusuma Trisna Bali.",
+            "mainEntity": {
+                "@type": "OfferCatalog",
+                "name": "Katalog Produk Elektronik",
+                "itemListElement": [{
+                        "@type": "OfferCatalog",
+                        "name": "Televisi"
+                    },
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Mesin Cuci"
+                    },
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Kulkas"
+                    },
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Audio & Speaker"
+                    },
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Peralatan Rumah Tangga"
+                    },
+                    {
+                        "@type": "OfferCatalog",
+                        "name": "Sparepart Elektronik"
+                    }
+                ]
+            }
+        }
+    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

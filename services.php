@@ -23,9 +23,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layanan Kami | Kusuma Trisna Bali</title>
+
+    <title>Layanan Service Elektronik | Kusuma Trisna Bali - Tabanan Bali</title>
+
+    <meta name="description" content="Kusuma Trisna Bali menyediakan layanan service dan perbaikan berbagai produk elektronik di Tabanan, Bali. Didukung teknisi berpengalaman untuk perbaikan TV, mesin cuci, kulkas, audio, dan berbagai perangkat elektronik lainnya.">
+
+    <meta name="keywords" content="Service Elektronik Bali, Service TV Bali, Service Mesin Cuci Bali, Service Kulkas Bali, Perbaikan Elektronik Tabanan, Teknisi Elektronik Bali, Kusuma Trisna Bali">
+
+    <meta name="author" content="Kusuma Trisna Bali">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+    <link rel="canonical" href="https://www.kusumatrisnabali.com/services.php">
 
     <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <meta name="theme-color" content="#0056b3">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Layanan Service Elektronik | Kusuma Trisna Bali">
+    <meta property="og:description" content="Layanan service dan perbaikan berbagai produk elektronik dengan teknisi profesional di Tabanan, Bali.">
+    <meta property="og:url" content="https://www.kusumatrisnabali.com/services.php">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/services-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Layanan Service Elektronik Kusuma Trisna Bali">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Layanan Service Elektronik | Kusuma Trisna Bali">
+    <meta name="twitter:description" content="Service dan perbaikan berbagai perangkat elektronik dengan dukungan teknisi profesional di Bali.">
+    <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/services-og.jpg">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "Layanan Service Elektronik Kusuma Trisna Bali",
+            "provider": {
+                "@type": "ElectronicsStore",
+                "name": "Kusuma Trisna Bali",
+                "url": "https://www.kusumatrisnabali.com/",
+                "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
+                "telephone": "+6287779928897",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Tabanan",
+                    "addressRegion": "Bali",
+                    "addressCountry": "ID"
+                }
+            },
+            "serviceType": "Perbaikan dan Service Produk Elektronik",
+            "description": "Layanan service dan perbaikan berbagai produk elektronik dengan dukungan teknisi profesional.",
+            "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "Bali"
+            },
+            "url": "https://www.kusumatrisnabali.com/services.php"
+        }
+    </script>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>

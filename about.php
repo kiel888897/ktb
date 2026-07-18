@@ -18,9 +18,70 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Kusuma Trisna Bali</title>
+
+    <title>Tentang Kami | Kusuma Trisna Bali - Distributor & Service Elektronik</title>
+
+    <meta name="description" content="Kenali Kusuma Trisna Bali, perusahaan yang berdiri sejak tahun 2019 dan bergerak di bidang distribusi serta layanan perbaikan berbagai produk elektronik di Tabanan, Bali. Kami menyediakan produk resmi, layanan teknis profesional, dan pelayanan terbaik bagi pelanggan.">
+
+    <meta name="keywords" content="Tentang Kusuma Trisna Bali, Profil Kusuma Trisna Bali, Distributor Elektronik Bali, Service Elektronik Tabanan, Elektronik Bali, Toko Elektronik Tabanan">
+
+    <meta name="author" content="Kusuma Trisna Bali">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+    <link rel="canonical" href="https://www.kusumatrisnabali.com/about.php">
 
     <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <meta name="theme-color" content="#0056b3">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Tentang Kami | Kusuma Trisna Bali">
+    <meta property="og:description" content="Kusuma Trisna Bali telah melayani pelanggan sejak tahun 2019 sebagai distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali.">
+    <meta property="og:url" content="https://www.kusumatrisnabali.com/about.php">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/about-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Tentang Kusuma Trisna Bali">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tentang Kami | Kusuma Trisna Bali">
+    <meta name="twitter:description" content="Mengenal lebih dekat Kusuma Trisna Bali sebagai distributor dan pusat layanan elektronik terpercaya di Bali.">
+    <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/about-og.jpg">
+
+    <!-- Schema.org -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "Tentang Kusuma Trisna Bali",
+            "url": "https://www.kusumatrisnabali.com/about.php",
+            "description": "Profil Kusuma Trisna Bali, distributor dan pusat layanan perbaikan elektronik di Tabanan, Bali sejak tahun 2019.",
+            "mainEntity": {
+                "@type": "ElectronicsStore",
+                "name": "Kusuma Trisna Bali",
+                "url": "https://www.kusumatrisnabali.com/",
+                "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
+                "image": "https://www.kusumatrisnabali.com/assets/about-og.jpg",
+                "foundingDate": "2019",
+                "telephone": "+6287779928897",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Tabanan",
+                    "addressRegion": "Bali",
+                    "addressCountry": "ID"
+                }
+            }
+        }
+    </script>
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
