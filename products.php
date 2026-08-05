@@ -161,7 +161,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Produk Elektronik | Kusuma Trisna Bali - Distributor Elektronik di Bali</title>
+    <title>Toko Elektronik Tabanan | Kusuma Trisna Bali - Toko Elektronik Tabanan</title>
 
     <meta name="description" content="Temukan berbagai produk elektronik resmi dari brand ternama di Kusuma Trisna Bali. Menyediakan TV, mesin cuci, kulkas, audio, peralatan rumah tangga, sparepart elektronik, dan berbagai kebutuhan elektronik dengan harga kompetitif di Tabanan, Bali.">
 
