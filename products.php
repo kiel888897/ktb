@@ -182,7 +182,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Produk Elektronik | Kusuma Trisna Bali">
+    <meta property="og:title" content="Toko Elektronik Tabanan | Kusuma Trisna Bali">
     <meta property="og:description" content="Berbagai produk elektronik resmi dari brand ternama dengan harga terbaik dan garansi resmi di Bali.">
     <meta property="og:url" content="https://www.kusumatrisnabali.com/products.php">
     <meta property="og:site_name" content="Kusuma Trisna Bali">
@@ -194,7 +194,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Produk Elektronik | Kusuma Trisna Bali">
+    <meta name="twitter:title" content="Toko Elektronik Tabanan | Kusuma Trisna Bali">
     <meta name="twitter:description" content="Distributor berbagai produk elektronik resmi dengan harga terbaik di Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/products-og.jpg">
 
@@ -203,7 +203,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
-            "name": "Produk Elektronik Kusuma Trisna Bali",
+            "name": "Toko Elektronik Tabanan Kusuma Trisna Bali",
             "url": "https://www.kusumatrisnabali.com/products.php",
             "description": "Halaman katalog produk elektronik resmi yang tersedia di Kusuma Trisna Bali.",
             "mainEntity": {
