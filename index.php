@@ -159,520 +159,521 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
     <?php include 'header.php'; ?>
 
-    <!-- HERO SLIDER -->
-    <section class="h-screen relative">
+    <main id="main-content">
+        <!-- HERO SLIDER -->
+        <section class="h-screen relative">
 
-        <div class="swiper heroSwiper h-full">
+            <div class="swiper heroSwiper h-full">
 
-            <div class="swiper-wrapper">
+                <div class="swiper-wrapper">
 
-                <!-- SLIDE 1 -->
-                <div class="swiper-slide relative">
+                    <!-- SLIDE 1 -->
+                    <div class="swiper-slide relative">
 
-                    <img
-                        src="assets/img/slider3.jpg"
-                        class="w-full h-full object-cover"
-                        alt="Authorized Service kusuma trisna bali">
+                        <img
+                            src="assets/img/slider3.jpg"
+                            class="w-full h-full object-cover"
+                            alt="Authorized Service kusuma trisna bali">
 
-                    <!-- Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
+                        <!-- Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
 
-                    <!-- Content -->
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="max-w-7xl mx-auto px-6 text-white">
+                        <!-- Content -->
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="max-w-7xl mx-auto px-6 text-white">
 
-                            <p class="text-sm md:text-base font-medium uppercase tracking-widest text-gray-300 mb-3">
-                                Authorized Service Center
-                            </p>
+                                <p class="text-sm md:text-base font-medium uppercase tracking-widest text-gray-300 mb-3">
+                                    Authorized Service Center
+                                </p>
 
-                            <h1 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
-                                Solusi Layanan Resmi & Teknis
-                                <span class="text-primary">Berkualitas Tinggi</span>
-                            </h1>
+                                <h1 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
+                                    Solusi Layanan Resmi & Teknis
+                                    <span class="text-primary">Berkualitas Tinggi</span>
+                                </h1>
 
-                            <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
-                                Kusuma Trisna Bali menyediakan produk dan layanan resmi
-                                untuk kebutuhan industri dan komersial dengan standar profesional.
-                            </p>
+                                <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
+                                    Kusuma Trisna Bali menyediakan produk dan layanan resmi
+                                    untuk kebutuhan industri dan komersial dengan standar profesional.
+                                </p>
 
-                            <div class="flex flex-wrap gap-4">
-                                <a href="#service"
-                                    class="inline-flex items-center gap-3 bg-primary px-6 py-3 rounded-md
+                                <div class="flex flex-wrap gap-4">
+                                    <a href="#service"
+                                        class="inline-flex items-center gap-3 bg-primary px-6 py-3 rounded-md
                        font-semibold text-white transition hover:bg-darkred">
-                                    Ajukan Layanan
+                                        Ajukan Layanan
+                                        <i class="fa fa-arrow-right"></i>
+                                    </a>
+
+                                    <a href="#products"
+                                        class="inline-flex items-center gap-3 border border-white/70
+                       px-6 py-3 rounded-md font-medium text-white
+                       hover:bg-white hover:text-gray-900 transition">
+                                        Lihat Produk
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SLIDE 2 -->
+                    <div class="swiper-slide relative">
+
+                        <img
+                            src="assets/img/slider2.jpg"
+                            class="w-full h-full object-cover"
+                            alt="Produk Terlaris kusuma trisna bali">
+
+                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
+
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="max-w-7xl mx-auto px-6 text-white">
+
+                                <p class="text-sm md:text-base font-medium uppercase tracking-widest text-gray-300 mb-3">
+                                    Produk & Brand Resmi
+                                </p>
+
+                                <h2 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
+                                    Produk Terlaris &
+                                    <span class="text-primary">Terpercaya</span>
+                                </h2>
+
+                                <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
+                                    Menyediakan berbagai produk elektronik resmi
+                                    dari brand ternama dengan dukungan teknis penuh.
+                                </p>
+
+                                <a href="#products"
+                                    class="inline-flex items-center gap-3 bg-primary px-6 py-3 rounded-md
+                     font-semibold text-white hover:bg-darkred transition">
+                                    Jelajahi Produk
                                     <i class="fa fa-arrow-right"></i>
                                 </a>
 
-                                <a href="#products"
-                                    class="inline-flex items-center gap-3 border border-white/70
-                       px-6 py-3 rounded-md font-medium text-white
-                       hover:bg-white hover:text-gray-900 transition">
-                                    Lihat Produk
-                                </a>
                             </div>
-
                         </div>
                     </div>
+
                 </div>
 
-                <!-- SLIDE 2 -->
-                <div class="swiper-slide relative">
-
-                    <img
-                        src="assets/img/slider2.jpg"
-                        class="w-full h-full object-cover"
-                        alt="Produk Terlaris kusuma trisna bali">
-
-                    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
-
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="max-w-7xl mx-auto px-6 text-white">
-
-                            <p class="text-sm md:text-base font-medium uppercase tracking-widest text-gray-300 mb-3">
-                                Produk & Brand Resmi
-                            </p>
-
-                            <h2 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
-                                Produk Terlaris &
-                                <span class="text-primary">Terpercaya</span>
-                            </h2>
-
-                            <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
-                                Menyediakan berbagai produk elektronik resmi
-                                dari brand ternama dengan dukungan teknis penuh.
-                            </p>
-
-                            <a href="#products"
-                                class="inline-flex items-center gap-3 bg-primary px-6 py-3 rounded-md
-                     font-semibold text-white hover:bg-darkred transition">
-                                Jelajahi Produk
-                                <i class="fa fa-arrow-right"></i>
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
 
             </div>
+        </section>
 
-            <!-- Pagination -->
-            <div class="swiper-pagination"></div>
+        <!-- TENTANG SINGKAT -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-        </div>
-    </section>
+                <!-- Text -->
+                <div data-aos="fade-right">
+                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                        Tentang Kami
+                    </span>
 
-    <!-- TENTANG SINGKAT -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-5 leading-tight">
+                        Authorized Service & Distribusi
+                        Produk Elektronik Terpercaya
+                    </h2>
 
-            <!-- Text -->
-            <div data-aos="fade-right">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Tentang Kami
-                </span>
+                    <p class="text-gray-600 mb-4">
+                        Kusuma Trisna Bali berdiri sejak tahun <strong>2019</strong> dan fokus
+                        pada <strong>distribusi serta layanan perbaikan</strong>
+                        berbagai produk elektronik untuk kebutuhan toko dan pelanggan.
+                    </p>
 
-                <h2 class="text-3xl md:text-4xl font-bold mb-5 leading-tight">
-                    Authorized Service & Distribusi
-                    Produk Elektronik Terpercaya
-                </h2>
+                    <p class="text-gray-600 mb-6">
+                        Kami didukung oleh tim teknisi berpengalaman yang bekerja
+                        mengikuti prosedur kerja yang baik, sehingga setiap layanan
+                        dilakukan dengan rapi, bertanggung jawab, dan dapat diandalkan.
+                    </p>
 
-                <p class="text-gray-600 mb-4">
-                    Kusuma Trisna Bali berdiri sejak tahun <strong>2019</strong> dan fokus
-                    pada <strong>distribusi serta layanan perbaikan</strong>
-                    berbagai produk elektronik untuk kebutuhan toko dan pelanggan.
-                </p>
-
-                <p class="text-gray-600 mb-6">
-                    Kami didukung oleh tim teknisi berpengalaman yang bekerja
-                    mengikuti prosedur kerja yang baik, sehingga setiap layanan
-                    dilakukan dengan rapi, bertanggung jawab, dan dapat diandalkan.
-                </p>
-
-                <a href="about.php"
-                    class="inline-flex items-center px-6 py-3 rounded-lg
+                    <a href="about.php"
+                        class="inline-flex items-center px-6 py-3 rounded-lg
                       bg-primary text-white font-semibold
                       hover:bg-primary/90 transition">
-                    Selengkapnya Tentang Kami
-                </a>
-            </div>
-
-            <!-- Highlight Box -->
-            <div data-aos="fade-up" class="grid grid-cols-2 gap-4 sm:gap-6">
-
-                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
-                        2019
-                    </h3>
-                    <p class="text-gray-600 text-xs sm:text-sm">
-                        Tahun Berdiri
-                    </p>
-                </div>
-
-                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
-                        8+
-                    </h3>
-                    <p class="text-gray-600 text-xs sm:text-sm">
-                        Brand Resmi
-                    </p>
-                </div>
-
-                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
-                        Layanan Resmi
-                    </h3>
-                    <p class="text-gray-600 text-xs sm:text-sm">
-                        Perbaikan & Dukungan Produk
-                    </p>
-                </div>
-
-                <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                    <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
-                        Berpengalaman
-                    </h3>
-                    <p class="text-gray-600 text-xs sm:text-sm">
-                        Tim Teknisi Handal
-                    </p>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-    <!-- LAYANAN UTAMA -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <!-- Heading -->
-            <div class="text-center mb-14">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Layanan Kami
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Layanan Utama
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Kami menyediakan layanan penjualan produk elektronik resmi
-                    serta layanan perbaikan profesional dengan standar kerja
-                    yang terpercaya dan bergaransi.
-                </p>
-            </div>
-
-            <!-- Grid -->
-            <div class="grid md:grid-cols-2 gap-8">
-
-                <!-- Sales -->
-                <div class="bg-white p-8 rounded-2xl
-                    shadow-md hover:shadow-lg
-                    transition duration-300 text-center"
-                    data-aos="fade-up">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                        flex items-center justify-center
-                        rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Sales
-                    </h3>
-
-                    <p class="text-gray-600 mb-6">
-                        Menyediakan berbagai produk elektronik resmi dari brand terpercaya
-                        untuk kebutuhan toko dan pelanggan. Kami memastikan setiap produk
-                        yang kami distribusikan adalah produk original dengan kualitas terjamin.
-                    </p>
-
-                    <a href="products.php"
-                        class="font-semibold text-primary hover:underline">
-                        Lihat semua produk →
+                        Selengkapnya Tentang Kami
                     </a>
                 </div>
 
-                <!-- Service -->
-                <div class="bg-white p-8 rounded-2xl
-                    shadow-md hover:shadow-lg
-                    transition duration-300 text-center"
-                    data-aos="fade-up" data-aos-delay="100">
+                <!-- Highlight Box -->
+                <div data-aos="fade-up" class="grid grid-cols-2 gap-4 sm:gap-6">
 
-                    <div class="w-16 h-16 mx-auto mb-6
-                        flex items-center justify-center
-                        rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
+                            2019
+                        </h3>
+                        <p class="text-gray-600 text-xs sm:text-sm">
+                            Tahun Berdiri
+                        </p>
                     </div>
 
-                    <h3 class="text-xl font-semibold mb-3">
-                        Service
-                    </h3>
+                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
+                            8+
+                        </h3>
+                        <p class="text-gray-600 text-xs sm:text-sm">
+                            Brand Resmi
+                        </p>
+                    </div>
 
-                    <p class="text-gray-600 mb-6">
-                        Layanan perbaikan dan perawatan produk elektronik dengan teknisi
-                        berpengalaman dan prosedur kerja profesional. Setiap proses dilakukan
-                        secara teliti untuk memastikan hasil yang optimal dan dapat diandalkan.
-                    </p>
+                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
+                            Layanan Resmi
+                        </h3>
+                        <p class="text-gray-600 text-xs sm:text-sm">
+                            Perbaikan & Dukungan Produk
+                        </p>
+                    </div>
 
-                    <a href="services.php"
-                        class="font-semibold text-primary hover:underline">
-                        Lihat layanan service →
-                    </a>
+                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
+                shadow-lg hover:shadow-xl transition duration-300">
+                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
+                            Berpengalaman
+                        </h3>
+                        <p class="text-gray-600 text-xs sm:text-sm">
+                            Tim Teknisi Handal
+                        </p>
+                    </div>
+
                 </div>
 
             </div>
-        </div>
-    </section>
-    <!-- BRAND -->
-    <section class="relative pt-24 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6">
+        </section>
+        <!-- LAYANAN UTAMA -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
 
-            <!-- Heading -->
-            <div class="text-center mb-14">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Brand
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Brand produk kami
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Berikut adalah brand resmi yang produknya kami sediakan untuk memenuhi kebutuhan Anda.
-                </p>
+                <!-- Heading -->
+                <div class="text-center mb-14">
+                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                        Layanan Kami
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        Layanan Utama
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Kami menyediakan layanan penjualan produk elektronik resmi
+                        serta layanan perbaikan profesional dengan standar kerja
+                        yang terpercaya dan bergaransi.
+                    </p>
+                </div>
+
+                <!-- Grid -->
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <!-- Sales -->
+                    <div class="bg-white p-8 rounded-2xl
+                    shadow-md hover:shadow-lg
+                    transition duration-300 text-center"
+                        data-aos="fade-up">
+
+                        <div class="w-16 h-16 mx-auto mb-6
+                        flex items-center justify-center
+                        rounded-full bg-primary/10 text-primary text-2xl">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-3">
+                            Sales
+                        </h3>
+
+                        <p class="text-gray-600 mb-6">
+                            Menyediakan berbagai produk elektronik resmi dari brand terpercaya
+                            untuk kebutuhan toko dan pelanggan. Kami memastikan setiap produk
+                            yang kami distribusikan adalah produk original dengan kualitas terjamin.
+                        </p>
+
+                        <a href="products.php"
+                            class="font-semibold text-primary hover:underline">
+                            Lihat semua produk →
+                        </a>
+                    </div>
+
+                    <!-- Service -->
+                    <div class="bg-white p-8 rounded-2xl
+                    shadow-md hover:shadow-lg
+                    transition duration-300 text-center"
+                        data-aos="fade-up" data-aos-delay="100">
+
+                        <div class="w-16 h-16 mx-auto mb-6
+                        flex items-center justify-center
+                        rounded-full bg-primary/10 text-primary text-2xl">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-3">
+                            Service
+                        </h3>
+
+                        <p class="text-gray-600 mb-6">
+                            Layanan perbaikan dan perawatan produk elektronik dengan teknisi
+                            berpengalaman dan prosedur kerja profesional. Setiap proses dilakukan
+                            secara teliti untuk memastikan hasil yang optimal dan dapat diandalkan.
+                        </p>
+
+                        <a href="services.php"
+                            class="font-semibold text-primary hover:underline">
+                            Lihat layanan service →
+                        </a>
+                    </div>
+
+                </div>
             </div>
+        </section>
+        <!-- BRAND -->
+        <section class="relative pt-24 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6">
+
+                <!-- Heading -->
+                <div class="text-center mb-14">
+                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                        Brand
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        Brand produk kami
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Berikut adalah brand resmi yang produknya kami sediakan untuk memenuhi kebutuhan Anda.
+                    </p>
+                </div>
 
 
-            <!-- Slider -->
-            <div class="swiper brandSwiper">
-                <div class="swiper-wrapper items-center">
+                <!-- Slider -->
+                <div class="swiper brandSwiper">
+                    <div class="swiper-wrapper items-center">
 
-                    <?php foreach ($brands as $brand): ?>
-                        <div class="swiper-slide flex justify-center">
+                        <?php foreach ($brands as $brand): ?>
+                            <div class="swiper-slide flex justify-center">
 
-                            <a href="brand-product.php?brand=<?= $brand['slug']; ?>">
-                                <img
-                                    src="admin/uploads/brands/<?= htmlspecialchars($brand['logo']); ?>"
-                                    alt="<?= htmlspecialchars($brand['name']); ?>"
-                                    class="object-contain
+                                <a href="brand-product.php?brand=<?= $brand['slug']; ?>">
+                                    <img
+                                        src="admin/uploads/brands/<?= htmlspecialchars($brand['logo']); ?>"
+                                        alt="<?= htmlspecialchars($brand['name']); ?>"
+                                        class="object-contain
            
            sm:hover:grayscale-0 sm:hover:opacity-100
            transition duration-300">
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+        <!-- PRODUK UNGGULAN -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-6">
+
+                <!-- Heading -->
+                <div class="text-center mb-14">
+                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                        Produk Kami
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        Produk Unggulan
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Produk elektronik pilihan dengan kualitas terjamin dan dukungan
+                        layanan resmi dari merek terpercaya.
+                    </p>
+                </div>
+
+                <!-- Grid Produk -->
+                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+                    <?php if ($featuredProducts): ?>
+                        <?php foreach ($featuredProducts as $product): ?>
+
+                            <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
+                                <div class="relative aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
+                                    <img
+                                        src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
+                                        alt="<?= htmlspecialchars($product['name']); ?>"
+                                        class="max-h-full object-contain">
+
+                                    <!-- Floating Model Badge -->
+                                    <?php if (!empty($product['model'])): ?>
+                                        <div class="absolute top-2 right-3">
+                                            <span class="text-primary text-xs font-semibold">
+                                                <?= htmlspecialchars($product['model']); ?>
+                                            </span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="p-5">
+                                    <h3 class="font-semibold text-lg mb-1">
+                                        <?= htmlspecialchars($product['name']); ?>
+                                    </h3>
+
+                                    <!-- Tagline -->
+                                    <?php if (!empty($product['tagline'])): ?>
+                                        <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                                            <?= htmlspecialchars($product['tagline']); ?>
+                                        </p>
+                                    <?php endif; ?>
+                                    <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
+                                        class="inline-flex items-center font-semibold text-primary hover:underline mt-2">
+                                        Lihat Detail
+                                        <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                                    </a>
+                                </div>
+                            </div>
+
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="col-span-4 text-center text-gray-500">
+                            Produk unggulan belum tersedia
+                        </p>
+                    <?php endif; ?>
 
                 </div>
-            </div>
 
 
-        </div>
-    </section>
-    <!-- PRODUK UNGGULAN -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-
-            <!-- Heading -->
-            <div class="text-center mb-14">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Produk Kami
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Produk Unggulan
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Produk elektronik pilihan dengan kualitas terjamin dan dukungan
-                    layanan resmi dari merek terpercaya.
-                </p>
-            </div>
-
-            <!-- Grid Produk -->
-            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-
-                <?php if ($featuredProducts): ?>
-                    <?php foreach ($featuredProducts as $product): ?>
-
-                        <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                            <div class="relative aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
-                                <img
-                                    src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
-                                    alt="<?= htmlspecialchars($product['name']); ?>"
-                                    class="max-h-full object-contain">
-
-                                <!-- Floating Model Badge -->
-                                <?php if (!empty($product['model'])): ?>
-                                    <div class="absolute top-2 right-3">
-                                        <span class="text-primary text-xs font-semibold">
-                                            <?= htmlspecialchars($product['model']); ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="p-5">
-                                <h3 class="font-semibold text-lg mb-1">
-                                    <?= htmlspecialchars($product['name']); ?>
-                                </h3>
-
-                                <!-- Tagline -->
-                                <?php if (!empty($product['tagline'])): ?>
-                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                        <?= htmlspecialchars($product['tagline']); ?>
-                                    </p>
-                                <?php endif; ?>
-                                <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
-                                    class="inline-flex items-center font-semibold text-primary hover:underline mt-2">
-                                    Lihat Detail
-                                    <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                                </a>
-                            </div>
-                        </div>
-
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="col-span-4 text-center text-gray-500">
-                        Produk unggulan belum tersedia
-                    </p>
-                <?php endif; ?>
-
-            </div>
-
-
-            <!-- CTA -->
-            <div class="text-center mt-14">
-                <a href="produk.php"
-                    class="inline-flex items-center px-8 py-3 rounded-lg
+                <!-- CTA -->
+                <div class="text-center mt-14">
+                    <a href="produk.php"
+                        class="inline-flex items-center px-8 py-3 rounded-lg
                       bg-primary text-white font-semibold
                       hover:bg-primary/90 transition">
-                    Lihat Semua Produk
-                    <i class="fa-solid fa-arrow-right ml-2"></i>
-                </a>
+                        Lihat Semua Produk
+                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
             </div>
-
-        </div>
-    </section>
+        </section>
 
 
-    <!-- PRODUK TERBARU -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6">
+        <!-- PRODUK TERBARU -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
 
-            <!-- Heading -->
-            <div class="mb-12 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-3" data-aos="fade-up">
-                    Produk Terbaru
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                    Produk elektronik terbaru dengan kualitas terjamin dan dukungan layanan resmi.
-                </p>
-            </div>
+                <!-- Heading -->
+                <div class="mb-12 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3" data-aos="fade-up">
+                        Produk Terbaru
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                        Produk elektronik terbaru dengan kualitas terjamin dan dukungan layanan resmi.
+                    </p>
+                </div>
 
-            <!-- Grid Produk -->
-            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+                <!-- Grid Produk -->
+                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
 
-                <?php if ($latestProducts): ?>
-                    <?php foreach ($latestProducts as $product): ?>
+                    <?php if ($latestProducts): ?>
+                        <?php foreach ($latestProducts as $product): ?>
 
-                        <div class="bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 group"
-                            data-aos="zoom-in">
+                            <div class="bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 group"
+                                data-aos="zoom-in">
 
-                            <div class="overflow-hidden rounded-t-2xl">
-                                <img
-                                    src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
-                                    class="w-full h-48 object-contain bg-white p-4"
-                                    alt="<?= htmlspecialchars($product['name']); ?>">
+                                <div class="overflow-hidden rounded-t-2xl">
+                                    <img
+                                        src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
+                                        class="w-full h-48 object-contain bg-white p-4"
+                                        alt="<?= htmlspecialchars($product['name']); ?>">
 
-                                <!-- Floating Model Badge -->
-                                <?php if (!empty($product['model'])): ?>
-                                    <div class="absolute top-2 right-3">
-                                        <span class="text-primary text-xs font-semibold">
-                                            <?= htmlspecialchars($product['model']); ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
+                                    <!-- Floating Model Badge -->
+                                    <?php if (!empty($product['model'])): ?>
+                                        <div class="absolute top-2 right-3">
+                                            <span class="text-primary text-xs font-semibold">
+                                                <?= htmlspecialchars($product['model']); ?>
+                                            </span>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
 
-                            <div class="p-5">
-                                <h3 class="font-semibold text-lg mb-1">
-                                    <?= htmlspecialchars($product['name']); ?>
-                                </h3>
+                                <div class="p-5">
+                                    <h3 class="font-semibold text-lg mb-1">
+                                        <?= htmlspecialchars($product['name']); ?>
+                                    </h3>
 
 
-                                <!-- Tagline -->
-                                <?php if (!empty($product['tagline'])): ?>
-                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                        <?= htmlspecialchars($product['tagline']); ?>
-                                    </p>
-                                <?php endif; ?>
+                                    <!-- Tagline -->
+                                    <?php if (!empty($product['tagline'])): ?>
+                                        <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
+                                            <?= htmlspecialchars($product['tagline']); ?>
+                                        </p>
+                                    <?php endif; ?>
 
-                                <ul class="text-sm text-gray-500 mb-4 space-y-1">
-                                    <!-- <li>✔ Garansi Resmi</li>
+                                    <ul class="text-sm text-gray-500 mb-4 space-y-1">
+                                        <!-- <li>✔ Garansi Resmi</li>
                                     <li>✔ Layanan Authorized Service</li>
                                     <li>✔ Kualitas Terpercaya</li> -->
-                                </ul>
+                                    </ul>
 
-                                <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
-                                    class="inline-block w-full text-center px-4 py-2 rounded-lg
+                                    <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
+                                        class="inline-block w-full text-center px-4 py-2 rounded-lg
                               bg-primary text-white font-semibold
                               hover:bg-primary/90 transition">
-                                    Lihat Detail
-                                </a>
+                                        Lihat Detail
+                                    </a>
+                                </div>
                             </div>
-                        </div>
 
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="col-span-4 text-center text-gray-500">
-                        Produk terbaru belum tersedia
-                    </p>
-                <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="col-span-4 text-center text-gray-500">
+                            Produk terbaru belum tersedia
+                        </p>
+                    <?php endif; ?>
+
+                </div>
 
             </div>
-
-        </div>
-    </section>
-    <!-- BRAND PARTNER -->
-    <section class="relative py-24 
+        </section>
+        <!-- BRAND PARTNER -->
+        <section class="relative py-24 
                 bg-gradient-to-b from-primary/5 via-white to-gray-50 
                 overflow-hidden">
 
-        <!-- Top Wave -->
-        <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
-            <svg class="relative block w-full h-[60px]"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 1440 90"
-                preserveAspectRatio="none">
-                <path fill="#ffffff"
-                    d="M0,30 C240,70 480,10 720,20 960,30 1200,60 1440,40 L1440,0 L0,0 Z">
-                </path>
-            </svg>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-6">
-
-            <!-- Heading -->
-            <div class="text-center mb-16">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary tracking-wide uppercase">
-                    Brand Partner
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Authorized Brand Partner
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                    Kami merupakan mitra resmi dan authorized service untuk berbagai
-                    merek elektronik terpercaya.
-                </p>
+            <!-- Top Wave -->
+            <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
+                <svg class="relative block w-full h-[60px]"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 1440 90"
+                    preserveAspectRatio="none">
+                    <path fill="#ffffff"
+                        d="M0,30 C240,70 480,10 720,20 960,30 1200,60 1440,40 L1440,0 L0,0 Z">
+                    </path>
+                </svg>
             </div>
 
-            <!-- GRID -->
-            <div class="grid 
+            <div class="max-w-7xl mx-auto px-6">
+
+                <!-- Heading -->
+                <div class="text-center mb-16">
+                    <span class="inline-block mb-3 text-sm font-semibold text-primary tracking-wide uppercase">
+                        Brand Partner
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        Authorized Brand Partner
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        Kami merupakan mitra resmi dan authorized service untuk berbagai
+                        merek elektronik terpercaya.
+                    </p>
+                </div>
+
+                <!-- GRID -->
+                <div class="grid 
                     grid-cols-2 
                     lg:grid-cols-3 
                     gap-8 md:gap-10 
                     max-w-5xl 
                     mx-auto">
 
-                <?php foreach ($partners as $partner): ?>
-                    <div class="group flex items-center justify-center
+                    <?php foreach ($partners as $partner): ?>
+                        <div class="group flex items-center justify-center
                             bg-white 
                             rounded-2xl 
                             p-4 md:p-5
@@ -681,22 +682,22 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             hover:-translate-y-2
                             transition duration-300 ease-in-out">
 
-                        <img
-                            src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                            alt="<?= htmlspecialchars($partner['name']); ?>"
-                            class="h-auto object-contain 
+                            <img
+                                src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
+                                alt="<?= htmlspecialchars($partner['name']); ?>"
+                                class="h-auto object-contain 
                                group-hover:grayscale-0 
                                group-hover:opacity-100
                                transition duration-300">
-                    </div>
-                <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
 
             </div>
-
-        </div>
-    </section>
-    <!-- IKLAN / PROMO -->
-    <!-- <section class="py-20 bg-primary text-white relative overflow-hidden">
+        </section>
+        <!-- IKLAN / PROMO -->
+        <!-- <section class="py-20 bg-primary text-white relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">
 
             <div data-aos="fade-right">
@@ -739,103 +740,103 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
     </section> -->
-    <!-- KENAPA MEMILIH KAMI -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-6">
+        <!-- KENAPA MEMILIH KAMI -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6">
 
-            <!-- Heading -->
-            <div class="text-center mb-14">
-                <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                    Keunggulan Kami
-                </span>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                    Kenapa Memilih Kami
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Kami berupaya memberikan layanan yang rapi, dapat diandalkan,
-                    dan sesuai dengan kebutuhan pelanggan.
-                </p>
+                <!-- Heading -->
+                <div class="text-center mb-14">
+                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
+                        Keunggulan Kami
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        Kenapa Memilih Kami
+                    </h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Kami berupaya memberikan layanan yang rapi, dapat diandalkan,
+                        dan sesuai dengan kebutuhan pelanggan.
+                    </p>
+                </div>
+
+                <!-- Grid -->
+                <div class="grid md:grid-cols-3 gap-8">
+
+                    <!-- Authorized Service -->
+                    <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                        data-aos="fade-up">
+
+                        <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-3">
+                            Layanan Perbaikan Terpercaya
+                        </h3>
+
+                        <p class="text-gray-600">
+                            Menangani perbaikan produk elektronik dengan prosedur kerja
+                            yang jelas dan penggunaan suku cadang yang sesuai kebutuhan.
+                        </p>
+                    </div>
+
+                    <!-- Teknisi Bersertifikat -->
+                    <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                        data-aos="fade-up" data-aos-delay="100">
+
+                        <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                            <i class="fa-solid fa-user-gear"></i>
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-3">
+                            Teknisi Berpengalaman
+                        </h3>
+
+                        <p class="text-gray-600">
+                            Dikerjakan oleh tim teknisi yang berpengalaman dalam menangani
+                            berbagai jenis produk elektronik secara hati-hati dan rapi.
+                        </p>
+                    </div>
+
+                    <!-- Garansi & Standar Pabrikan -->
+                    <div class="bg-white p-8 rounded-2xl
+                        shadow-md hover:shadow-lg transition text-center"
+                        data-aos="fade-up" data-aos-delay="200">
+
+                        <div class="w-16 h-16 mx-auto mb-6
+                            flex items-center justify-center
+                            rounded-full bg-primary/10 text-primary text-2xl">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <h3 class="text-xl font-semibold mb-3">
+                            Layanan Bertanggung Jawab
+                        </h3>
+
+                        <p class="text-gray-600">
+                            Setiap pekerjaan dilakukan dengan tanggung jawab dan pengecekan
+                            hasil untuk memastikan perangkat dapat digunakan dengan baik.
+                        </p>
+                    </div>
+
+                </div>
             </div>
+        </section>
 
-            <!-- Grid -->
-            <div class="grid md:grid-cols-3 gap-8">
+        <!-- FOOTER -->
+        <?php include 'footer.php'; ?>
 
-                <!-- Authorized Service -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                    data-aos="fade-up">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-certificate"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Layanan Perbaikan Terpercaya
-                    </h3>
-
-                    <p class="text-gray-600">
-                        Menangani perbaikan produk elektronik dengan prosedur kerja
-                        yang jelas dan penggunaan suku cadang yang sesuai kebutuhan.
-                    </p>
-                </div>
-
-                <!-- Teknisi Bersertifikat -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                    data-aos="fade-up" data-aos-delay="100">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-user-gear"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Teknisi Berpengalaman
-                    </h3>
-
-                    <p class="text-gray-600">
-                        Dikerjakan oleh tim teknisi yang berpengalaman dalam menangani
-                        berbagai jenis produk elektronik secara hati-hati dan rapi.
-                    </p>
-                </div>
-
-                <!-- Garansi & Standar Pabrikan -->
-                <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                    data-aos="fade-up" data-aos-delay="200">
-
-                    <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-
-                    <h3 class="text-xl font-semibold mb-3">
-                        Layanan Bertanggung Jawab
-                    </h3>
-
-                    <p class="text-gray-600">
-                        Setiap pekerjaan dilakukan dengan tanggung jawab dan pengecekan
-                        hasil untuk memastikan perangkat dapat digunakan dengan baik.
-                    </p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <?php include 'footer.php'; ?>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-    <script src="assets/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
+        <script src="assets/main.js"></script>
 </body>
 
 </html>
