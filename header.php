@@ -30,7 +30,8 @@
 
          <!-- MOBILE BUTTON -->
          <button id="openMenu"
-             class="lg:hidden text-2xl text-white transition">
+             class="lg:hidden text-2xl text-white transition"
+             aria-label="Open menu">
              <i class="fa fa-bars"></i>
          </button>
 

@@ -79,11 +79,21 @@
             </a>
 
             <div class="flex gap-4 text-xl mt-4">
-                <a href="#" class="hover:text-primary transition">
-                    <i class="fab fa-instagram"></i>
+                <a href="https://www.instagram.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Kunjungi akun Instagram kami"
+                    class="hover:text-primary transition">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="sr-only">Instagram</span>
                 </a>
-                <a target="_blank" href="https://www.facebook.com/kusumatrisnabali.ktb/" class="hover:text-primary transition">
-                    <i class="fab fa-facebook"></i>
+                <a target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/kusumatrisnabali.ktb/"
+                    aria-label="Kunjungi halaman Facebook kami"
+                    class="hover:text-primary transition">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
                 </a>
             </div>
         </div>
