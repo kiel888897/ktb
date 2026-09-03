@@ -130,11 +130,11 @@ try {
         . '<tr><th align="left" style="background:#f5f5f5;vertical-align:top">Pesan</th><td style="white-space:pre-wrap">' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</td></tr>'
         . '</table></body></html>';
     $boundary = 'ktb_' . bin2hex(random_bytes(12));
-    $headers = 'From: ' . SMTP_USER . "\r\n" . 'Reply-To: ' . $email . "\r\n" . 'To: ' . RECIPIENT . "\r\n" . 'Subject: ' . $subject . "\r\n" . 'MIME-Version: 1.0\r\n' . 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
+    $headers = 'From: ' . SMTP_USER . "\r\n" . 'Reply-To: ' . $email . "\r\n" . 'To: ' . RECIPIENT . "\r\n" . 'Subject: ' . $subject . "\r\n" . "MIME-Version: 1.0\r\n" . 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
     $data = $headers . "\r\n\r\n--{$boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n" . $plainBody
         . "\r\n\r\n--{$boundary}\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n" . $htmlBody
         . "\r\n\r\n--{$boundary}--";
-    $data = str_replace("\n.", "\n..", str_replace("\r\n", "\n", $data)) . "\r\n.";
+    $data = preg_replace('/\r\n\./', "\r\n..", $data) . "\r\n.";
     smtpCommand($socket, $data, 250);
     smtpCommand($socket, 'QUIT', 221);
     fclose($socket);
