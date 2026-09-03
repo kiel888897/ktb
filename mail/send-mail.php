@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../admin/config/mail.php';
+
 const SMTP_HOST = 'mail.kusumatrisnabali.com';
 const SMTP_PORT = 465;
 const SMTP_USER = 'info@kusumatrisnabali.com';

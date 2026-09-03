@@ -158,7 +158,6 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
     <?php include 'header.php'; ?>
-
     <main id="main-content">
         <!-- HERO SLIDER -->
         <section class="h-screen relative">
@@ -540,7 +539,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- CTA -->
                 <div class="text-center mt-14">
-                    <a href="produk.php"
+                    <a href="products.php"
                         class="inline-flex items-center px-8 py-3 rounded-lg
                       bg-primary text-white font-semibold
                       hover:bg-primary/90 transition">
@@ -829,14 +828,15 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         </section>
 
         <!-- FOOTER -->
-        <?php include 'footer.php'; ?>
+    </main>
+    <?php include 'footer.php'; ?>
 
-        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            AOS.init();
-        </script>
-        <script src="assets/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script src="assets/main.js"></script>
 </body>
 
 </html>
