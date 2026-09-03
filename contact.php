@@ -105,7 +105,7 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc" async defer></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -282,7 +282,7 @@
                                 class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30"></textarea>
                         </div>
 
-                        <div class="g-recaptcha" data-sitekey="6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc"></div>
+                        <input type="hidden" name="recaptcha_token" id="recaptchaToken">
 
                         <button type="submit"
                             class="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-darkred transition">
@@ -301,6 +301,28 @@
 
     <!-- Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.querySelector('form[action="mail/send-mail.php"]').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const form = this;
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc', {
+                        action: 'contact'
+                    })
+                    .then(function(token) {
+                        document.getElementById('recaptchaToken').value = token;
+                        form.submit();
+                    })
+                    .catch(function() {
+                        submitButton.disabled = false;
+                        window.location.href = 'contact.php?status=captcha';
+                    });
+            });
+        });
+    </script>
     <script>
         AOS.init({
             duration: 900,

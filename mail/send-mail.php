@@ -26,7 +26,7 @@ if (!empty($_POST['company'])) {
 $name = preg_replace('/[\r\n]+/', ' ', trim((string) ($_POST['name'] ?? ''))) ?? '';
 $email = trim((string) ($_POST['email'] ?? ''));
 $message = trim((string) ($_POST['message'] ?? ''));
-$captchaToken = (string) ($_POST['g-recaptcha-response'] ?? '');
+$captchaToken = (string) ($_POST['recaptcha_token'] ?? '');
 
 if (
     $name === '' || mb_strlen($name) > 100 || !filter_var($email, FILTER_VALIDATE_EMAIL)
@@ -68,7 +68,12 @@ $captchaContext = stream_context_create([
 ]);
 $captchaResponse = @file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $captchaContext);
 $captchaResult = $captchaResponse ? json_decode($captchaResponse, true) : null;
-if (!is_array($captchaResult) || empty($captchaResult['success'])) {
+if (
+    !is_array($captchaResult)
+    || empty($captchaResult['success'])
+    || ($captchaResult['action'] ?? '') !== 'contact'
+    || (float) ($captchaResult['score'] ?? 0) < 0.5
+) {
     redirectWithStatus('captcha');
 }
 
