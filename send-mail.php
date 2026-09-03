@@ -2,18 +2,11 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../admin/config/mail.php';
-
-const SMTP_HOST = 'mail.kusumatrisnabali.com';
-const SMTP_PORT = 465;
-const SMTP_USER = 'info@kusumatrisnabali.com';
-const SMTP_PASSWORD = '5$$PrV0rae&Fe(^%';
-const RECAPTCHA_SECRET = '6LdPkaYtAAAAACTFLeUSSdZMEaa5LlPa4YA9sqBg';
-const RECIPIENT = 'info@kusumatrisnabali.com';
+require_once __DIR__ . '/mail/mail.php';
 
 function redirectWithStatus(string $status): never
 {
-    header('Location: ../contact.php?status=' . rawurlencode($status));
+    header('Location: contact.php?status=' . rawurlencode($status));
     exit;
 }
 

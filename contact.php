@@ -253,7 +253,7 @@
                             Kirim Pesan
                         </h3>
 
-                        <form action="mail/send-mail.php" method="post" class="space-y-5">
+                        <form action="send-mail.php" method="post" class="space-y-5">
                             <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
 
                             <div>
@@ -312,7 +312,7 @@
     <!-- Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        document.querySelector('form[action="mail/send-mail.php"]').addEventListener('submit', function(event) {
+        document.querySelector('form[action="send-mail.php"]').addEventListener('submit', function(event) {
             event.preventDefault();
             const form = this;
             const submitButton = form.querySelector('button[type="submit"]');
