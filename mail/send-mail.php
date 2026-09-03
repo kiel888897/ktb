@@ -25,12 +25,15 @@ if (!empty($_POST['company'])) {
 
 $name = preg_replace('/[\r\n]+/', ' ', trim((string) ($_POST['name'] ?? ''))) ?? '';
 $email = trim((string) ($_POST['email'] ?? ''));
+$phone = preg_replace('/[\r\n]+/', ' ', trim((string) ($_POST['phone'] ?? ''))) ?? '';
 $message = trim((string) ($_POST['message'] ?? ''));
 $captchaToken = (string) ($_POST['recaptcha_token'] ?? '');
 
 if (
     $name === '' || mb_strlen($name) > 100 || !filter_var($email, FILTER_VALIDATE_EMAIL)
-    || mb_strlen($email) > 190 || $message === '' || mb_strlen($message) > 5000 || $captchaToken === ''
+    || mb_strlen($email) > 190 || $phone === '' || mb_strlen($phone) > 30
+    || !preg_match('/^[0-9+() .-]+$/', $phone) || $message === ''
+    || mb_strlen($message) > 5000 || $captchaToken === ''
 ) {
     redirectWithStatus('error');
 }
@@ -115,9 +118,23 @@ try {
     smtpCommand($socket, 'RCPT TO:<' . RECIPIENT . '>', 250);
     smtpCommand($socket, 'DATA', 354);
     $subject = 'Pesan kontak website dari ' . $name;
-    $body = "Nama: {$name}\r\nEmail: {$email}\r\nIP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown') . "\r\n\r\n{$message}";
-    $headers = 'From: ' . SMTP_USER . "\r\n" . 'Reply-To: ' . $email . "\r\n" . 'To: ' . RECIPIENT . "\r\n" . 'Subject: ' . $subject . "\r\n" . 'Content-Type: text/plain; charset=UTF-8';
-    $data = $headers . "\r\n\r\n" . str_replace("\n.", "\n..", str_replace("\r\n", "\n", $body)) . "\r\n.";
+    $ipAddress = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $plainBody = "Nama: {$name}\r\nEmail: {$email}\r\nTelepon: {$phone}\r\nIP: {$ipAddress}\r\n\r\nPesan:\r\n{$message}";
+    $htmlBody = '<!doctype html><html><body style="font-family:Arial,sans-serif;color:#333">'
+        . '<h2 style="color:#c1121f">Pesan Baru dari Website</h2>'
+        . '<table cellpadding="10" cellspacing="0" border="1" style="border-collapse:collapse;border-color:#ddd;width:100%;max-width:650px">'
+        . '<tr><th align="left" style="background:#f5f5f5;width:140px">Nama</th><td>' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+        . '<tr><th align="left" style="background:#f5f5f5">Email</th><td>' . htmlspecialchars($email, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+        . '<tr><th align="left" style="background:#f5f5f5">Telepon</th><td>' . htmlspecialchars($phone, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+        . '<tr><th align="left" style="background:#f5f5f5">IP</th><td>' . htmlspecialchars($ipAddress, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+        . '<tr><th align="left" style="background:#f5f5f5;vertical-align:top">Pesan</th><td style="white-space:pre-wrap">' . htmlspecialchars($message, ENT_QUOTES, 'UTF-8') . '</td></tr>'
+        . '</table></body></html>';
+    $boundary = 'ktb_' . bin2hex(random_bytes(12));
+    $headers = 'From: ' . SMTP_USER . "\r\n" . 'Reply-To: ' . $email . "\r\n" . 'To: ' . RECIPIENT . "\r\n" . 'Subject: ' . $subject . "\r\n" . 'MIME-Version: 1.0\r\n' . 'Content-Type: multipart/alternative; boundary="' . $boundary . '"';
+    $data = $headers . "\r\n\r\n--{$boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n" . $plainBody
+        . "\r\n\r\n--{$boundary}\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n" . $htmlBody
+        . "\r\n\r\n--{$boundary}--";
+    $data = str_replace("\n.", "\n..", str_replace("\r\n", "\n", $data)) . "\r\n.";
     smtpCommand($socket, $data, 250);
     smtpCommand($socket, 'QUIT', 221);
     fclose($socket);
