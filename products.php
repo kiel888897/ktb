@@ -285,6 +285,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- PRODUCTS -->
         <section class="py-16">
             <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-8">Daftar Produk</h2>
 
                 <!-- FILTER -->
                 <form method="GET"
@@ -317,7 +318,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- BRAND -->
                         <div>
+                            <label for="brandFilter" class="sr-only">Pilih brand</label>
                             <select name="brand"
+                                id="brandFilter"
                                 class="w-full border border-gray-300 rounded-xl
                        px-4 py-3
                        focus:ring-2 focus:ring-primary/30
@@ -334,7 +337,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- CATEGORY -->
                         <div>
+                            <label for="categoryFilter" class="sr-only">Pilih kategori</label>
                             <select name="category"
+                                id="categoryFilter"
                                 class="w-full border border-gray-300 rounded-xl
                        px-4 py-3
                        focus:ring-2 focus:ring-primary/30
@@ -351,7 +356,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <!-- SUBCATEGORY -->
                         <div>
+                            <label for="subcategoryFilter" class="sr-only">Pilih subkategori</label>
                             <select name="subcategory"
+                                id="subcategoryFilter"
                                 class="w-full border border-gray-300 rounded-xl
                        px-4 py-3
                        focus:ring-2 focus:ring-primary/30
@@ -485,6 +492,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 $queryString['page'] = $page - 1;
                                 ?>
                                 <a href="?<?= http_build_query($queryString); ?>"
+                                    aria-label="Halaman sebelumnya"
                                     class="px-4 py-2 border rounded-lg hover:bg-gray-100">
                                     <i class="fa-solid fa-angles-left"></i>
                                 </a>
@@ -496,6 +504,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 $queryString['page'] = $i;
                                 ?>
                                 <a href="?<?= http_build_query($queryString); ?>"
+                                    aria-label="Buka halaman <?= $i; ?>"
                                     class="px-4 py-2 border rounded-lg
                         <?= $i == $page ? 'bg-primary text-white border-primary' : 'hover:bg-gray-100'; ?>">
                                     <?= $i; ?>
@@ -508,6 +517,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 $queryString['page'] = $page + 1;
                                 ?>
                                 <a href="?<?= http_build_query($queryString); ?>"
+                                    aria-label="Halaman berikutnya"
                                     class="px-4 py-2 border rounded-lg hover:bg-gray-100">
                                     <i class="fa-solid fa-angles-right"></i>
                                 </a>
