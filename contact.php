@@ -105,6 +105,7 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -161,6 +162,22 @@
     </section>
     <!-- CONTACT CONTENT -->
     <section class="py-24">
+        <?php if (isset($_GET['status'])): ?>
+            <?php
+            $contactStatus = $_GET['status'];
+            $contactMessage = $contactStatus === 'success'
+                ? 'Pesan berhasil dikirim. Kami akan segera menghubungi Anda.'
+                : ($contactStatus === 'captcha' ? 'Verifikasi anti-spam gagal. Silakan coba lagi.' : 'Pesan tidak dapat dikirim. Silakan coba lagi nanti.');
+            $contactAlertClass = $contactStatus === 'success'
+                ? 'border-green-200 bg-green-50 text-green-800'
+                : 'border-red-200 bg-red-50 text-red-800';
+            ?>
+            <div class="max-w-6xl mx-auto px-6 mb-8">
+                <div role="alert" class="border rounded-lg px-4 py-3 <?php echo $contactAlertClass; ?>">
+                    <?php echo htmlspecialchars($contactMessage, ENT_QUOTES, 'UTF-8'); ?>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="max-w-6xl mx-auto px-6 pb-16">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.491802868451!2d115.1211551!3d-8.5486154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23bbcadf71b29%3A0x47932c18a19d26e4!2sCV.%20Kusuma%20Trisna%20Bali!5e0!3m2!1sid!2sid!4v1770969154441!5m2!1sid!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
@@ -235,13 +252,14 @@
                         Kirim Pesan
                     </h3>
 
-                    <form action="#" method="post" class="space-y-5">
+                    <form action="mail/send-mail.php" method="post" class="space-y-5">
+                        <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                 Nama Lengkap
                             </label>
-                            <input type="text"
+                            <input type="text" name="name" required maxlength="100"
                                 placeholder="Nama Anda"
                                 class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
                         </div>
@@ -250,7 +268,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                 Email
                             </label>
-                            <input type="email"
+                            <input type="email" name="email" required maxlength="190"
                                 placeholder="email@contoh.com"
                                 class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
                         </div>
@@ -259,10 +277,12 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">
                                 Pesan
                             </label>
-                            <textarea rows="5"
+                            <textarea name="message" rows="5" required maxlength="5000"
                                 placeholder="Tulis pesan Anda..."
                                 class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30"></textarea>
                         </div>
+
+                        <div class="g-recaptcha" data-sitekey="6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc"></div>
 
                         <button type="submit"
                             class="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-darkred transition">
