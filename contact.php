@@ -275,19 +275,10 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Nomor Telepon
+                                Nomor Telepon / WhatsApp
                             </label>
                             <input type="tel" name="phone" required maxlength="30"
                                 placeholder="08xxxxxxxxxx"
-                                class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Telepon
-                            </label>
-                            <input type="tel" name="phone" required maxlength="20"
-                                placeholder="081234567890"
                                 class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
                         </div>
                         <div>
