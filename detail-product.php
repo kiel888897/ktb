@@ -94,7 +94,7 @@ $company = "Kusuma Trisna Bali";
 $location = "Tabanan, Bali";
 
 // Judul SEO
-$seoTitle = $product['subcategory_name'] . ', ' . $product['brand_name'] . ', ' . $product['name'];
+$seoTitle = $product['subcategory_name'] . ' ' . $product['brand_name'] . ' ' . $product['name'];
 
 if (!empty($product['tagline'])) {
     $seoTitle .= ' | ' . trim(strip_tags($product['tagline']));
