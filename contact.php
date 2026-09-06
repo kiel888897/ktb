@@ -105,7 +105,6 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?render=6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc" async defer></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -180,7 +179,7 @@
                 </div>
             <?php endif; ?>
             <div class="max-w-6xl mx-auto px-6 pb-16">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.491802868451!2d115.1211551!3d-8.5486154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23bbcadf71b29%3A0x47932c18a19d26e4!2sCV.%20Kusuma%20Trisna%20Bali!5e0!3m2!1sid!2sid!4v1770969154441!5m2!1sid!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.491802868451!2d115.1211551!3d-8.5486154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23bbcadf71b29%3A0x47932c18a19d26e4!2sCV.%20Kusuma%20Trisna%20Bali!5e0!3m2!1sid!2sid!4v1770969154441!5m2!1sid!2sid" title="Lokasi Kusuma Trisna Bali di Google Maps" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
             <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
 
@@ -202,7 +201,7 @@
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Alamat</h4>
+                                <h3 class="font-medium text-gray-900">Alamat</h3>
                                 <p class="text-gray-600 text-sm">
                                     Jl By Pass Jl. Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken,<br> Kec. Tabanan, Kabupaten Tabanan, Bali 82113
                                 </p>
@@ -214,7 +213,7 @@
                                 <i class="fa-solid fa-phone"></i>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Sales</h4>
+                                <h3 class="font-medium text-gray-900">Sales</h3>
                                 <p class="text-gray-600 text-sm">
                                     +62 877-7992-8897
                                 </p>
@@ -225,7 +224,7 @@
                                 <i class="fa-solid fa-phone"></i>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Services</h4>
+                                <h3 class="font-medium text-gray-900">Services</h3>
                                 <p class="text-gray-600 text-sm">
                                     +62 812-3830-0513
                                 </p>
@@ -236,7 +235,7 @@
                                 <i class="fa-solid fa-envelope"></i>
                             </div>
                             <div>
-                                <h4 class="font-medium text-gray-900">Email</h4>
+                                <h3 class="font-medium text-gray-900">Email</h3>
                                 <p class="text-gray-600 text-sm">
                                     info@kusumatrisnabali.com
                                 </p>
@@ -312,25 +311,51 @@
     <!-- Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        document.querySelector('form[action="send-mail.php"]').addEventListener('submit', function(event) {
+        const contactForm = document.querySelector('form[action="send-mail.php"]');
+        const recaptchaSiteKey = '6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc';
+
+        function loadRecaptcha() {
+            if (window.grecaptcha) {
+                return Promise.resolve(window.grecaptcha);
+            }
+
+            return new Promise(function(resolve, reject) {
+                const script = document.createElement('script');
+                script.src = 'https://www.google.com/recaptcha/api.js?render=' + recaptchaSiteKey;
+                script.onload = function() {
+                    resolve(window.grecaptcha);
+                };
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
             const form = this;
             const submitButton = form.querySelector('button[type="submit"]');
             submitButton.disabled = true;
 
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc', {
-                        action: 'contact'
-                    })
-                    .then(function(token) {
-                        document.getElementById('recaptchaToken').value = token;
-                        form.submit();
-                    })
-                    .catch(function() {
-                        submitButton.disabled = false;
-                        window.location.href = 'contact.php?status=captcha';
+            loadRecaptcha()
+                .then(function(recaptcha) {
+                    recaptcha.ready(function() {
+                        recaptcha.execute(recaptchaSiteKey, {
+                                action: 'contact'
+                            })
+                            .then(function(token) {
+                                document.getElementById('recaptchaToken').value = token;
+                                form.submit();
+                            })
+                            .catch(function() {
+                                submitButton.disabled = false;
+                                window.location.href = 'contact.php?status=captcha';
+                            });
                     });
-            });
+                })
+                .catch(function() {
+                    submitButton.disabled = false;
+                    window.location.href = 'contact.php?status=captcha';
+                });
         });
     </script>
     <script>
