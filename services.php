@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Layanan Service Elektronik | Kusuma Trisna Bali - Tabanan Bali</title>
+    <title>Layanan Service Elektronik | Service Hisense - Tabanan Bali</title>
 
     <meta name="description" content="Kusuma Trisna Bali menyediakan layanan service dan perbaikan berbagai produk elektronik di Tabanan, Bali. Didukung teknisi berpengalaman untuk perbaikan TV, mesin cuci, kulkas, audio, dan berbagai perangkat elektronik lainnya.">
 
