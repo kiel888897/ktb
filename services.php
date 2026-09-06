@@ -352,7 +352,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
                             1
                         </div>
-                        <h4 class="font-semibold text-gray-900 mb-2">Konsultasi</h4>
+                        <h3 class="font-semibold text-gray-900 mb-2">Konsultasi</h3>
                         <p class="text-sm text-gray-600">
                             Diskusi awal untuk memahami kebutuhan.
                         </p>
@@ -362,7 +362,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
                             2
                         </div>
-                        <h4 class="font-semibold text-gray-900 mb-2">Perencanaan</h4>
+                        <h3 class="font-semibold text-gray-900 mb-2">Perencanaan</h3>
                         <p class="text-sm text-gray-600">
                             Menyusun strategi dan solusi.
                         </p>
@@ -372,7 +372,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
                             3
                         </div>
-                        <h4 class="font-semibold text-gray-900 mb-2">Implementasi</h4>
+                        <h3 class="font-semibold text-gray-900 mb-2">Implementasi</h3>
                         <p class="text-sm text-gray-600">
                             Pelaksanaan layanan secara profesional.
                         </p>
@@ -382,7 +382,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
                         <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
                             4
                         </div>
-                        <h4 class="font-semibold text-gray-900 mb-2">Evaluasi</h4>
+                        <h3 class="font-semibold text-gray-900 mb-2">Evaluasi</h3>
                         <p class="text-sm text-gray-600">
                             Monitoring dan peningkatan berkelanjutan.
                         </p>
