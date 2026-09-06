@@ -126,7 +126,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
         <section class="relative py-20">
             <div class="absolute inset-0">
                 <img src="assets/img/slider1.jpg"
-                    class="w-full h-full object-cover">
+                    class="w-full h-full object-cover"
+                    alt="Layanan service dan perbaikan elektronik Kusuma Trisna Bali">
                 <div class="absolute inset-0 bg-black/40"></div>
             </div>
 
