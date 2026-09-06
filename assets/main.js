@@ -50,38 +50,46 @@ closeBtn.onclick = () => {
   setTimeout(() => mobileMenu.classList.add("hidden"), 300);
   document.body.classList.remove("overflow-hidden");
 };
-//hero swiper
-new Swiper(".heroSwiper", {
-  loop: true,
-  speed: 800,
-  autoplay: {
-    delay: 5000,
-    disableOnInteraction: false,
-  },
-  pagination: {
-    el: ".heroSwiper .swiper-pagination",
-    clickable: true,
-  },
-});
-//brand swiper
-const brandSwiper = new Swiper(".brandSwiper", {
-  loop: true,
-  speed: 3000,
-  autoplay: {
-    delay: 0,
-    disableOnInteraction: false,
-  },
-  slidesPerView: 2,
-  spaceBetween: 30,
-  breakpoints: {
-    640: {
-      slidesPerView: 3,
-    },
-    768: {
-      slidesPerView: 4,
-    },
-    1024: {
-      slidesPerView: 6,
-    },
-  },
-});
+if (typeof Swiper !== "undefined") {
+  const heroElement = document.querySelector(".heroSwiper");
+  const brandElement = document.querySelector(".brandSwiper");
+
+  if (heroElement) {
+    new Swiper(heroElement, {
+      loop: true,
+      speed: 800,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".heroSwiper .swiper-pagination",
+        clickable: true,
+      },
+    });
+  }
+
+  if (brandElement) {
+    new Swiper(brandElement, {
+      loop: true,
+      speed: 3000,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+      },
+      slidesPerView: 2,
+      spaceBetween: 30,
+      breakpoints: {
+        640: {
+          slidesPerView: 3,
+        },
+        768: {
+          slidesPerView: 4,
+        },
+        1024: {
+          slidesPerView: 6,
+        },
+      },
+    });
+  }
+}
