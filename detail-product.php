@@ -379,8 +379,8 @@ $seoUrl = 'https://kusumatrisnabali.com/product-detail.php?slug=' . urlencode($p
                         <!-- WHATSAPP -->
                         <a href="https://wa.me/6287779928897?text=Halo%20Kusuma%20Trisna%20Bali%2C%20saya%20tertarik%20dengan%20produk%20<?= urlencode($product['name']); ?>.%20Bisakah%20saya%20mendapatkan%20informasi%20lebih%20lanjut%3F"
                             target="_blank"
-                            class="inline-flex items-center px-6 py-3 bg-green-600 text-white
-                          rounded-lg font-medium hover:bg-green-700 transition">
+                            class="inline-flex items-center px-6 py-3 bg-green-700 text-white
+                                                    rounded-lg font-medium hover:bg-green-800 transition">
                             <i class="fa-brands fa-whatsapp mr-2 text-lg"></i>
                             WhatsApp
                         </a>
