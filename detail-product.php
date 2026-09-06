@@ -94,7 +94,7 @@ $company = "Kusuma Trisna Bali";
 $location = "Tabanan, Bali";
 
 // Judul SEO
-$seoTitle = $product['subcategory_name'] . ' ' . $product['brand_name'] . ' ' . $product['name'];
+$seoTitle = $product['subcategory_name'] . ', ' . $product['brand_name'] . ', ' . $product['name'];
 
 if (!empty($product['tagline'])) {
     $seoTitle .= ' | ' . trim(strip_tags($product['tagline']));
@@ -159,10 +159,11 @@ $keywords = array_unique($keywords);
 $seoKeywords = implode(', ', $keywords);
 
 $seoImage = !empty($images[0]['image'])
-    ? 'https://kusumatrisnabali.com/admin/uploads/products/' . $images[0]['image']
-    : 'https://kusumatrisnabali.com/assets/images/logo.png';
+    ? 'https://www.kusumatrisnabali.com/admin/uploads/products/' . rawurlencode($images[0]['image'])
+    : 'https://www.kusumatrisnabali.com/assets/img/logo.png';
 
-$seoUrl = 'https://kusumatrisnabali.com/product-detail.php?slug=' . urlencode($product['slug']);
+$seoUrl = 'https://www.kusumatrisnabali.com/detail-product.php?slug=' . rawurlencode($product['slug']);
+$seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -173,21 +174,17 @@ $seoUrl = 'https://kusumatrisnabali.com/product-detail.php?slug=' . urlencode($p
     <title><?= htmlspecialchars($seoTitle) ?></title>
     <meta name="description" content="<?= htmlspecialchars($seoDescription) ?>">
     <meta name="keywords" content="<?= htmlspecialchars($seoKeywords) ?>">
-    <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
-    <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
-    <meta property="og:image" content="<?= htmlspecialchars($seoImage) ?>">
+    <meta property="og:type" content="product">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:title" content="<?= htmlspecialchars($seoTitle, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seoDescription, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($seoImage, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:image:alt" content="<?= htmlspecialchars($seoImageAlt, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:url" content="<?= htmlspecialchars($seoUrl) ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($seoUrl, ENT_QUOTES, 'UTF-8') ?>">
     <link rel="icon" href="admin/favicon.ico">
     <meta name="robots" content="index, follow">
-    <meta property="og:type" content="product">
-    <!-- open graph meta tags -->
-    <meta property="og:title" content="<?= htmlspecialchars($seoTitle) ?>">
-    <meta property="og:description" content="<?= htmlspecialchars($seoDescription) ?>">
-    <meta property="og:image" content="<?= $seoImage ?>">
-    <meta property="og:url" content="<?= $seoUrl ?>">
-    <meta property="og:site_name" content="Kusuma Trisna Bali">
     <!-- twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?= htmlspecialchars($seoTitle) ?>">
