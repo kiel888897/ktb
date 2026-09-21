@@ -169,6 +169,7 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
 <html lang="id">
 
 <head>
+    <?php include 'tag-google.php'; ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($seoTitle) ?></title>

@@ -88,6 +88,7 @@ $page_title = $current_brand
 <html lang="id">
 
 <head>
+    <?php include 'tag-google.php'; ?>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($page_title); ?></title>
     <link rel="icon" href="admin/favicon.ico">

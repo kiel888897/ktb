@@ -78,6 +78,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="id">
 
 <head>
+    <?php include 'tag-google.php'; ?>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($product['name']); ?> | Kusuma Trisna Bali</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
