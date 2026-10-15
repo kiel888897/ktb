@@ -273,7 +273,7 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
                 <div class="inline-flex items-center gap-2 px-4 py-2 text-white mb-6"
                     data-aos="fade-up">
 
-                    <a href="index.php"
+                    <a href="/"
                         class="hover:text-primary transition">
                         Home
                     </a>

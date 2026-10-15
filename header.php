@@ -5,15 +5,15 @@
      <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
 
          <!-- LOGO -->
-         <div class="flex items-center gap-3">
+         <a href="/" class="flex items-center gap-3" aria-label="Kusuma Trisna Bali - Beranda">
              <img src="assets/img/logo.png" class="h-9" alt="Kusuma Trisna Bali">
              <span id="logoNav" class="font-bold text-lg text-white transition-colors">Kusuma Trisna Bali</span>
-         </div>
+         </a>
 
          <!-- DESKTOP NAV -->
          <nav id="desktopNav"
              class="hidden lg:flex gap-10 font-medium text-white transition-colors duration-300">
-             <a href="index.php" class="hover:text-primary">Home</a>
+             <a href="/" class="hover:text-primary">Home</a>
              <a href="about.php" class="hover:text-primary">About</a>
              <a href="products.php" class="hover:text-primary">Produk</a>
              <a href="services.php" class="hover:text-primary">Service</a>
@@ -48,7 +48,9 @@
 
          <!-- HEADER MENU -->
          <div class="flex items-center justify-between p-6 border-b">
-             <img src="assets/img/logo.png" class="h-9" alt="Kusuma Trisna Bali">
+             <a href="/" aria-label="Kusuma Trisna Bali - Beranda">
+                 <img src="assets/img/logo.png" class="h-9" alt="Kusuma Trisna Bali">
+             </a>
              <button id="closeMenu" class="text-2xl text-gray-700">
                  <i class="fa fa-xmark"></i>
              </button>
@@ -57,7 +59,7 @@
          <!-- MENU ITEMS -->
          <nav class="p-6 flex flex-col gap-6 text-gray-900 font-semibold text-lg">
 
-             <a href="index.php" class="flex items-center gap-4 hover:text-primary">
+             <a href="/" class="flex items-center gap-4 hover:text-primary">
                  <i class="fa fa-house text-primary"></i> Home
              </a>
 

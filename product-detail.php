@@ -119,7 +119,7 @@ $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="relative max-w-6xl mx-auto px-6 text-white">
                 <div class="mb-4 text-sm">
-                    <a href="index.php" class="hover:text-primary">Home</a> /
+                    <a href="/" class="hover:text-primary">Home</a> /
                     <a href="products.php" class="hover:text-primary">Produk</a> /
                     <span class="text-primary font-semibold"><?= htmlspecialchars($product['name']); ?></span>
                 </div>

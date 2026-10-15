@@ -5,7 +5,7 @@
         <!-- Brand -->
         <div>
             <h3 class="text-xl font-bold text-white mb-4">
-                Kusuma Trisna Bali
+                <a href="/">Kusuma Trisna Bali</a>
             </h3>
             <p class="text-sm leading-relaxed">
                 Distribusi dan layanan perbaikan produk elektronik
@@ -20,7 +20,7 @@
             </h4>
             <ul class="space-y-2 text-sm">
                 <li>
-                    <a href="index.php" class="hover:text-primary transition">
+                    <a href="/" class="hover:text-primary transition">
                         Home
                     </a>
                 </li>

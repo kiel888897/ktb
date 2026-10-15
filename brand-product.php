@@ -157,7 +157,7 @@ $page_title = $current_brand
                     <?php
                     $brandLogo = !empty($current_brand['logo'])
                         ? "admin/uploads/brands/" . $current_brand['logo']
-                        : "admin/assets/img/brand-placeholder.png";
+                        : "assets/img/brand-placeholder.png";
                     ?>
 
                     <div class="mb-14">
@@ -216,7 +216,7 @@ $page_title = $current_brand
                         $img = $p['image'] ?? '';
                         $imgPath = $img
                             ? "admin/uploads/products/" . $img
-                            : "admin/assets/img/product-placeholder.png";
+                            : "assets/img/product-placeholder.png";
                         ?>
 
                         <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">

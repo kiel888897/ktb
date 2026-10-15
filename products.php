@@ -401,7 +401,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($products as $p): ?>
                         <?php
                         $img = $p['image'] ?? '';
-                        $imgPath = $img ? "admin/uploads/products/" . $img : "admin/assets/img/product-placeholder.png";
+                        $imgPath = $img ? "admin/uploads/products/" . $img : "assets/img/product-placeholder.png";
                         ?>
                         <!-- <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition"> -->
                         <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">
