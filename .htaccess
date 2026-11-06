@@ -8,7 +8,8 @@ ErrorDocument 404 /404.php
 
     # Domain tanpa www -> https://www (HTTP->HTTPS sudah ditangani hosting)
     RewriteCond %{HTTP_HOST} ^kusumatrisnabali\.com$ [NC]
-    RewriteRule ^ https://www.kusumatrisnabali.com%{REQUEST_URI} [L,R=301]
+    # Pakai $1 (path relatif folder ini); %{REQUEST_URI} di hosting ini ikut membawa nama subfolder
+    RewriteRule ^(.*)$ https://www.kusumatrisnabali.com/$1 [L,R=301]
 
     # /index.php -> /
     RewriteCond %{THE_REQUEST} \s/+index\.php[\s?] [NC]
@@ -24,7 +25,7 @@ ErrorDocument 404 /404.php
 
 # Jangan indeks area admin (kecuali gambar upload yang dipakai halaman publik)
 <IfModule mod_headers.c>
-    <If "%{REQUEST_URI} =~ m#^/admin/# && %{REQUEST_URI} !~ m#^/admin/uploads/#">
+    <If "%{REQUEST_URI} =~ m#/admin/# && %{REQUEST_URI} !~ m#/admin/uploads/#">
         Header set X-Robots-Tag "noindex, nofollow"
     </If>
 </IfModule>
