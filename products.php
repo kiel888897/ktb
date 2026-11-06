@@ -268,20 +268,9 @@ $noindex = $search !== ''
     jsonld(breadcrumb_ld([['Beranda', $site . '/'], ['Produk', $site . '/products.php']]));
     ?>
 
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#c1121f'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
 
 <body class="text-gray-800 bg-gray-50">

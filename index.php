@@ -113,7 +113,6 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kusuma Trisna Bali">
 
-    <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
@@ -122,20 +121,9 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#c1121f',
-                        darkred: '#780000'
-                    }
-                }
-            }
-        }
-    </script>
     <link rel="stylesheet" href="assets/style.css">
     <?php include 'schema-store.php'; ?>
+    <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">

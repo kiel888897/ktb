@@ -1,3 +1,4 @@
 admin/config/
 admin/uploads/
 .serena/
+node_modules/
