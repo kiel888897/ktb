@@ -20,24 +20,22 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Tentang Kami | Kusuma Trisna Bali - Distributor & Service Elektronik</title>
+    <title>Tentang Kusuma Trisna Bali | Distributor Elektronik Tabanan</title>
 
-    <meta name="description" content="Kenali Kusuma Trisna Bali, perusahaan yang berdiri sejak tahun 2019 dan bergerak di bidang distribusi serta layanan perbaikan berbagai produk elektronik di Tabanan, Bali. Kami menyediakan produk resmi, layanan teknis profesional, dan pelayanan terbaik bagi pelanggan.">
+    <meta name="description" content="Profil Kusuma Trisna Bali: distributor dan pusat service elektronik di Tabanan, Bali sejak 2019, dengan produk resmi dan teknisi berpengalaman.">
 
-    <meta name="keywords" content="Tentang Kusuma Trisna Bali, Profil Kusuma Trisna Bali, Distributor Elektronik Bali, Service Elektronik Tabanan, Elektronik Bali, Toko Elektronik Tabanan">
 
-    <meta name="author" content="Kusuma Trisna Bali">
     <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
     <link rel="canonical" href="https://www.kusumatrisnabali.com/about.php">
 
-    <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-    <meta name="theme-color" content="#0056b3">
+    <meta name="theme-color" content="#c1121f">
 
     <!-- Open Graph -->
     <meta property="og:type" content="article">
@@ -47,7 +45,7 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/about-og.jpg">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="674">
     <meta property="og:image:alt" content="Tentang Kusuma Trisna Bali">
     <meta property="og:locale" content="id_ID">
 
@@ -57,43 +55,32 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="twitter:description" content="Mengenal lebih dekat Kusuma Trisna Bali sebagai distributor dan pusat layanan elektronik terpercaya di Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/about-og.jpg">
 
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            "name": "Tentang Kusuma Trisna Bali",
-            "url": "https://www.kusumatrisnabali.com/about.php",
-            "description": "Profil Kusuma Trisna Bali, distributor dan pusat layanan perbaikan elektronik di Tabanan, Bali sejak tahun 2019.",
-            "mainEntity": {
-                "@type": "ElectronicsStore",
-                "name": "Kusuma Trisna Bali",
-                "url": "https://www.kusumatrisnabali.com/",
-                "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
-                "image": "https://www.kusumatrisnabali.com/assets/about-og.jpg",
-                "foundingDate": "2019",
-                "telephone": "+6287779928897",
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Tabanan",
-                    "addressRegion": "Bali",
-                    "addressCountry": "ID"
-                }
-            }
-        }
-    </script>
+    <?php
+    include 'schema-store.php';
+    jsonld([
+        '@context' => 'https://schema.org',
+        '@type' => 'AboutPage',
+        'name' => 'Tentang Kusuma Trisna Bali',
+        'url' => SITE_URL . '/about.php',
+        'description' => 'Profil Kusuma Trisna Bali, distributor dan pusat layanan perbaikan elektronik di Tabanan, Bali sejak tahun 2019.',
+        'isPartOf' => ['@id' => SITE_URL . '/#website'],
+        'mainEntity' => ['@id' => SITE_URL . '/#store'],
+    ]);
+    jsonld(breadcrumb_ld([['Beranda', SITE_URL . '/'], ['Tentang Kami', SITE_URL . '/about.php']]));
+    ?>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind Config -->
     <script>
@@ -120,8 +107,8 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <section class="relative py-32">
             <!-- Background Image -->
             <div class="absolute inset-0">
-                <img src="assets/img/slider4.jpg"
-                    alt="About Kusuma Trisna Bali"
+                <img src="assets/img/slider4.webp" width="1920" height="1075" fetchpriority="high"
+                    alt="Tentang Kusuma Trisna Bali"
                     class="w-full h-full object-cover">
                 <!-- Overlay -->
                 <div class="absolute inset-0 bg-black/20"></div>
@@ -171,8 +158,8 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div data-aos="fade-left">
-                    <img src="assets/img/slider1.jpg"
-                        alt="Team Kusuma Trisna Bali"
+                    <img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy"
+                        alt="Tim Kusuma Trisna Bali"
                         class="rounded-xl shadow-md">
                 </div>
 
@@ -267,7 +254,8 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <a href="products.php?partner=<?= $partner['slug']; ?>">
                                     <img
                                         src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                                        alt="<?= htmlspecialchars($partner['name']); ?>"
+                                        alt="Logo <?= htmlspecialchars($partner['name']); ?>"
+                                        loading="lazy" decoding="async"
                                         class="h-auto object-contain                            hover:grayscale-0 hover:opacity-100 transition">
 
                                 </a>
@@ -285,7 +273,7 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Script -->
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({

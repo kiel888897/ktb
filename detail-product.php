@@ -21,6 +21,7 @@ $sql = "
     SELECT
         p.*,
         b.name AS brand_name,
+        b.slug AS brand_slug,
         c.name AS category_name,
         s.name AS subcategory_name
     FROM products p
@@ -35,7 +36,7 @@ $stmt->execute([$slug]);
 $product = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$product) {
-    header('Location: products.php');
+    include __DIR__ . '/404.php';
     exit;
 }
 
@@ -87,83 +88,67 @@ $relStmt->execute([
 
 $related = $relStmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Nama perusahaan
-$company = "Kusuma Trisna Bali";
+$site = 'https://www.kusumatrisnabali.com';
+$clean = fn($s) => trim(preg_replace('/\s+/u', ' ', strip_tags((string) $s)));
 
-// Lokasi SEO
-$location = "Tabanan, Bali";
+// URL gambar (relatif untuk <img>, absolut untuk meta/schema)
+$imgSrc = fn(string $file): string => $file === 'product-placeholder.png'
+    ? 'assets/img/product-placeholder.webp'
+    : 'admin/uploads/products/' . rawurlencode($file);
 
-// Judul SEO
-$seoTitle = $product['subcategory_name'] . ' ' . $product['brand_name'] . ' ' . $product['name'];
-
-if (!empty($product['tagline'])) {
-    $seoTitle .= ' | ' . trim(strip_tags($product['tagline']));
+// Judul SEO: "<Nama> <Model> - <Brand> | Kusuma Trisna Bali" (maks ~65 karakter)
+$titleCore = $clean($product['name']);
+if (!empty($product['model']) && mb_stripos($titleCore, $clean($product['model'])) === false) {
+    $titleCore .= ' ' . $clean($product['model']);
 }
-
+if (mb_stripos($titleCore, $clean($product['brand_name'])) === false) {
+    $titleCore .= ' - ' . $clean($product['brand_name']);
+}
+$seoTitle = $titleCore . ' | Kusuma Trisna Bali';
+if (mb_strlen($seoTitle) > 65) {
+    $seoTitle = $titleCore;
+}
 
 // Description
-$seoDescription = '';
+$seoDescription = $clean(
+    (!empty($product['tagline']) ? $clean($product['tagline']) . '. ' : '')
+        . $clean($product['short_description'])
+        . ' Tersedia di Kusuma Trisna Bali, distributor '
+        . mb_strtolower($product['subcategory_name'])
+        . ' ' . $product['brand_name'] . ' di Tabanan, Bali.'
+);
+$seoDescription = mb_strimwidth($seoDescription, 0, 160, '…', 'UTF-8');
 
-if (!empty($product['tagline'])) {
-    $seoDescription .= trim(strip_tags($product['tagline'])) . '. ';
+$seoImages = array_map(fn($i) => $site . '/' . $imgSrc($i['image']), $images);
+$seoImage = $seoImages[0];
+
+$seoUrl = $site . '/detail-product.php?slug=' . rawurlencode($product['slug']);
+$seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
+
+$productLd = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Product',
+    '@id' => $seoUrl . '#product',
+    'name' => $clean($product['name']),
+    'url' => $seoUrl,
+    'image' => $seoImages,
+    'description' => $clean($product['short_description'] ?: $seoDescription),
+    'brand' => ['@type' => 'Brand', 'name' => $clean($product['brand_name'])],
+    'category' => $clean($product['category_name'] . ' > ' . $product['subcategory_name']),
+];
+if (!empty($product['model'])) {
+    $productLd['model'] = $clean($product['model']);
+    $productLd['mpn'] = $clean($product['model']);
 }
 
-$seoDescription .= trim(strip_tags($product['short_description'])) . ' ';
-
-$seoDescription .= "Tersedia di $company, supplier dan distributor "
-    . strtolower($product['category_name'])
-    . " serta "
-    . strtolower($product['subcategory_name'])
-    . " di $location. "
-    . "Melayani kebutuhan proyek, industri, hotel, villa, kontraktor, dan rumah tangga di seluruh Bali.";
-
-$seoDescription = substr($seoDescription, 0, 160);
-
-
-// Keywords
-$keywords = [
-    $product['name'],
-    $product['model'],
-    $product['brand_name'],
-    $product['category_name'],
-    $product['subcategory_name'],
-    $product['tagline'],
-
-    "Elektronik Bali",
-    "Electrical Bali",
-    "Service Elektronik Bali",
-    "Service Elektronik Tabanan",
-    "service elektronik Denpasar",
-    "service elektronik Badung",
-    "Industrial Equipment Bali",
-    "Power Tools Bali",
-    "Supplier Bali",
-    "Distributor Bali",
-    "Tabanan",
-    "Denpasar",
-    "Badung",
-    "Gianyar",
-    "Ubud",
-    "Sanur",
-    "Nusa Dua",
-    "Jimbaran",
-    "Kusuma Trisna Bali"
+$breadcrumbItems = [
+    ['Beranda', $site . '/'],
+    ['Produk', $site . '/products.php'],
 ];
-
-// Hapus yang kosong
-$keywords = array_filter($keywords);
-
-// Hapus duplikat
-$keywords = array_unique($keywords);
-
-$seoKeywords = implode(', ', $keywords);
-
-$seoImage = !empty($images[0]['image'])
-    ? 'https://www.kusumatrisnabali.com/admin/uploads/products/' . rawurlencode($images[0]['image'])
-    : 'https://www.kusumatrisnabali.com/assets/img/logo.png';
-
-$seoUrl = 'https://www.kusumatrisnabali.com/detail-product.php?slug=' . rawurlencode($product['slug']);
-$seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
+if (!empty($product['brand_slug'] ?? '')) {
+    $breadcrumbItems[] = [$product['brand_name'], $site . '/brand-product.php?brand=' . rawurlencode($product['brand_slug'])];
+}
+$breadcrumbItems[] = [$clean($product['name']), $seoUrl];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -174,35 +159,38 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($seoTitle) ?></title>
     <meta name="description" content="<?= htmlspecialchars($seoDescription) ?>">
-    <meta name="keywords" content="<?= htmlspecialchars($seoKeywords) ?>">
+    <link rel="canonical" href="<?= htmlspecialchars($seoUrl, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:type" content="product">
+    <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:title" content="<?= htmlspecialchars($seoTitle, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:description" content="<?= htmlspecialchars($seoDescription, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:image" content="<?= htmlspecialchars($seoImage, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:image:alt" content="<?= htmlspecialchars($seoImageAlt, ENT_QUOTES, 'UTF-8') ?>">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     <meta property="og:url" content="<?= htmlspecialchars($seoUrl, ENT_QUOTES, 'UTF-8') ?>">
-    <link rel="icon" href="admin/favicon.ico">
-    <meta name="robots" content="index, follow">
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <meta name="theme-color" content="#c1121f">
+    <meta name="robots" content="index, follow, max-image-preview:large">
     <!-- twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?= htmlspecialchars($seoTitle) ?>">
     <meta name="twitter:description" content="<?= htmlspecialchars($seoDescription) ?>">
-    <meta name="twitter:image" content="<?= $seoImage ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($seoImage, ENT_QUOTES, 'UTF-8') ?>">
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <!-- Swiper -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" />
 
     <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind Config -->
     <script>
@@ -234,23 +222,11 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
             max-width: 100%;
         }
     </style>
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Product",
-            "name": "<?= addslashes($product['name']) ?>",
-            "image": [
-                "<?= $seoImage ?>"
-            ],
-            "description": "<?= addslashes(strip_tags($seoDescription)) ?>",
-            "brand": {
-                "@type": "Brand",
-                "name": "<?= addslashes($product['brand_name']) ?>"
-            },
-            "category": "<?= addslashes($product['category_name']) ?>",
-            "url": "<?= $seoUrl ?>"
-        }
-    </script>
+    <?php
+    include 'schema-store.php';
+    jsonld($productLd);
+    jsonld(breadcrumb_ld($breadcrumbItems));
+    ?>
 </head>
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
@@ -260,7 +236,7 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
         <section class="relative pt-40 pb-32">
             <!-- Background -->
             <div class="absolute inset-0">
-                <img src="assets/img/slider8.jpg"
+                <img src="assets/img/slider8.webp" width="1920" height="1080" fetchpriority="high"
                     class="w-full h-full object-cover"
                     alt="Produk Kusuma Trisna Bali">
                 <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20"></div>
@@ -270,7 +246,7 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
             <div class="relative max-w-6xl mx-auto px-6 text-center">
 
                 <!-- Breadcrumb -->
-                <div class="inline-flex items-center gap-2 px-4 py-2 text-white mb-6"
+                <nav aria-label="Breadcrumb" class="inline-flex items-center gap-2 px-4 py-2 text-white mb-6"
                     data-aos="fade-up">
 
                     <a href="/"
@@ -287,11 +263,13 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
 
                     <span class="opacity-70">/</span>
 
-                    <span class="font-semibold text-primary">
-                        Detail Produk
-                    </span>
+                    <?php if (!empty($product['brand_slug'])): ?>
+                    <a href="brand-product.php?brand=<?= urlencode($product['brand_slug']); ?>" class="hover:text-primary transition"><?= htmlspecialchars($product['brand_name']); ?></a>
+                    <span class="opacity-70">/</span>
+                    <?php endif; ?>
+                    <span class="font-semibold text-primary" aria-current="page"><?= htmlspecialchars($product['name']); ?></span>
 
-                </div>
+                </nav>
 
             </div>
 
@@ -310,12 +288,13 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
                             <div class="swiper-wrapper">
 
 
-                                <?php foreach ($images as $img): ?>
+                                <?php foreach ($images as $i => $img): ?>
                                     <div class="swiper-slide">
                                         <div class="flex items-center justify-center">
                                             <img
-                                                src="admin/uploads/products/<?= htmlspecialchars($img['image']); ?>"
-                                                alt="<?= htmlspecialchars($product['name']); ?>"
+                                                src="<?= htmlspecialchars($imgSrc($img['image'])); ?>"
+                                                alt="<?= htmlspecialchars($seoImageAlt . ($i ? ' - foto ' . ($i + 1) : '')); ?>"
+                                                width="600" height="420" <?= $i ? 'loading="lazy"' : '' ?>
                                                 class="w-full h-[300px] md:h-[420px] object-contain">
                                         </div>
                                     </div>
@@ -434,8 +413,9 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
                                 data-aos="fade-up">
                                 <div class="h-48 flex items-center justify-center bg-gray-50">
                                     <img
-                                        src="admin/uploads/products/<?= htmlspecialchars($r['image'] ?? 'default.png'); ?>"
+                                        src="<?= htmlspecialchars($imgSrc($r['image'] ?: 'product-placeholder.png')); ?>"
                                         alt="<?= htmlspecialchars($r['name']); ?>"
+                                        loading="lazy" decoding="async"
                                         class="object-contain">
 
                                 </div>
@@ -469,7 +449,7 @@ $seoImageAlt = $product['name'] . ' - ' . $product['brand_name'];
         });
     </script>
 
-    <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
     <script>
         const mainSwiper = new Swiper('.productMain', {
             loop: true,

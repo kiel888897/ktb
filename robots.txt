@@ -1,4 +1,9 @@
 User-agent: *
 Allow: /
+Allow: /admin/uploads/
+Disallow: /admin/
+Disallow: /tailadmin/
+Disallow: /mail/
+Disallow: /send-mail.php
 
 Sitemap: https://www.kusumatrisnabali.com/sitemap.xml

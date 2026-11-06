@@ -74,20 +74,16 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kusuma Trisna Bali | Distributor & Service Elektronik di Tabanan Bali</title>
+    <title>Distributor &amp; Service Elektronik Tabanan | Kusuma Trisna Bali</title>
 
-    <meta name="description" content="Kusuma Trisna Bali merupakan distributor dan pusat layanan perbaikan elektronik di Tabanan, Bali. Menyediakan berbagai produk elektronik resmi dari brand ternama dengan harga terbaik, layanan teknis profesional, dan garansi resmi.">
+    <meta name="description" content="Distributor dan service center elektronik resmi di Tabanan, Bali. Produk original dari brand ternama, teknisi profesional, dan garansi resmi.">
 
-    <meta name="keywords" content="Kusuma Trisna Bali, elektronik Tabanan, toko elektronik Bali, distributor elektronik Bali, service elektronik Bali, elektronik murah Tabanan, elektronik murah Bali, perbaikan elektronik, servis elektronik, sparepart elektronik, produk elektronik resmi, toko elektronik terpercaya, Tabanan Bali">
 
-    <meta name="author" content="Kusuma Trisna Bali">
     <meta name="robots" content="index, follow">
-    <meta name="language" content="id">
-    <meta name="revisit-after" content="7 days">
 
     <link rel="canonical" href="https://www.kusumatrisnabali.com/">
 
-    <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
@@ -100,8 +96,8 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
     <meta property="og:image:alt" content="Elektonik Kusuma Trisna Bali Tabanan">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:width" content="1000">
+    <meta property="og:image:height" content="563">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter Card -->
@@ -110,20 +106,21 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta name="twitter:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
 
-    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
-    <meta name="theme-color" content="#0056b3">
+    <meta name="theme-color" content="#c1121f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kusuma Trisna Bali">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -138,23 +135,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         }
     </script>
     <link rel="stylesheet" href="assets/style.css">
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "ElectronicsStore",
-            "name": "Kusuma Trisna Bali",
-            "url": "https://www.kusumatrisnabali.com/",
-            "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
-            "image": "https://www.kusumatrisnabali.com/assets/og-image.jpg",
-            "telephone": "+6287779928897",
-            "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Tabanan",
-                "addressRegion": "Bali",
-                "addressCountry": "ID"
-            }
-        }
-    </script>
+    <?php include 'schema-store.php'; ?>
 </head>
 
 <body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
@@ -171,9 +152,10 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <div class="swiper-slide relative">
 
                         <img
-                            src="assets/img/slider3.jpg"
+                            src="assets/img/slider3.webp"
+                            width="1920" height="1075" fetchpriority="high"
                             class="w-full h-full object-cover"
-                            alt="Authorized Service kusuma trisna bali">
+                            alt="Authorized service center elektronik Kusuma Trisna Bali di Tabanan">
 
                         <!-- Overlay -->
                         <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
@@ -187,8 +169,8 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                 </p>
 
                                 <h1 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
-                                    Solusi Layanan Resmi & Teknis
-                                    <span class="text-primary">Berkualitas Tinggi</span>
+                                    Distributor & Service Elektronik Resmi
+                                    <span class="text-primary">di Tabanan, Bali</span>
                                 </h1>
 
                                 <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
@@ -220,9 +202,10 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                     <div class="swiper-slide relative">
 
                         <img
-                            src="assets/img/slider2.jpg"
+                            src="assets/img/slider2.webp"
+                            width="1920" height="1075" loading="lazy"
                             class="w-full h-full object-cover"
-                            alt="Produk Terlaris kusuma trisna bali">
+                            alt="Produk elektronik terlaris Kusuma Trisna Bali">
 
                         <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
 
@@ -453,7 +436,8 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                                 <a href="brand-product.php?brand=<?= $brand['slug']; ?>">
                                     <img
                                         src="admin/uploads/brands/<?= htmlspecialchars($brand['logo']); ?>"
-                                        alt="<?= htmlspecialchars($brand['name']); ?>"
+                                        alt="Logo <?= htmlspecialchars($brand['name']); ?>"
+                                        loading="lazy" decoding="async"
                                         class="object-contain
            
            sm:hover:grayscale-0 sm:hover:opacity-100
@@ -495,8 +479,9 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                             <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
                                 <div class="relative aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
                                     <img
-                                        src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
+                                        src="<?= !empty($product['image']) ? 'admin/uploads/products/' . htmlspecialchars($product['image']) : 'assets/img/product-placeholder.webp'; ?>"
                                         alt="<?= htmlspecialchars($product['name']); ?>"
+                                        loading="lazy" decoding="async"
                                         class="max-h-full object-contain">
 
                                     <!-- Floating Model Badge -->
@@ -578,7 +563,8 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
                                 <div class="overflow-hidden rounded-t-2xl">
                                     <img
-                                        src="admin/uploads/products/<?= htmlspecialchars($product['image'] ?? 'default.png'); ?>"
+                                        src="<?= !empty($product['image']) ? 'admin/uploads/products/' . htmlspecialchars($product['image']) : 'assets/img/product-placeholder.webp'; ?>"
+                                        loading="lazy" decoding="async"
                                         class="w-full h-48 object-contain bg-white p-4"
                                         alt="<?= htmlspecialchars($product['name']); ?>">
 
@@ -684,7 +670,8 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
                             <img
                                 src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                                alt="<?= htmlspecialchars($partner['name']); ?>"
+                                alt="Logo <?= htmlspecialchars($partner['name']); ?>"
+                                loading="lazy" decoding="async"
                                 class="h-auto object-contain 
                                group-hover:grayscale-0 
                                group-hover:opacity-100
@@ -732,7 +719,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <div class="rounded-2xl overflow-hidden shadow-xl h-[320px] md:h-[380px] relative">
-                <img src="assets/img/promo1.jpg"
+                <img src="assets/img/promo1.webp" width="1384" height="1040" loading="lazy"
                     class="w-full h-full object-cover" alt="Toko Elektronik Kusuma Trisna Bali di Tabanan">
                 <div class="absolute inset-0 bg-black/10"></div>
             </div>
@@ -832,7 +819,7 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     </main>
     <?php include 'footer.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();

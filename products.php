@@ -162,6 +162,41 @@ $params[] = $offset;
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+/*
+|--------------------------------------------------------------------------
+| SEO: canonical, judul, robots
+|--------------------------------------------------------------------------
+*/
+$site = 'https://www.kusumatrisnabali.com';
+$nameBySlug = fn(array $rows, string $slug) => array_column($rows, 'name', 'slug')[$slug] ?? '';
+
+$canonParams = [];
+if ($brand_id > 0) $canonParams['brand'] = $brand_slug;
+if ($partner_id > 0) $canonParams['partner'] = $partner_slug;
+if ($category_id > 0) $canonParams['category'] = $category_slug;
+if ($subcategory_id > 0) $canonParams['subcategory'] = $subcategory_slug;
+if ($page > 1) $canonParams['page'] = $page;
+$canonical = $site . '/products.php' . ($canonParams ? '?' . http_build_query($canonParams) : '');
+
+$filterLabel = trim(implode(' ', array_filter([
+    $subcategory_id > 0 ? $nameBySlug($subcategories, $subcategory_slug) : ($category_id > 0 ? $nameBySlug($categories, $category_slug) : ''),
+    $brand_id > 0 ? $nameBySlug($brands, $brand_slug) : '',
+])));
+
+$seoTitle = $filterLabel !== ''
+    ? "Jual {$filterLabel} Resmi di Tabanan Bali | Kusuma Trisna Bali"
+    : 'Produk Elektronik Resmi di Tabanan Bali | Kusuma Trisna Bali';
+if ($page > 1) {
+    $seoTitle = "Halaman {$page} - " . $seoTitle;
+}
+
+// Hasil pencarian & filter tidak dikenal: jangan diindeks
+$noindex = $search !== ''
+    || ($brand_slug !== '' && $brand_id === 0)
+    || ($partner_slug !== '' && $partner_id === 0)
+    || ($category_slug !== '' && $category_id === 0)
+    || ($subcategory_slug !== '' && $subcategory_id === 0);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -171,82 +206,67 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Toko Elektronik Tabanan | Kusuma Trisna Bali - Toko Elektronik Tabanan</title>
+    <title><?= htmlspecialchars($seoTitle); ?></title>
 
-    <meta name="description" content="Temukan berbagai produk elektronik resmi dari brand ternama di Kusuma Trisna Bali. Menyediakan TV, mesin cuci, kulkas, audio, peralatan rumah tangga, sparepart elektronik, dan berbagai kebutuhan elektronik dengan harga kompetitif di Tabanan, Bali.">
+    <meta name="description" content="Katalog produk elektronik resmi Kusuma Trisna Bali di Tabanan: TV, kulkas, mesin cuci, showcase, audio, dan sparepart dari brand ternama.">
 
-    <meta name="keywords" content="Produk Elektronik Bali, Distributor Elektronik Bali, Toko Elektronik Tabanan, Elektronik Murah Bali, TV LED, Mesin Cuci, Kulkas, Audio, Sparepart Elektronik, Kusuma Trisna Bali">
 
-    <meta name="author" content="Kusuma Trisna Bali">
-    <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <?php if ($noindex): ?>
+        <meta name="robots" content="noindex, follow">
+    <?php else: ?>
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <?php endif; ?>
 
-    <link rel="canonical" href="https://www.kusumatrisnabali.com/products.php">
+    <link rel="canonical" href="<?= htmlspecialchars($canonical); ?>">
 
-    <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-    <meta name="theme-color" content="#0056b3">
+    <meta name="theme-color" content="#c1121f">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Toko Elektronik Tabanan | Kusuma Trisna Bali">
+    <meta property="og:title" content="<?= htmlspecialchars($seoTitle); ?>">
     <meta property="og:description" content="Berbagai produk elektronik resmi dari brand ternama dengan harga terbaik dan garansi resmi di Bali.">
-    <meta property="og:url" content="https://www.kusumatrisnabali.com/products.php">
+    <meta property="og:url" content="<?= htmlspecialchars($canonical); ?>">
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/products-og.jpg">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="674">
     <meta property="og:image:alt" content="Produk Elektronik Kusuma Trisna Bali">
     <meta property="og:locale" content="id_ID">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Toko Elektronik Tabanan | Kusuma Trisna Bali">
+    <meta name="twitter:title" content="<?= htmlspecialchars($seoTitle); ?>">
     <meta name="twitter:description" content="Distributor berbagai produk elektronik resmi dengan harga terbaik di Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/products-og.jpg">
 
     <!-- Schema.org -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "CollectionPage",
-            "name": "Toko Elektronik Tabanan Kusuma Trisna Bali",
-            "url": "https://www.kusumatrisnabali.com/products.php",
-            "description": "Halaman katalog produk elektronik resmi yang tersedia di Kusuma Trisna Bali.",
-            "mainEntity": {
-                "@type": "OfferCatalog",
-                "name": "Katalog Produk Elektronik",
-                "itemListElement": [{
-                        "@type": "OfferCatalog",
-                        "name": "Televisi"
-                    },
-                    {
-                        "@type": "OfferCatalog",
-                        "name": "Mesin Cuci"
-                    },
-                    {
-                        "@type": "OfferCatalog",
-                        "name": "Kulkas"
-                    },
-                    {
-                        "@type": "OfferCatalog",
-                        "name": "Audio & Speaker"
-                    },
-                    {
-                        "@type": "OfferCatalog",
-                        "name": "Peralatan Rumah Tangga"
-                    },
-                    {
-                        "@type": "OfferCatalog",
-                        "name": "Sparepart Elektronik"
-                    }
-                ]
-            }
-        }
-    </script>
+    <?php
+    include 'schema-store.php';
+    $itemList = [];
+    foreach (array_values($products) as $n => $p) {
+        $itemList[] = [
+            '@type' => 'ListItem',
+            'position' => $offset + $n + 1,
+            'url' => $site . '/detail-product.php?slug=' . rawurlencode($p['slug']),
+            'name' => $p['name'],
+        ];
+    }
+    jsonld([
+        '@context' => 'https://schema.org',
+        '@type' => 'CollectionPage',
+        'name' => $seoTitle,
+        'url' => $canonical,
+        'isPartOf' => ['@id' => $site . '/#website'],
+        'provider' => ['@id' => $site . '/#store'],
+        'mainEntity' => ['@type' => 'ItemList', 'numberOfItems' => $totalData, 'itemListElement' => $itemList],
+    ]);
+    jsonld(breadcrumb_ld([['Beranda', $site . '/'], ['Produk', $site . '/products.php']]));
+    ?>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -272,7 +292,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- HERO -->
         <section class="relative py-28">
             <div class="absolute inset-0">
-                <img src="assets/img/slider5.jpg" class="w-full h-full object-cover" alt="Produk">
+                <img src="assets/img/slider5.webp" width="1920" height="1080" fetchpriority="high" class="w-full h-full object-cover" alt="Produk elektronik resmi Kusuma Trisna Bali">
                 <div class="absolute inset-0 bg-black/40"></div>
             </div>
             <div class="relative max-w-6xl mx-auto px-6 text-center">
@@ -401,7 +421,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php foreach ($products as $p): ?>
                         <?php
                         $img = $p['image'] ?? '';
-                        $imgPath = $img ? "admin/uploads/products/" . $img : "assets/img/product-placeholder.png";
+                        $imgPath = $img ? "admin/uploads/products/" . $img : "assets/img/product-placeholder.webp";
                         ?>
                         <!-- <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition"> -->
                         <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">
@@ -421,7 +441,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <!-- Product Image -->
                                 <img
                                     src="<?= htmlspecialchars($imgPath); ?>"
-                                    alt="<?= htmlspecialchars($p['name']); ?>"
+                                    alt="<?= htmlspecialchars($p['name'] . ' - ' . $p['brand_name']); ?>"
+                                    loading="lazy" decoding="async"
                                     class="max-h-44 object-contain">
                             </div>
 

@@ -25,12 +25,15 @@ $current_brand = null;
 |--------------------------------------------------------------------------
 */
 if ($brand_slug !== '') {
-    $stmt = $pdo->prepare("SELECT id, name, description, logo FROM brands WHERE slug = ?");
+    $stmt = $pdo->prepare("SELECT id, slug, name, description, logo FROM brands WHERE slug = ?");
     $stmt->execute([$brand_slug]);
     $current_brand = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($current_brand) {
         $brand_id = $current_brand['id'];
+    } else {
+        include __DIR__ . '/404.php';
+        exit;
     }
 }
 
@@ -79,9 +82,24 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute([$brand_id]);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$site = 'https://www.kusumatrisnabali.com';
+$brandName = $current_brand['name'] ?? '';
 $page_title = $current_brand
-    ? $current_brand['name'] . " | Kusuma Trisna Bali"
+    ? "Produk {$brandName} Resmi di Tabanan Bali | Kusuma Trisna Bali"
     : "Brand Produk | Kusuma Trisna Bali";
+$canonical = $current_brand
+    ? $site . '/brand-product.php?brand=' . rawurlencode($current_brand['slug'])
+    : $site . '/brand-product.php';
+$brandDesc = trim(preg_replace('/\s+/u', ' ', strip_tags((string) ($current_brand['description'] ?? ''))));
+$metaDesc = mb_strimwidth(
+    $current_brand
+        ? "Daftar produk {$brandName} resmi di Kusuma Trisna Bali, distributor elektronik di Tabanan, Bali. " . $brandDesc
+        : 'Brand elektronik resmi yang didistribusikan Kusuma Trisna Bali di Tabanan, Bali.',
+    0, 160, '…', 'UTF-8'
+);
+$ogImage = !empty($current_brand['logo'])
+    ? $site . '/admin/uploads/brands/' . rawurlencode($current_brand['logo'])
+    : $site . '/assets/products-og.jpg';
 ?>
 
 <!DOCTYPE html>
@@ -90,9 +108,57 @@ $page_title = $current_brand
 <head>
     <?php include 'tag-google.php'; ?>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($page_title); ?></title>
-    <link rel="icon" href="admin/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($page_title); ?></title>
+    <meta name="description" content="<?= htmlspecialchars($metaDesc); ?>">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="<?= htmlspecialchars($canonical); ?>">
+
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <meta name="theme-color" content="#c1121f">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Kusuma Trisna Bali">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:title" content="<?= htmlspecialchars($page_title); ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($metaDesc); ?>">
+    <meta property="og:url" content="<?= htmlspecialchars($canonical); ?>">
+    <meta property="og:image" content="<?= htmlspecialchars($ogImage); ?>">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= htmlspecialchars($page_title); ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($metaDesc); ?>">
+    <meta name="twitter:image" content="<?= htmlspecialchars($ogImage); ?>">
+
+    <?php
+    include 'schema-store.php';
+    $itemList = [];
+    foreach (array_values($products) as $n => $p) {
+        $itemList[] = [
+            '@type' => 'ListItem',
+            'position' => $n + 1,
+            'url' => $site . '/detail-product.php?slug=' . rawurlencode($p['slug']),
+            'name' => $p['name'],
+        ];
+    }
+    jsonld([
+        '@context' => 'https://schema.org',
+        '@type' => 'CollectionPage',
+        'name' => $page_title,
+        'url' => $canonical,
+        'description' => $metaDesc,
+        'isPartOf' => ['@id' => $site . '/#website'],
+        'about' => $current_brand ? ['@type' => 'Brand', 'name' => $brandName] : null,
+        'provider' => ['@id' => $site . '/#store'],
+        'mainEntity' => ['@type' => 'ItemList', 'numberOfItems' => count($itemList), 'itemListElement' => $itemList],
+    ]);
+    jsonld(breadcrumb_ld(array_filter([
+        ['Beranda', $site . '/'],
+        ['Produk', $site . '/products.php'],
+        $current_brand ? [$brandName, $canonical] : null,
+    ])));
+    ?>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -118,13 +184,13 @@ $page_title = $current_brand
         <!-- HERO -->
         <section class="relative py-28">
             <div class="absolute inset-0">
-                <img src="assets/img/slider5.jpg" class="w-full h-full object-cover" alt="Brand Produk">
+                <img src="assets/img/slider5.webp" width="1920" height="1080" fetchpriority="high" class="w-full h-full object-cover" alt="Brand produk elektronik resmi Kusuma Trisna Bali">
                 <div class="absolute inset-0 bg-black/50"></div>
             </div>
 
             <div class="relative max-w-6xl mx-auto px-6 text-center text-white">
                 <h1 class="text-4xl font-semibold mb-4">
-                    Brand & Produk Resmi
+                    <?= $current_brand ? 'Produk ' . htmlspecialchars($brandName) . ' Resmi' : 'Brand & Produk Resmi'; ?>
                 </h1>
                 <p class="max-w-xl mx-auto text-white/90">
                     Pilih brand yang Anda butuhkan dan temukan berbagai produk original
@@ -141,7 +207,7 @@ $page_title = $current_brand
                 <div class="flex flex-wrap justify-center gap-3 mb-12">
                     <?php foreach ($brands as $b): ?>
                         <?php $active = ($b['id'] == $brand_id); ?>
-                        <a href="brand-product.php?brand=<?= $b['slug']; ?>"
+                        <a href="brand-product.php?brand=<?= urlencode($b['slug']); ?>"
                             class="px-5 py-2 rounded-full text-sm font-medium transition
                    <?= $active
                             ? 'bg-primary text-white shadow-md'
@@ -157,7 +223,7 @@ $page_title = $current_brand
                     <?php
                     $brandLogo = !empty($current_brand['logo'])
                         ? "admin/uploads/brands/" . $current_brand['logo']
-                        : "assets/img/brand-placeholder.png";
+                        : "assets/img/logo.png";
                     ?>
 
                     <div class="mb-14">
@@ -170,7 +236,8 @@ $page_title = $current_brand
                                 <div class="flex-shrink-0">
                                     <div class="w-40 h-28 flex items-center justify-center bg-gray-50 rounded-xl border">
                                         <img src="<?= htmlspecialchars($brandLogo); ?>"
-                                            alt="<?= htmlspecialchars($current_brand['name']); ?>"
+                                            alt="Logo <?= htmlspecialchars($current_brand['name']); ?>"
+                                            loading="lazy"
                                             class="max-h-20 object-contain">
                                     </div>
                                 </div>
@@ -216,7 +283,7 @@ $page_title = $current_brand
                         $img = $p['image'] ?? '';
                         $imgPath = $img
                             ? "admin/uploads/products/" . $img
-                            : "assets/img/product-placeholder.png";
+                            : "assets/img/product-placeholder.webp";
                         ?>
 
                         <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">
@@ -233,6 +300,7 @@ $page_title = $current_brand
 
                                 <img src="<?= htmlspecialchars($imgPath); ?>"
                                     alt="<?= htmlspecialchars($p['name']); ?>"
+                                    loading="lazy" decoding="async"
                                     class="max-h-44 object-contain">
                             </div>
 

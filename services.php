@@ -25,24 +25,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Layanan Service Elektronik | Service Hisense - Tabanan Bali</title>
+    <title>Service Elektronik &amp; Hisense di Tabanan Bali | Kusuma Trisna Bali</title>
 
-    <meta name="description" content="Kusuma Trisna Bali menyediakan layanan service dan perbaikan berbagai produk elektronik di Tabanan, Bali. Didukung teknisi berpengalaman untuk perbaikan TV, mesin cuci, kulkas, audio, dan berbagai perangkat elektronik lainnya.">
+    <meta name="description" content="Service TV, mesin cuci, kulkas, audio, dan elektronik lain di Tabanan, Bali oleh teknisi berpengalaman. Cek status service dengan kode service Anda.">
 
-    <meta name="keywords" content="Service Elektronik Bali, Service TV Bali, Service Mesin Cuci Bali, Service Kulkas Bali, Perbaikan Elektronik Tabanan, Teknisi Elektronik Bali, Kusuma Trisna Bali">
 
-    <meta name="author" content="Kusuma Trisna Bali">
     <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
     <link rel="canonical" href="https://www.kusumatrisnabali.com/services.php">
 
-    <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-    <meta name="theme-color" content="#0056b3">
+    <meta name="theme-color" content="#c1121f">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -52,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/services-og.jpg">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="674">
     <meta property="og:image:alt" content="Layanan Service Elektronik Kusuma Trisna Bali">
     <meta property="og:locale" content="id_ID">
 
@@ -62,45 +60,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     <meta name="twitter:description" content="Service dan perbaikan berbagai perangkat elektronik dengan dukungan teknisi profesional di Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/services-og.jpg">
 
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "Layanan Service Elektronik Kusuma Trisna Bali",
-            "provider": {
-                "@type": "ElectronicsStore",
-                "name": "Kusuma Trisna Bali",
-                "url": "https://www.kusumatrisnabali.com/",
-                "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
-                "telephone": "+6287779928897",
-                "address": {
-                    "@type": "PostalAddress",
-                    "addressLocality": "Tabanan",
-                    "addressRegion": "Bali",
-                    "addressCountry": "ID"
-                }
-            },
-            "serviceType": "Perbaikan dan Service Produk Elektronik",
-            "description": "Layanan service dan perbaikan berbagai produk elektronik dengan dukungan teknisi profesional.",
-            "areaServed": {
-                "@type": "AdministrativeArea",
-                "name": "Bali"
-            },
-            "url": "https://www.kusumatrisnabali.com/services.php"
-        }
-    </script>
+    <?php
+    include 'schema-store.php';
+    jsonld([
+        '@context' => 'https://schema.org',
+        '@type' => 'Service',
+        'name' => 'Service dan Perbaikan Elektronik',
+        'serviceType' => 'Perbaikan dan service produk elektronik',
+        'description' => 'Layanan service dan perbaikan TV, mesin cuci, kulkas, audio, dan perangkat elektronik lain oleh teknisi berpengalaman di Tabanan, Bali.',
+        'url' => SITE_URL . '/services.php',
+        'provider' => ['@id' => SITE_URL . '/#store'],
+        'areaServed' => ['@type' => 'AdministrativeArea', 'name' => 'Bali'],
+    ]);
+    jsonld(breadcrumb_ld([['Beranda', SITE_URL . '/'], ['Layanan Service', SITE_URL . '/services.php']]));
+    ?>
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script>
         tailwind.config = {
@@ -126,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
         <!-- HERO -->
         <section class="relative py-20">
             <div class="absolute inset-0">
-                <img src="assets/img/slider1.jpg"
+                <img src="assets/img/slider1.webp" width="1600" height="896" fetchpriority="high"
                     class="w-full h-full object-cover"
                     alt="Layanan service dan perbaikan elektronik Kusuma Trisna Bali">
                 <div class="absolute inset-0 bg-black/40"></div>
@@ -397,7 +381,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
 
 
     <!-- Script -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({

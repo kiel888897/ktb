@@ -8,22 +8,20 @@
 
     <title>Hubungi Kami | Kusuma Trisna Bali - Tabanan Bali</title>
 
-    <meta name="description" content="Hubungi Kusuma Trisna Bali untuk informasi produk elektronik, layanan service, konsultasi teknis, atau penawaran terbaik. Kami siap melayani pelanggan di Tabanan dan seluruh Bali.">
+    <meta name="description" content="Hubungi Kusuma Trisna Bali di Tabanan untuk info produk elektronik, service, dan penawaran. Telepon/WhatsApp +62 877-7992-8897.">
 
-    <meta name="keywords" content="Kontak Kusuma Trisna Bali, Hubungi Toko Elektronik Bali, Service Elektronik Tabanan, Distributor Elektronik Bali, Kontak Elektronik Bali">
 
-    <meta name="author" content="Kusuma Trisna Bali">
     <meta name="robots" content="index,follow">
-    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 
     <link rel="canonical" href="https://www.kusumatrisnabali.com/contact.php">
 
-    <link rel="icon" href="admin/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 
-    <meta name="theme-color" content="#0056b3">
+    <meta name="theme-color" content="#c1121f">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -33,7 +31,7 @@
     <meta property="og:site_name" content="Kusuma Trisna Bali">
     <meta property="og:image" content="https://www.kusumatrisnabali.com/assets/contact-og.jpg">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="887">
     <meta property="og:image:alt" content="Hubungi Kusuma Trisna Bali">
     <meta property="og:locale" content="id_ID">
 
@@ -43,76 +41,31 @@
     <meta name="twitter:description" content="Hubungi Kusuma Trisna Bali untuk informasi produk dan layanan elektronik di Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/contact-og.jpg">
 
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "ContactPage",
-            "name": "Hubungi Kusuma Trisna Bali",
-            "url": "https://www.kusumatrisnabali.com/contact.php",
-            "description": "Halaman kontak resmi Kusuma Trisna Bali.",
-            "mainEntity": {
-                "@type": "ElectronicsStore",
-                "name": "Kusuma Trisna Bali",
-                "url": "https://www.kusumatrisnabali.com/",
-                "logo": "https://www.kusumatrisnabali.com/assets/logo.png",
-                "image": "https://www.kusumatrisnabali.com/assets/contact-og.jpg",
-                "telephone": "+6287779928897",
-                "email": "info@kusumatrisnabali.com",
-                "address": {
-                    "@type": "PostalAddress",
-                    "streetAddress": "Jl. Jl By Pass Jl. Dr. Ir. Soekarno, Banjar Tegal Belodan",
-                    "addressLocality": "Tabanan",
-                    "addressRegion": "Bali",
-                    "postalCode": "82113",
-                    "addressCountry": "ID"
-                },
-                "geo": {
-                    "@type": "GeoCoordinates",
-                    "latitude": "-8.54850399878213",
-                    "longitude": "115.12117655767516"
-                },
-                "openingHoursSpecification": [{
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday"
-                    ],
-                    "opens": "08:00",
-                    "closes": "17:00"
-                }],
-                "contactPoint": {
-                    "@type": "ContactPoint",
-                    "telephone": "+6287779928897",
-                    "contactType": "customer service",
-                    "areaServed": "ID",
-                    "availableLanguage": [
-                        "Indonesian",
-                        "English"
-                    ]
-                },
-                "sameAs": [
-                    "https://www.facebook.com/kusumatrisnabali.ktb",
-                    "https://www.instagram.com/kusumatrisnabali"
-                ]
-            }
-        }
-    </script>
+    <?php
+    include 'schema-store.php';
+    jsonld([
+        '@context' => 'https://schema.org',
+        '@type' => 'ContactPage',
+        'name' => 'Hubungi Kusuma Trisna Bali',
+        'url' => SITE_URL . '/contact.php',
+        'description' => 'Halaman kontak resmi Kusuma Trisna Bali.',
+        'isPartOf' => ['@id' => SITE_URL . '/#website'],
+        'mainEntity' => ['@id' => SITE_URL . '/#store'],
+    ]);
+    jsonld(breadcrumb_ld([['Beranda', SITE_URL . '/'], ['Kontak', SITE_URL . '/contact.php']]));
+    ?>
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- Icons & Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
     <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind Config -->
     <script>
@@ -141,8 +94,8 @@
         <section class="relative py-32">
             <!-- Background Image -->
             <div class="absolute inset-0">
-                <img src="assets/img/slider7.jpg"
-                    alt="Contact Kusuma Trisna Bali"
+                <img src="assets/img/slider7.webp" width="1536" height="864" fetchpriority="high"
+                    alt="Hubungi Kusuma Trisna Bali di Tabanan"
                     class="w-full h-full object-cover">
                 <!-- Overlay -->
                 <div class="absolute inset-0 bg-black/30"></div>
