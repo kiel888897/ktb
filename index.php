@@ -2,70 +2,97 @@
 
 require 'admin/config/database.php';
 
-$stmt1 = $pdo->prepare("
-    SELECT * 
-    FROM brands
-    ORDER BY id asc
-");
-$stmt1->execute();
-$brands = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-$stmt = $pdo->prepare("
-    SELECT name, logo 
+$e = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
+
+// Nama merek di DB huruf kapital semua; rapikan untuk kalimat
+$brandName = function ($n) {
+    $n = trim((string) $n);
+    if (strlen($n) <= 3) {
+        return strtoupper($n);
+    }
+    return preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+
+$productImg = fn($f) => !empty($f) ? 'admin/uploads/products/' . $f : 'assets/img/product-placeholder.webp';
+
+$brands = $pdo->query("SELECT name, slug, logo FROM brands ORDER BY name ASC")->fetchAll(PDO::FETCH_ASSOC);
+
+$partners = $pdo->query("
+    SELECT name, logo
     FROM partners
     WHERE is_active = 1
     ORDER BY sort_order ASC, id DESC
-");
-$stmt->execute();
-$partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
+")->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt1 = $pdo->prepare("
+$productSql = "
     SELECT
-        p.id,
-        p.name,
-        p.slug,
-        p.model,
-        p.tagline,
-        p.short_description,
+        p.id, p.name, p.slug, p.model,
+        b.name AS brand,
+        s.name AS sub_name, s.slug AS sub_slug,
         pi.image
     FROM products p
-    LEFT JOIN product_images pi
-        ON pi.product_id = p.id
-        AND pi.is_main = 1
-    WHERE p.is_active = 1
-      AND p.is_featured = 1
-      AND p.deleted_at IS NULL
-    ORDER BY p.sort_order ASC, p.created_at DESC
-    LIMIT 4
-");
-
-$stmt1->execute();
-$featuredProducts = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
-$stmt2 = $pdo->prepare("
-    SELECT
-        p.id,
-        p.name,
-        p.slug,
-        p.model,
-        p.tagline,
-        p.short_description,
-        pi.image
-    FROM products p
-    LEFT JOIN product_images pi
-        ON pi.product_id = p.id
-        AND pi.is_main = 1
+    LEFT JOIN brands b ON b.id = p.brand_id
+    LEFT JOIN subcategories s ON s.id = p.subcategory_id
+    LEFT JOIN product_images pi ON pi.product_id = p.id AND pi.is_main = 1
     WHERE p.is_active = 1
       AND p.deleted_at IS NULL
-    ORDER BY p.created_at DESC
-    LIMIT 4
-");
-$stmt2->execute();
+";
 
-$latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+$allProducts = $pdo->query($productSql . " ORDER BY p.sort_order ASC, p.created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
+
+// Satu baris per produk (jaga-jaga bila ada >1 gambar utama)
+$seen = [];
+$allProducts = array_values(array_filter($allProducts, function ($p) use (&$seen) {
+    if (isset($seen[$p['id']])) {
+        return false;
+    }
+    return $seen[$p['id']] = true;
+}));
+
+$featured = $pdo->query($productSql . " AND p.is_featured = 1 ORDER BY p.sort_order ASC, p.created_at DESC LIMIT 8")->fetchAll(PDO::FETCH_ASSOC);
+$featuredIds = [];
+$featured = array_values(array_filter($featured, function ($p) use (&$featuredIds) {
+    if (isset($featuredIds[$p['id']])) {
+        return false;
+    }
+    return $featuredIds[$p['id']] = true;
+}));
+foreach ($allProducts as $p) {
+    if (count($featured) >= 4) {
+        break;
+    }
+    if (!isset($featuredIds[$p['id']])) {
+        $featured[] = $p;
+        $featuredIds[$p['id']] = true;
+    }
+}
+$featured = array_slice($featured, 0, 4);
+
+// Katalog per subkategori, yang terbanyak dulu
+$catalog = [];
+foreach ($allProducts as $p) {
+    if (empty($p['sub_slug'])) {
+        continue;
+    }
+    $catalog[$p['sub_slug']]['name'] = $p['sub_name'];
+    $catalog[$p['sub_slug']]['items'][] = $p;
+}
+uasort($catalog, fn($a, $b) => count($b['items']) <=> count($a['items']));
+$catalog = array_slice($catalog, 0, 8, true);
+
+$brandCount = count($brands);
+$productCount = count($allProducts);
+$partnerNames = array_map(fn($p) => $brandName($p['name']), $partners);
+$partnerList = count($partnerNames) > 1
+    ? implode(', ', array_slice($partnerNames, 0, -1)) . ' dan ' . end($partnerNames)
+    : implode('', $partnerNames);
+
+$waNumber = '6287779928897';
+$waHello = 'https://wa.me/' . $waNumber . '?text=' . rawurlencode('Halo Kusuma Trisna Bali, saya ingin bertanya.');
+$mapsUrl = 'https://share.google/LNnFVBGg7wU9klqp3';
+
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -77,7 +104,6 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <title>Distributor &amp; Service Elektronik Tabanan | Kusuma Trisna Bali</title>
 
     <meta name="description" content="Distributor dan service center elektronik resmi di Tabanan, Bali. Produk original dari brand ternama, teknisi profesional, dan garansi resmi.">
-
 
     <meta name="robots" content="index, follow">
 
@@ -113,706 +139,395 @@ $latestProducts = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kusuma Trisna Bali">
 
+    <script>document.documentElement.classList.add('js');</script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/img/slider3.webp" fetchpriority="high">
 
-    <link rel="stylesheet" href="assets/style.css">
     <?php include 'schema-store.php'; ?>
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
-    <?php include 'header.php'; ?>
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
     <main id="main-content">
-        <!-- HERO SLIDER -->
-        <section class="h-screen relative">
 
-            <div class="swiper heroSwiper h-full">
+        <!-- ============ PAPAN PEMBUKA ============ -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 lg:h-[100svh] lg:min-h-[680px] lg:max-h-[1100px] lg:flex lg:flex-col" aria-label="Kusuma Trisna Bali">
+            <div class="board lg:flex-1 lg:min-h-0 lg:grid-rows-[auto_auto_minmax(0,1fr)]" data-reveal>
 
-                <div class="swiper-wrapper">
+                <!-- Nama -->
+                <a href="/" class="tile col-span-2 lg:col-span-12 flex items-center gap-4 lg:gap-8 bg-[var(--ink)] text-white py-5 lg:py-7">
+                    <img src="assets/img/logo.webp" width="96" height="96" alt="" class="w-11 h-11 sm:w-16 sm:h-16 lg:w-24 lg:h-24 shrink-0 rounded-full">
+                    <p class="t-display text-[clamp(2rem,9vw,3.75rem)] lg:whitespace-nowrap lg:text-[length:var(--t-display)]">Kusuma Trisna Bali</p>
+                </a>
 
-                    <!-- SLIDE 1 -->
-                    <div class="swiper-slide relative">
+                <!-- Menu -->
+                <nav aria-label="Menu utama" class="col-span-2 lg:col-span-12 grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap)]">
+                    <a href="products.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Produk <?= $arrow ?></a>
+                    <a href="services.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Service <?= $arrow ?></a>
+                    <a href="about.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Tentang kami <?= $arrow ?></a>
+                    <a href="contact.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Kontak <?= $arrow ?></a>
+                </nav>
 
-                        <img
-                            src="assets/img/slider3.webp"
-                            width="1920" height="1075" fetchpriority="high"
-                            class="w-full h-full object-cover"
-                            alt="Authorized service center elektronik Kusuma Trisna Bali di Tabanan">
-
-                        <!-- Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
-
-                        <!-- Content -->
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="max-w-7xl mx-auto px-6 text-white">
-
-                                <p class="text-sm md:text-base font-medium uppercase tracking-widest text-gray-300 mb-3">
-                                    Authorized Service Center
-                                </p>
-
-                                <h1 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
-                                    Distributor & Service Elektronik Resmi
-                                    <span class="text-primary">di Tabanan, Bali</span>
-                                </h1>
-
-                                <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
-                                    Kusuma Trisna Bali menyediakan produk dan layanan resmi
-                                    untuk kebutuhan industri dan komersial dengan standar profesional.
-                                </p>
-
-                                <div class="flex flex-wrap gap-4">
-                                    <a href="#service"
-                                        class="inline-flex items-center gap-3 bg-primary px-6 py-3 rounded-md
-                       font-semibold text-white transition hover:bg-darkred">
-                                        Ajukan Layanan
-                                        <i class="fa fa-arrow-right"></i>
-                                    </a>
-
-                                    <a href="#products"
-                                        class="inline-flex items-center gap-3 border border-white/70
-                       px-6 py-3 rounded-md font-medium text-white
-                       hover:bg-white hover:text-gray-900 transition">
-                                        Lihat Produk
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
+                <!-- Foto besar + pernyataan -->
+                <div class="tile tile--photo col-span-2 lg:col-start-3 lg:col-span-8 lg:row-start-3 flex flex-col lg:block bg-[var(--tile)]">
+                    <div class="aspect-[4/3] lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
+                        <img src="assets/img/slider3.webp" width="1920" height="1075" fetchpriority="high"
+                            class="drift w-full h-full object-cover"
+                            alt="Showroom elektronik Kusuma Trisna Bali dengan kulkas, AC, TV, dan audio">
                     </div>
-
-                    <!-- SLIDE 2 -->
-                    <div class="swiper-slide relative">
-
-                        <img
-                            src="assets/img/slider2.webp"
-                            width="1920" height="1075" loading="lazy"
-                            class="w-full h-full object-cover"
-                            alt="Produk elektronik terlaris Kusuma Trisna Bali">
-
-                        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30"></div>
-
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="max-w-7xl mx-auto px-6 text-white">
-
-                                <p class="text-sm md:text-base font-medium uppercase tracking-widest text-gray-300 mb-3">
-                                    Produk & Brand Resmi
-                                </p>
-
-                                <h2 class="text-4xl md:text-6xl font-semibold leading-tight tracking-tight mb-6 max-w-3xl">
-                                    Produk Terlaris &
-                                    <span class="text-primary">Terpercaya</span>
-                                </h2>
-
-                                <p class="text-gray-200 max-w-xl mb-8 text-base md:text-lg">
-                                    Menyediakan berbagai produk elektronik resmi
-                                    dari brand ternama dengan dukungan teknis penuh.
-                                </p>
-
-                                <a href="#products"
-                                    class="inline-flex items-center gap-3 bg-primary px-6 py-3 rounded-md
-                     font-semibold text-white hover:bg-darkred transition">
-                                    Jelajahi Produk
-                                    <i class="fa fa-arrow-right"></i>
-                                </a>
-
-                            </div>
-                        </div>
+                    <div class="relative lg:absolute lg:left-0 lg:bottom-0 lg:max-w-[64%] bg-[var(--ground)] lg:rounded-tr-[var(--r)] p-5 lg:p-7">
+                        <h1 class="t-l">Distributor &amp; service elektronik di Tabanan</h1>
+                        <p class="t-s mt-3">Produk resmi dari <?= $brandCount ?> merek, dan service yang bisa Anda pantau lewat kode tiket.</p>
                     </div>
-
                 </div>
 
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
+                <!-- Rel kiri: foto + fakta -->
+                <div class="col-span-2 lg:col-start-1 lg:col-span-2 lg:row-start-3 grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[auto_minmax(0,1fr)] gap-[var(--gap)]">
+                    <div class="tile tile--photo aspect-square lg:aspect-auto lg:order-2 min-h-0">
+                        <img src="assets/img/slider8.webp" width="1536" height="864" loading="lazy"
+                            class="object-[30%_50%]" alt="Rak showroom berisi TV, kulkas, dan stok barang">
+                    </div>
+                    <ul class="tile t-s font-medium space-y-1 lg:order-1 lg:!p-4">
+                        <li>Sejak 2019</li>
+                        <li><?= $brandCount ?> merek resmi</li>
+                        <li><?= $productCount ?> produk di katalog</li>
+                        <li>Service resmi <?= count($partners) ?> merek</li>
+                        <li>Tabanan, Bali</li>
+                    </ul>
+                </div>
 
-            </div>
-        </section>
-
-        <!-- TENTANG SINGKAT -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-
-                <!-- Text -->
-                <div data-aos="fade-right">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                        Tentang Kami
-                    </span>
-
-                    <h2 class="text-3xl md:text-4xl font-bold mb-5 leading-tight">
-                        Authorized Service & Distribusi
-                        Produk Elektronik Terpercaya
-                    </h2>
-
-                    <p class="text-gray-600 mb-4">
-                        Kusuma Trisna Bali berdiri sejak tahun <strong>2019</strong> dan fokus
-                        pada <strong>distribusi serta layanan perbaikan</strong>
-                        berbagai produk elektronik untuk kebutuhan toko dan pelanggan.
-                    </p>
-
-                    <p class="text-gray-600 mb-6">
-                        Kami didukung oleh tim teknisi berpengalaman yang bekerja
-                        mengikuti prosedur kerja yang baik, sehingga setiap layanan
-                        dilakukan dengan rapi, bertanggung jawab, dan dapat diandalkan.
-                    </p>
-
-                    <a href="about.php"
-                        class="inline-flex items-center px-6 py-3 rounded-lg
-                      bg-primary text-white font-semibold
-                      hover:bg-primary/90 transition">
-                        Selengkapnya Tentang Kami
+                <!-- Rel kanan: warna terang ke gelap, terakhir aksi -->
+                <div class="rail col-span-2 lg:col-start-11 lg:col-span-2 lg:row-start-3 grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-5 gap-[var(--gap)] lg:min-h-0">
+                    <div class="tile t-s">
+                        <p class="font-semibold">Sen–Sab 08.00–17.00</p>
+                        <p class="text-[var(--soft)]" data-open-status>WITA</p>
+                    </div>
+                    <a href="<?= $mapsUrl ?>" target="_blank" rel="noopener" class="tile t-s bg-[var(--tile-2)] transition-colors hover:bg-[#d1d5db]">
+                        <span class="font-semibold block">Jl. By Pass Ir. Soekarno</span>
+                        <span class="link-arrow">Lihat peta <?= $arrow ?></span>
+                    </a>
+                    <a href="tel:+6287779928897" class="tile t-s bg-[var(--ink)] text-white transition-colors hover:bg-black">
+                        <span class="block">Telepon</span>
+                        <span class="font-semibold">0877-7992-8897</span>
+                    </a>
+                    <a href="#lacak" class="tile t-s bg-[var(--deep)] text-white transition-colors hover:bg-[#5c0000]">
+                        <span class="block font-semibold">Lacak service</span>
+                        <span>Pakai kode service</span>
+                    </a>
+                    <a href="<?= $waHello ?>" target="_blank" rel="noopener" class="tile col-span-2 lg:col-span-1 t-s bg-[var(--accent)] text-white flex flex-col justify-between gap-3 transition-colors hover:bg-[var(--deep)]">
+                        <span class="font-semibold">Chat WhatsApp</span>
+                        <span class="link-arrow">Tanya stok <?= $arrow ?></span>
                     </a>
                 </div>
 
-                <!-- Highlight Box -->
-                <div data-aos="fade-up" class="grid grid-cols-2 gap-4 sm:gap-6">
+            </div>
+        </section>
 
-                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
-                            2019
-                        </h3>
-                        <p class="text-gray-600 text-xs sm:text-sm">
-                            Tahun Berdiri
-                        </p>
-                    </div>
+        <!-- ============ JUAL & SERVICE ============ -->
+        <section id="layanan" class="max-w-7xl mx-auto px-4 sm:px-6 mt-[var(--gap)]">
+            <div class="board lg:[grid-auto-rows:96px]" data-reveal>
 
-                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">
-                            8+
-                        </h3>
-                        <p class="text-gray-600 text-xs sm:text-sm">
-                            Brand Resmi
-                        </p>
-                    </div>
+                <div class="tile col-span-2 lg:col-start-1 lg:col-span-6 lg:row-start-1 lg:row-span-3">
+                    <h2 class="t-h">Jual dan service, satu tempat</h2>
+                    <p class="t-s mt-4 max-w-md">Kami menyalurkan produk elektronik resmi ke toko dan rumah tangga, lalu merawatnya lewat service center kami sendiri.</p>
+                </div>
 
-                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
-                            Layanan Resmi
-                        </h3>
-                        <p class="text-gray-600 text-xs sm:text-sm">
-                            Perbaikan & Dukungan Produk
-                        </p>
-                    </div>
+                <div class="tile tile--photo col-span-2 aspect-[4/3] lg:aspect-auto lg:col-start-7 lg:col-span-6 lg:row-start-1 lg:row-span-5">
+                    <img src="assets/img/slider5.webp" width="1920" height="1075" loading="lazy" alt="Barang elektronik dimuat untuk dikirim ke toko">
+                </div>
 
-                    <div class="p-4 sm:p-6 bg-blue-50 rounded-2xl text-center
-                shadow-lg hover:shadow-xl transition duration-300">
-                        <h3 class="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-1">
-                            Berpengalaman
-                        </h3>
-                        <p class="text-gray-600 text-xs sm:text-sm">
-                            Tim Teknisi Handal
-                        </p>
-                    </div>
+                <div class="tile bg-[var(--ink)] text-white flex flex-col justify-between lg:col-start-1 lg:col-span-3 lg:row-start-4 lg:row-span-2">
+                    <p class="t-display"><?= $brandCount ?></p>
+                    <p class="t-s">merek resmi yang kami salurkan</p>
+                </div>
 
+                <ul class="tile bg-[var(--tile-2)] t-s font-medium space-y-1 lg:col-start-7 lg:col-span-3 lg:row-start-9 lg:row-span-2">
+                    <li>Televisi</li>
+                    <li>AC dan air cooler</li>
+                    <li>Kulkas, showcase, freezer</li>
+                    <li>Mesin cuci, kipas angin</li>
+                </ul>
+
+                <div class="tile col-span-2 lg:col-span-3 bg-[var(--tile-2)] flex flex-col justify-between gap-4 lg:col-start-4 lg:row-start-4 lg:row-span-2">
+                    <p class="t-m">Stok original untuk toko dan rumah.</p>
+                    <a href="products.php" class="link-arrow hover:text-[var(--accent)]">Lihat produk <?= $arrow ?></a>
+                </div>
+
+                <div class="tile tile--photo col-span-2 aspect-[4/3] lg:aspect-auto lg:col-start-1 lg:col-span-6 lg:row-start-6 lg:row-span-5">
+                    <img src="assets/img/promo1.webp" width="1384" height="1040" loading="lazy" alt="Teknisi memeriksa TV di service center">
+                </div>
+
+                <div class="tile col-span-2 flex flex-col justify-between gap-6 lg:col-start-7 lg:col-span-6 lg:row-start-6 lg:row-span-3">
+                    <p class="t-l max-w-xl">Service oleh teknisi berpengalaman, dengan prosedur yang jelas dan hasil yang dicek ulang.</p>
+                    <a href="services.php" class="link-arrow hover:text-[var(--accent)]">Layanan service <?= $arrow ?></a>
+                </div>
+
+                <div class="tile col-span-2 lg:col-span-3 bg-[var(--deep)] text-white t-s lg:col-start-10 lg:row-start-9 lg:row-span-2">
+                    <p class="font-semibold">Service center resmi</p>
+                    <p><?= $e($partnerList) ?></p>
                 </div>
 
             </div>
         </section>
-        <!-- LAYANAN UTAMA -->
-        <section class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-6">
 
-                <!-- Heading -->
-                <div class="text-center mb-14">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                        Layanan Kami
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Layanan Utama
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        Kami menyediakan layanan penjualan produk elektronik resmi
-                        serta layanan perbaikan profesional dengan standar kerja
-                        yang terpercaya dan bergaransi.
-                    </p>
-                </div>
+        <!-- ============ KATALOG ============ -->
+        <section id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 mt-28 lg:mt-40">
+            <div class="grid lg:grid-cols-12 gap-12 lg:gap-[var(--gap)]">
 
-                <!-- Grid -->
-                <div class="grid md:grid-cols-2 gap-8">
+                <div class="lg:col-span-7 lg:pr-10" data-reveal>
+                    <h2 class="t-display">Katalog</h2>
+                    <p class="t-s mt-5 max-w-lg">Semua produk yang kami jual, menurut jenisnya. Buka satu jenis untuk melihat produk dan mereknya.</p>
 
-                    <!-- Sales -->
-                    <div class="bg-white p-8 rounded-2xl
-                    shadow-md hover:shadow-lg
-                    transition duration-300 text-center"
-                        data-aos="fade-up">
-
-                        <div class="w-16 h-16 mx-auto mb-6
-                        flex items-center justify-center
-                        rounded-full bg-primary/10 text-primary text-2xl">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-3">
-                            Sales
-                        </h3>
-
-                        <p class="text-gray-600 mb-6">
-                            Menyediakan berbagai produk elektronik resmi dari brand terpercaya
-                            untuk kebutuhan toko dan pelanggan. Kami memastikan setiap produk
-                            yang kami distribusikan adalah produk original dengan kualitas terjamin.
-                        </p>
-
-                        <a href="products.php"
-                            class="font-semibold text-primary hover:underline">
-                            Lihat semua produk →
-                        </a>
+                    <div class="mt-8 space-y-[var(--gap)]">
+                        <?php $first = true;
+                        foreach ($catalog as $slug => $group): ?>
+                            <details class="bar" <?= $first ? 'open' : '' ?>>
+                                <summary>
+                                    <span><?= $e($group['name']) ?> <span class="text-[var(--soft)] font-normal">· <?= count($group['items']) ?> produk</span></span>
+                                    <svg class="plus" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                                        <path d="M12 5v14M5 12h14" />
+                                    </svg>
+                                </summary>
+                                <ul class="px-[18px] pb-5 pt-1 space-y-3.5">
+                                    <?php foreach (array_slice($group['items'], 0, 6) as $item): ?>
+                                        <li class="flex items-baseline justify-between gap-4">
+                                            <a href="detail-product.php?slug=<?= $e($item['slug']) ?>" class="hover:text-[var(--accent)] underline-offset-4 hover:underline"><?= $e($item['name']) ?></a>
+                                            <span class="text-[var(--soft)] text-right shrink-0"><?= $e($brandName($item['brand'] ?? '')) ?></span>
+                                        </li>
+                                    <?php endforeach; ?>
+                                    <li>
+                                        <a href="products.php?subcategory=<?= $e($slug) ?>" class="link-arrow text-[var(--accent)]">Semua <?= $e(strtolower($group['name'])) ?> <?= $arrow ?></a>
+                                    </li>
+                                </ul>
+                            </details>
+                        <?php $first = false;
+                        endforeach; ?>
                     </div>
-
-                    <!-- Service -->
-                    <div class="bg-white p-8 rounded-2xl
-                    shadow-md hover:shadow-lg
-                    transition duration-300 text-center"
-                        data-aos="fade-up" data-aos-delay="100">
-
-                        <div class="w-16 h-16 mx-auto mb-6
-                        flex items-center justify-center
-                        rounded-full bg-primary/10 text-primary text-2xl">
-                            <i class="fa-solid fa-screwdriver-wrench"></i>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-3">
-                            Service
-                        </h3>
-
-                        <p class="text-gray-600 mb-6">
-                            Layanan perbaikan dan perawatan produk elektronik dengan teknisi
-                            berpengalaman dan prosedur kerja profesional. Setiap proses dilakukan
-                            secara teliti untuk memastikan hasil yang optimal dan dapat diandalkan.
-                        </p>
-
-                        <a href="services.php"
-                            class="font-semibold text-primary hover:underline">
-                            Lihat layanan service →
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-        <!-- BRAND -->
-        <section class="relative pt-24 overflow-hidden">
-            <div class="max-w-7xl mx-auto px-6">
-
-                <!-- Heading -->
-                <div class="text-center mb-14">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                        Brand
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Brand produk kami
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        Berikut adalah brand resmi yang produknya kami sediakan untuk memenuhi kebutuhan Anda.
-                    </p>
                 </div>
 
-
-                <!-- Slider -->
-                <div class="swiper brandSwiper">
-                    <div class="swiper-wrapper items-center">
-
+                <div class="lg:col-span-5" data-reveal>
+                    <h3 class="t-m"><?= $brandCount ?> merek resmi</h3>
+                    <ul class="mt-5 grid grid-cols-3 sm:grid-cols-4 gap-[var(--gap)]">
                         <?php foreach ($brands as $brand): ?>
-                            <div class="swiper-slide flex justify-center">
-
-                                <a href="brand-product.php?brand=<?= $brand['slug']; ?>">
-                                    <img
-                                        src="admin/uploads/brands/<?= htmlspecialchars($brand['logo']); ?>"
-                                        alt="Logo <?= htmlspecialchars($brand['name']); ?>"
-                                        loading="lazy" decoding="async"
-                                        class="object-contain
-           
-           sm:hover:grayscale-0 sm:hover:opacity-100
-           transition duration-300">
+                            <li>
+                                <a href="brand-product.php?brand=<?= $e($brand['slug']) ?>"
+                                    class="tile !p-3 flex items-center justify-center aspect-[3/2] transition-colors hover:bg-[var(--tile-2)]"
+                                    title="Produk <?= $e($brandName($brand['name'])) ?>">
+                                    <img src="admin/uploads/brands/<?= $e($brand['logo']) ?>" alt="<?= $e($brandName($brand['name'])) ?>"
+                                        loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
                                 </a>
-                            </div>
+                            </li>
                         <?php endforeach; ?>
-
-                    </div>
-                </div>
-
-
-            </div>
-        </section>
-        <!-- PRODUK UNGGULAN -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
-
-                <!-- Heading -->
-                <div class="text-center mb-14">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                        Produk Kami
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Produk Unggulan
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        Produk elektronik pilihan dengan kualitas terjamin dan dukungan
-                        layanan resmi dari merek terpercaya.
-                    </p>
-                </div>
-
-                <!-- Grid Produk -->
-                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-
-                    <?php if ($featuredProducts): ?>
-                        <?php foreach ($featuredProducts as $product): ?>
-
-                            <div class="bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition">
-                                <div class="relative aspect-[4/3] flex items-center justify-center p-4 bg-white rounded-t-2xl">
-                                    <img
-                                        src="<?= !empty($product['image']) ? 'admin/uploads/products/' . htmlspecialchars($product['image']) : 'assets/img/product-placeholder.webp'; ?>"
-                                        alt="<?= htmlspecialchars($product['name']); ?>"
-                                        loading="lazy" decoding="async"
-                                        class="max-h-full object-contain">
-
-                                    <!-- Floating Model Badge -->
-                                    <?php if (!empty($product['model'])): ?>
-                                        <div class="absolute top-2 right-3">
-                                            <span class="text-primary text-xs font-semibold">
-                                                <?= htmlspecialchars($product['model']); ?>
-                                            </span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="p-5">
-                                    <h3 class="font-semibold text-lg mb-1">
-                                        <?= htmlspecialchars($product['name']); ?>
-                                    </h3>
-
-                                    <!-- Tagline -->
-                                    <?php if (!empty($product['tagline'])): ?>
-                                        <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                            <?= htmlspecialchars($product['tagline']); ?>
-                                        </p>
-                                    <?php endif; ?>
-                                    <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
-                                        class="inline-flex items-center font-semibold text-primary hover:underline mt-2">
-                                        Lihat Detail
-                                        <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="col-span-4 text-center text-gray-500">
-                            Produk unggulan belum tersedia
-                        </p>
-                    <?php endif; ?>
-
-                </div>
-
-
-                <!-- CTA -->
-                <div class="text-center mt-14">
-                    <a href="products.php"
-                        class="inline-flex items-center px-8 py-3 rounded-lg
-                      bg-primary text-white font-semibold
-                      hover:bg-primary/90 transition">
-                        Lihat Semua Produk
-                        <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </a>
+                    </ul>
                 </div>
 
             </div>
         </section>
 
-
-        <!-- PRODUK TERBARU -->
-        <section class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-6">
-
-                <!-- Heading -->
-                <div class="mb-12 text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-3" data-aos="fade-up">
-                        Produk Terbaru
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
-                        Produk elektronik terbaru dengan kualitas terjamin dan dukungan layanan resmi.
-                    </p>
-                </div>
-
-                <!-- Grid Produk -->
-                <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-
-                    <?php if ($latestProducts): ?>
-                        <?php foreach ($latestProducts as $product): ?>
-
-                            <div class="bg-white rounded-2xl shadow hover:shadow-xl transition duration-300 group"
-                                data-aos="zoom-in">
-
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img
-                                        src="<?= !empty($product['image']) ? 'admin/uploads/products/' . htmlspecialchars($product['image']) : 'assets/img/product-placeholder.webp'; ?>"
-                                        loading="lazy" decoding="async"
-                                        class="w-full h-48 object-contain bg-white p-4"
-                                        alt="<?= htmlspecialchars($product['name']); ?>">
-
-                                    <!-- Floating Model Badge -->
-                                    <?php if (!empty($product['model'])): ?>
-                                        <div class="absolute top-2 right-3">
-                                            <span class="text-primary text-xs font-semibold">
-                                                <?= htmlspecialchars($product['model']); ?>
-                                            </span>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="p-5">
-                                    <h3 class="font-semibold text-lg mb-1">
-                                        <?= htmlspecialchars($product['name']); ?>
-                                    </h3>
-
-
-                                    <!-- Tagline -->
-                                    <?php if (!empty($product['tagline'])): ?>
-                                        <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                            <?= htmlspecialchars($product['tagline']); ?>
-                                        </p>
-                                    <?php endif; ?>
-
-                                    <ul class="text-sm text-gray-500 mb-4 space-y-1">
-                                        <!-- <li>✔ Garansi Resmi</li>
-                                    <li>✔ Layanan Authorized Service</li>
-                                    <li>✔ Kualitas Terpercaya</li> -->
-                                    </ul>
-
-                                    <a href="detail-product.php?slug=<?= htmlspecialchars($product['slug']); ?>"
-                                        class="inline-block w-full text-center px-4 py-2 rounded-lg
-                              bg-primary text-white font-semibold
-                              hover:bg-primary/90 transition">
-                                        Lihat Detail
-                                    </a>
-                                </div>
-                            </div>
-
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="col-span-4 text-center text-gray-500">
-                            Produk terbaru belum tersedia
-                        </p>
-                    <?php endif; ?>
-
-                </div>
-
+        <!-- ============ MARQUEE ============ -->
+        <div class="marquee mt-28 lg:mt-48 t-display text-[var(--ink)]" aria-hidden="true">
+            <div class="marquee__track">
+                <span>Distributor &amp; service elektronik resmi · Tabanan, Bali ·</span>
+                <span>Distributor &amp; service elektronik resmi · Tabanan, Bali ·</span>
             </div>
-        </section>
-        <!-- BRAND PARTNER -->
-        <section class="relative py-24 
-                bg-gradient-to-b from-primary/5 via-white to-gray-50 
-                overflow-hidden">
-
-            <!-- Top Wave -->
-            <div class="absolute top-0 left-0 w-full overflow-hidden leading-none">
-                <svg class="relative block w-full h-[60px]"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1440 90"
-                    preserveAspectRatio="none">
-                    <path fill="#ffffff"
-                        d="M0,30 C240,70 480,10 720,20 960,30 1200,60 1440,40 L1440,0 L0,0 Z">
-                    </path>
-                </svg>
-            </div>
-
-            <div class="max-w-7xl mx-auto px-6">
-
-                <!-- Heading -->
-                <div class="text-center mb-16">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary tracking-wide uppercase">
-                        Brand Partner
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Authorized Brand Partner
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                        Kami merupakan mitra resmi dan authorized service untuk berbagai
-                        merek elektronik terpercaya.
-                    </p>
-                </div>
-
-                <!-- GRID -->
-                <div class="grid 
-                    grid-cols-2 
-                    lg:grid-cols-3 
-                    gap-8 md:gap-10 
-                    max-w-5xl 
-                    mx-auto">
-
-                    <?php foreach ($partners as $partner): ?>
-                        <div class="group flex items-center justify-center
-                            bg-white 
-                            rounded-2xl 
-                            p-4 md:p-5
-                            shadow-sm 
-                            hover:shadow-xl 
-                            hover:-translate-y-2
-                            transition duration-300 ease-in-out">
-
-                            <img
-                                src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                                alt="Logo <?= htmlspecialchars($partner['name']); ?>"
-                                loading="lazy" decoding="async"
-                                class="h-auto object-contain 
-                               group-hover:grayscale-0 
-                               group-hover:opacity-100
-                               transition duration-300">
-                        </div>
-                    <?php endforeach; ?>
-
-                </div>
-
-            </div>
-        </section>
-        <!-- IKLAN / PROMO -->
-        <!-- <section class="py-20 bg-primary text-white relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">
-
-            <div data-aos="fade-right">
-                <span class="inline-block mb-3 px-4 py-1 text-sm rounded-full
-                         bg-white/20 text-white">
-                    Layanan Perbaikan Elektronik
-                </span>
-
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-                    Promo Layanan Service Elektronik
-                </h2>
-
-                <p class="text-white/90 mb-6 max-w-md">
-                    Kami melayani perbaikan berbagai produk elektronik dengan
-                    teknisi berpengalaman dan proses kerja yang rapi serta bertanggung jawab.
-                </p>
-
-                <div class="flex flex-wrap gap-4">
-                    <a href="services.php"
-                        class="px-6 py-3 rounded-lg bg-white text-primary
-                          font-semibold hover:bg-gray-100 transition">
-                        Ajukan Service
-                    </a>
-
-                    <a href="contact.php"
-                        class="px-6 py-3 rounded-lg border border-white
-                          text-white font-semibold
-                          hover:bg-white hover:text-primary transition">
-                        Hubungi Kami
-                    </a>
-                </div>
-            </div>
-
-            <div class="rounded-2xl overflow-hidden shadow-xl h-[320px] md:h-[380px] relative">
-                <img src="assets/img/promo1.webp" width="1384" height="1040" loading="lazy"
-                    class="w-full h-full object-cover" alt="Toko Elektronik Kusuma Trisna Bali di Tabanan">
-                <div class="absolute inset-0 bg-black/10"></div>
-            </div>
-
-
         </div>
-    </section> -->
-        <!-- KENAPA MEMILIH KAMI -->
-        <section class="py-20 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-6">
 
-                <!-- Heading -->
-                <div class="text-center mb-14">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                        Keunggulan Kami
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Kenapa Memilih Kami
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        Kami berupaya memberikan layanan yang rapi, dapat diandalkan,
-                        dan sesuai dengan kebutuhan pelanggan.
-                    </p>
+        <!-- ============ PRODUK UNGGULAN ============ -->
+        <section id="produk" class="max-w-7xl mx-auto px-4 sm:px-6 mt-16 lg:mt-24">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+                <h2 class="t-h">Produk unggulan</h2>
+                <a href="products.php" class="link-arrow hover:text-[var(--accent)]">Semua <?= $productCount ?> produk <?= $arrow ?></a>
+            </div>
+
+            <div class="board lg:[grid-auto-rows:120px]" data-reveal>
+                <?php foreach ($featured as $i => $p):
+                    $big = $i === 0;
+                    $place = [
+                        'lg:col-start-1 lg:col-span-6 lg:row-start-1 lg:row-span-4 col-span-2',
+                        'lg:col-start-7 lg:col-span-3 lg:row-start-1 lg:row-span-2',
+                        'lg:col-start-10 lg:col-span-3 lg:row-start-1 lg:row-span-2',
+                        'lg:col-start-7 lg:col-span-3 lg:row-start-3 lg:row-span-2',
+                    ][$i]; ?>
+                    <a href="detail-product.php?slug=<?= $e($p['slug']) ?>"
+                        class="tile group flex flex-col <?= $place ?> <?= $big ? 'aspect-square lg:aspect-auto' : 'aspect-[3/4] lg:aspect-auto' ?>">
+                        <div class="flex-1 min-h-0 flex items-center justify-center <?= $big ? 'p-6 lg:p-10' : 'p-2' ?>">
+                            <img src="<?= $e($productImg($p['image'])) ?>" alt="<?= $e($p['name']) ?>"
+                                loading="lazy" decoding="async"
+                                class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="pt-3">
+                            <p class="<?= $big ? 't-l' : 't-m' ?> group-hover:text-[var(--accent)] transition-colors"><?= $e($p['name']) ?></p>
+                            <p class="t-s text-[var(--soft)]"><?= $e(trim($brandName($p['brand'] ?? '') . ' · ' . ($p['sub_name'] ?? ''), ' ·')) ?></p>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+
+                <a href="products.php" class="tile bg-[var(--accent)] text-white flex flex-col justify-between gap-4 aspect-[3/4] lg:aspect-auto lg:col-start-10 lg:col-span-3 lg:row-start-3 lg:row-span-2 transition-colors hover:bg-[var(--deep)]">
+                    <span class="t-m">Lihat semua <?= $productCount ?> produk di katalog</span>
+                    <span class="link-arrow">Buka katalog <?= $arrow ?></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- ============ SERVICE & LACAK ============ -->
+        <section id="lacak" class="max-w-7xl mx-auto px-4 sm:px-6 mt-28 lg:mt-40 scroll-mt-6">
+            <div class="grid lg:grid-cols-12 gap-[var(--gap)] gap-y-10 lg:gap-y-[var(--gap)]" data-reveal>
+
+                <div class="lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:self-start lg:pr-8">
+                    <h2 class="t-h">Service yang bisa Anda pantau</h2>
+                    <p class="t-s mt-4 max-w-lg">Setiap barang yang masuk mendapat kode service. Masukkan kodenya untuk melihat progres terbaru.</p>
+
+                    <form action="services.php#track-service" method="post" class="mt-6 flex flex-col sm:flex-row gap-[var(--gap)] max-w-xl">
+                        <label for="kode-service" class="sr-only">Kode service</label>
+                        <input id="kode-service" type="text" name="service_code" required autocomplete="off"
+                            placeholder="Kode service, mis. SRV-20260216-001"
+                            class="flex-1 min-w-0 rounded-[var(--r)] bg-[var(--tile)] px-5 py-4 text-[var(--ink)] placeholder:text-[var(--soft)] focus:bg-[var(--tile-2)] focus:outline-none">
+                        <button type="submit" class="btn">Cek status <?= $arrow ?></button>
+                    </form>
                 </div>
 
-                <!-- Grid -->
-                <div class="grid md:grid-cols-3 gap-8">
-
-                    <!-- Authorized Service -->
-                    <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                        data-aos="fade-up">
-
-                        <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                            <i class="fa-solid fa-certificate"></i>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-3">
-                            Layanan Perbaikan Terpercaya
-                        </h3>
-
-                        <p class="text-gray-600">
-                            Menangani perbaikan produk elektronik dengan prosedur kerja
-                            yang jelas dan penggunaan suku cadang yang sesuai kebutuhan.
-                        </p>
+                <figure class="lg:col-start-1 lg:col-span-3 lg:row-start-2 lg:self-end">
+                    <div class="tile tile--photo h-[46vw] lg:h-[260px]">
+                        <img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diterima dan dicatat">
                     </div>
+                    <figcaption class="mt-4">
+                        <p class="t-m">Diterima dan dicek</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Barang dicatat, Anda menerima kode service, lalu teknisi memeriksa kerusakannya.</p>
+                    </figcaption>
+                </figure>
 
-                    <!-- Teknisi Bersertifikat -->
-                    <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                        data-aos="fade-up" data-aos-delay="100">
-
-                        <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                            <i class="fa-solid fa-user-gear"></i>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-3">
-                            Teknisi Berpengalaman
-                        </h3>
-
-                        <p class="text-gray-600">
-                            Dikerjakan oleh tim teknisi yang berpengalaman dalam menangani
-                            berbagai jenis produk elektronik secara hati-hati dan rapi.
-                        </p>
+                <figure class="lg:col-start-4 lg:col-span-4 lg:row-start-2 lg:self-end">
+                    <div class="tile tile--photo h-[58vw] lg:h-[400px]">
+                        <img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Dua teknisi menangani perbaikan TV">
                     </div>
+                    <figcaption class="mt-4">
+                        <p class="t-m">Dikerjakan</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Bila menunggu suku cadang atau persetujuan Anda, statusnya tertulis di kode service.</p>
+                    </figcaption>
+                </figure>
 
-                    <!-- Garansi & Standar Pabrikan -->
-                    <div class="bg-white p-8 rounded-2xl
-                        shadow-md hover:shadow-lg transition text-center"
-                        data-aos="fade-up" data-aos-delay="200">
-
-                        <div class="w-16 h-16 mx-auto mb-6
-                            flex items-center justify-center
-                            rounded-full bg-primary/10 text-primary text-2xl">
-                            <i class="fa-solid fa-shield-halved"></i>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-3">
-                            Layanan Bertanggung Jawab
-                        </h3>
-
-                        <p class="text-gray-600">
-                            Setiap pekerjaan dilakukan dengan tanggung jawab dan pengecekan
-                            hasil untuk memastikan perangkat dapat digunakan dengan baik.
-                        </p>
+                <figure class="lg:col-start-8 lg:col-span-5 lg:row-start-1 lg:row-span-2 lg:self-end">
+                    <div class="tile tile--photo h-[72vw] lg:h-[600px]">
+                        <img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf Kusuma Trisna Bali siap menyerahkan barang">
                     </div>
+                    <figcaption class="mt-4">
+                        <p class="t-m">Selesai</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Hasil dicek ulang sebelum barang diserahkan kembali kepada Anda.</p>
+                    </figcaption>
+                </figure>
 
+            </div>
+
+            <?php if ($partners): ?>
+                <div class="mt-16 grid lg:grid-cols-12 gap-[var(--gap)] items-center" data-reveal>
+                    <h3 class="t-m lg:col-span-3 mb-4 lg:mb-0">Service center resmi untuk</h3>
+                    <ul class="lg:col-span-9 grid grid-cols-3 sm:grid-cols-6 gap-[var(--gap)]">
+                        <?php foreach ($partners as $partner): ?>
+                            <li class="tile !p-3 flex items-center justify-center aspect-[3/2]">
+                                <img src="admin/uploads/partners/<?= $e($partner['logo']) ?>" alt="<?= $e($brandName($partner['name'])) ?>"
+                                    loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+        </section>
+
+        <!-- ============ TENTANG ============ -->
+        <section id="tentang" class="max-w-7xl mx-auto px-4 sm:px-6 mt-28 lg:mt-40">
+            <div data-reveal>
+                <h2 class="t-h">Di Tabanan sejak 2019</h2>
+                <p class="t-m font-normal mt-6 max-w-2xl">Kusuma Trisna Bali menyalurkan produk elektronik resmi untuk toko dan rumah tangga di Bali, dan merawatnya di tempat yang sama.</p>
+            </div>
+
+            <div class="mt-12 lg:mt-16 grid lg:grid-cols-12 gap-[var(--gap)] lg:gap-4" data-reveal>
+                <div class="lg:col-span-8">
+                    <div class="tile tile--photo aspect-[4/3] lg:aspect-[16/10]">
+                        <img src="assets/img/slider2.webp" width="1920" height="1075" loading="lazy" alt="Ruang pamer produk elektronik">
+                        <div class="hidden lg:block absolute top-0 right-0 w-[320px] bg-[var(--ground)] p-5 rounded-bl-[var(--r)]">
+                            <p class="t-s">Tim teknisi kami bekerja dengan prosedur yang jelas, sehingga setiap service rapi, bertanggung jawab, dan dapat diandalkan.</p>
+                            <a href="about.php" class="link-arrow mt-3 hover:text-[var(--accent)]">Tentang kami <?= $arrow ?></a>
+                        </div>
+                    </div>
+                    <div class="lg:hidden mt-4">
+                        <p class="t-s">Tim teknisi kami bekerja dengan prosedur yang jelas, sehingga setiap service rapi, bertanggung jawab, dan dapat diandalkan.</p>
+                        <a href="about.php" class="link-arrow mt-3">Tentang kami <?= $arrow ?></a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-4 mt-6 lg:mt-0">
+                    <div class="tile bg-[var(--ink)] text-white aspect-[3/2] lg:aspect-auto lg:h-[60%] flex items-center justify-center">
+                        <svg viewBox="0 0 540 340" class="w-full max-h-full" role="img" aria-label="Peta Pulau Bali, titik merah menandai Tabanan">
+                            <path fill="#374151" d="M10 40 L100 36 L248 44 L276 20 L372 36 L476 92 L504 116 L524 140 L516 160 L468 184 L444 192 L400 204 L368 228 L344 256 L332 272 L332 284 L336 300 L312 320 L276 312 L304 288 L304 268 L292 240 L276 228 L260 220 L232 192 L164 148 L88 140 L72 136 L40 92 Z" />
+                            <circle cx="286" cy="200" r="11" fill="#c1121f" />
+                            <text x="304" y="186" fill="#ffffff" font-size="22" font-weight="600" font-family="IBM Plex Sans, sans-serif">Tabanan</text>
+                        </svg>
+                    </div>
+                    <dl class="grid grid-cols-2 gap-x-4 gap-y-5 mt-6 t-s">
+                        <div>
+                            <dt class="text-[var(--soft)]">Alamat</dt>
+                            <dd class="font-medium">Jl. By Pass Ir. Soekarno, Dauh Peken</dd>
+                        </div>
+                        <div>
+                            <dt class="text-[var(--soft)]">Jam buka</dt>
+                            <dd class="font-medium">Sen–Sab, 08.00–17.00</dd>
+                        </div>
+                        <div>
+                            <dt class="text-[var(--soft)]">Berdiri</dt>
+                            <dd class="font-medium">2019</dd>
+                        </div>
+                        <div>
+                            <dt class="text-[var(--soft)]">Waktu setempat</dt>
+                            <dd class="font-medium" data-clock>WITA (UTC+8)</dd>
+                        </div>
+                    </dl>
                 </div>
             </div>
         </section>
 
-        <!-- FOOTER -->
-    </main>
-    <?php include 'footer.php'; ?>
+        <!-- ============ KONTAK ============ -->
+        <section id="kontak" class="mt-28 lg:mt-40 bg-[var(--deep)] text-white pt-12 pb-20 lg:pb-28 overflow-hidden">
+            <ul class="flex gap-[var(--gap)] -ml-10 w-max" aria-hidden="true">
+                <?php foreach (array_slice($allProducts, 0, 12) as $i => $p): ?>
+                    <li class="h-[110px] lg:h-[150px] <?= ['aspect-[3/4]', 'aspect-square', 'aspect-[3/2]'][$i % 3] ?> rounded-[var(--r)] bg-white flex items-center justify-center p-3 shrink-0">
+                        <img src="<?= $e($productImg($p['image'])) ?>" alt="" loading="lazy" decoding="async" class="max-h-full max-w-full object-contain">
+                    </li>
+                <?php endforeach; ?>
+            </ul>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init();
-    </script>
-    <script src="assets/main.js"></script>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 mt-14 lg:mt-20" data-reveal>
+                <h2 class="t-h">Tanya stok atau jadwal service</h2>
+                <p class="t-s mt-4 max-w-lg">Tulis nama dan keperluan Anda. Pesannya terbuka di WhatsApp, siap dikirim ke kami.</p>
+
+                <form action="https://wa.me/<?= $waNumber ?>" method="get" target="_blank" data-wa-form
+                    class="mt-10 grid lg:grid-cols-3 gap-[var(--gap)]">
+                    <label for="wa-nama" class="sr-only">Nama Anda</label>
+                    <input id="wa-nama" name="nama" type="text" autocomplete="name" placeholder="Nama Anda"
+                        class="h-[60px] lg:h-[96px] rounded-[var(--r)] bg-[#8f1414] px-5 text-lg text-white placeholder:text-white/80 lg:text-center focus:bg-white focus:text-[var(--ink)] focus:placeholder:text-[var(--soft)] focus:outline-none transition-colors">
+                    <label for="wa-perlu" class="sr-only">Keperluan</label>
+                    <input id="wa-perlu" name="text" type="text" placeholder="Keperluan, mis. service TV Hisense"
+                        class="h-[60px] lg:h-[96px] rounded-[var(--r)] bg-[#8f1414] px-5 text-lg text-white placeholder:text-white/80 lg:text-center focus:bg-white focus:text-[var(--ink)] focus:placeholder:text-[var(--soft)] focus:outline-none transition-colors">
+                    <button type="submit"
+                        class="h-[60px] lg:h-[96px] rounded-[var(--r)] bg-white text-[var(--deep)] text-lg font-semibold inline-flex items-center justify-center gap-3 hover:bg-[var(--tile)] active:scale-[.98] transition">
+                        Kirim lewat WhatsApp <?= $arrow ?>
+                    </button>
+                </form>
+                <div class="grid lg:grid-cols-3 gap-[var(--gap)] mt-4 t-s text-white/90">
+                    <p>Dibalas pada jam kerja, Senin–Sabtu 08.00–17.00.</p>
+                    <p class="hidden lg:block"></p>
+                    <p>Atau telepon <a href="tel:+6287779928897" class="underline underline-offset-4 hover:text-white">0877-7992-8897</a></p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <?php include 'footer-board.php'; ?>
+
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
 </body>
 
 </html>

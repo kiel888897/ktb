@@ -16,3 +16,152 @@
         }
     }
 }
+
+/* ==========================================================================
+   Beranda: papan petak (board). Satu radius, satu jarak petak, 5 ukuran huruf.
+   ========================================================================== */
+@layer components {
+    :root {
+        --ground: #ffffff;
+        --tile: #f3f4f6;
+        --tile-2: #e5e7eb;
+        --ink: #111827;
+        --soft: #4b5563;
+        --accent: #c1121f;
+        --deep: #780000;
+        --r: 6px;
+        --gap: 6px;
+        --t-display: clamp(3rem, 8vw, 7.5rem);
+        --t-h: clamp(2rem, 4vw, 3.5rem);
+        --t-l: clamp(1.5rem, 2.3vw, 2.125rem);
+        --t-m: 1.25rem;
+        --t-s: 1rem;
+    }
+
+    @media (min-width: 1024px) {
+        :root { --gap: 8px; }
+    }
+
+    .home { background: var(--ground); color: var(--ink); }
+    .home a:focus-visible,
+    .home button:focus-visible,
+    .home input:focus-visible,
+    .home summary:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+    }
+
+    .board {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--gap);
+    }
+
+    @media (min-width: 1024px) {
+        .board { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    }
+
+    .tile {
+        position: relative;
+        min-width: 0;
+        overflow: hidden;
+        border-radius: var(--r);
+        background: var(--tile);
+        padding: 20px;
+    }
+
+    @media (min-width: 1024px) {
+        .tile { padding: 24px; }
+    }
+
+    .tile--photo { padding: 0; background: var(--tile-2); }
+    .tile--photo > img { width: 100%; height: 100%; object-fit: cover; }
+
+    .t-display { font-size: var(--t-display); font-weight: 700; line-height: .92; letter-spacing: -.045em; }
+    .t-h { font-size: var(--t-h); font-weight: 700; line-height: 1.02; letter-spacing: -.035em; }
+    .t-l { font-size: var(--t-l); font-weight: 600; line-height: 1.15; letter-spacing: -.025em; }
+    .t-m { font-size: var(--t-m); font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
+    .t-s { font-size: var(--t-s); line-height: 1.55; }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .6rem;
+        border-radius: var(--r);
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        padding: .9rem 1.4rem;
+        transition: background-color .2s ease, transform .2s ease;
+    }
+    .btn:hover { background: var(--deep); }
+    .btn:active { transform: scale(.97); }
+
+    .link-arrow {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        font-weight: 600;
+    }
+    .link-arrow svg { transition: transform .2s ease; }
+    .link-arrow:hover svg { transform: translateX(4px); }
+
+    /* Foto produk berlatar putih menyatu dengan petak abu */
+    .blend { mix-blend-mode: multiply; }
+
+    /* Marquee */
+    .marquee { overflow: hidden; white-space: nowrap; }
+    .marquee__track { display: inline-flex; animation: marquee 38s linear infinite; }
+    .marquee:hover .marquee__track { animation-play-state: paused; }
+    .marquee__track > span { padding-right: .5em; }
+
+    @keyframes marquee {
+        to { transform: translateX(-50%); }
+    }
+
+    /* Foto hero bergerak pelan */
+    .drift { animation: drift 24s ease-in-out infinite alternate; transform-origin: 60% 50%; }
+
+    @keyframes drift {
+        from { transform: scale(1); }
+        to { transform: scale(1.08); }
+    }
+
+    /* Muncul saat discroll (hanya bila JS aktif) */
+    .js [data-reveal] > * {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity .7s ease, transform .7s cubic-bezier(.2, .7, .2, 1);
+    }
+    .js [data-reveal].is-in > * { opacity: 1; transform: none; }
+
+    /* Katalog: baris yang bisa dibuka */
+    .bar { border-radius: var(--r); background: var(--tile); }
+    .bar > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        min-height: 56px;
+        padding: 0 18px;
+        cursor: pointer;
+        list-style: none;
+        font-weight: 500;
+    }
+    .bar > summary::-webkit-details-marker { display: none; }
+    .bar > summary .plus { transition: transform .25s ease; }
+    .bar[open] > summary .plus { transform: rotate(45deg); }
+    .bar > summary:hover { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+        .marquee__track, .drift { animation: none; }
+        .js [data-reveal] > * { opacity: 1; transform: none; transition: none; }
+    }
+}
+
+@layer components {
+    @media (min-width: 1024px) {
+        .rail > .tile { padding: 14px 16px; }
+    }
+}
