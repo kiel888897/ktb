@@ -33,7 +33,7 @@
         --gap: 6px;
         --t-display: clamp(3rem, 8vw, 7.5rem);
         --t-h: clamp(2rem, 4vw, 3.5rem);
-        --t-l: clamp(1.5rem, 2.3vw, 2.125rem);
+        --t-l: clamp(1.75rem, 2.3vw, 2.125rem);
         --t-m: 1.25rem;
         --t-s: 1rem;
     }
@@ -164,4 +164,9 @@
     @media (min-width: 1024px) {
         .rail > .tile { padding: 14px 16px; }
     }
+}
+
+@layer components {
+    .mnav > summary::-webkit-details-marker { display: none; }
+    .mnav[open] > summary { background: var(--tile-2); }
 }

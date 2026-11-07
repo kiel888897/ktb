@@ -151,20 +151,39 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 </head>
 
 <body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <!-- Bar atas khusus HP/tablet -->
+    <header class="lg:hidden sticky top-0 z-40 bg-[var(--ground)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
+            <a href="/" class="flex items-center gap-3 min-w-0">
+                <img src="assets/img/logo.webp" width="96" height="96" alt="" class="w-9 h-9 rounded-full shrink-0">
+                <span class="text-lg font-bold tracking-tight truncate">Kusuma Trisna Bali</span>
+            </a>
+            <details class="mnav">
+                <summary class="flex items-center gap-2 h-11 px-3 rounded-[var(--r)] bg-[var(--tile)] font-semibold cursor-pointer list-none" aria-label="Buka menu">Menu <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+                <nav aria-label="Menu HP" class="absolute left-0 right-0 top-16 bg-[var(--ground)] px-4 sm:px-6 pb-6 pt-2 grid gap-[var(--gap)]">
+                    <a href="products.php" class="tile flex items-center justify-between py-4 font-semibold">Produk <?= $arrow ?></a>
+                    <a href="services.php" class="tile flex items-center justify-between py-4 font-semibold">Service &amp; lacak <?= $arrow ?></a>
+                    <a href="about.php" class="tile flex items-center justify-between py-4 font-semibold">Tentang kami <?= $arrow ?></a>
+                    <a href="contact.php" class="tile flex items-center justify-between py-4 font-semibold">Kontak <?= $arrow ?></a>
+                </nav>
+            </details>
+        </div>
+    </header>
+
     <main id="main-content">
 
         <!-- ============ PAPAN PEMBUKA ============ -->
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 lg:h-[100svh] lg:min-h-[680px] lg:max-h-[1100px] lg:flex lg:flex-col" aria-label="Kusuma Trisna Bali">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-1 lg:pt-6 lg:h-[100svh] lg:min-h-[680px] lg:max-h-[1100px] lg:flex lg:flex-col" aria-label="Kusuma Trisna Bali">
             <div class="board lg:flex-1 lg:min-h-0 lg:grid-rows-[auto_auto_minmax(0,1fr)]" data-reveal>
 
                 <!-- Nama -->
-                <a href="/" class="tile col-span-2 lg:col-span-12 flex items-center gap-4 lg:gap-8 bg-[var(--ink)] text-white py-5 lg:py-7">
+                <a href="/" class="tile hidden lg:flex lg:col-span-12 items-center gap-4 lg:gap-8 bg-[var(--ink)] text-white py-5 lg:py-7">
                     <img src="assets/img/logo.webp" width="96" height="96" alt="" class="w-11 h-11 sm:w-16 sm:h-16 lg:w-24 lg:h-24 shrink-0 rounded-full">
                     <p class="t-display text-[clamp(2rem,9vw,3.75rem)] lg:whitespace-nowrap lg:text-[length:var(--t-display)]">Kusuma Trisna Bali</p>
                 </a>
 
                 <!-- Menu -->
-                <nav aria-label="Menu utama" class="col-span-2 lg:col-span-12 grid grid-cols-2 lg:grid-cols-4 gap-[var(--gap)]">
+                <nav aria-label="Menu utama" class="hidden lg:grid lg:col-span-12 grid-cols-2 lg:grid-cols-4 gap-[var(--gap)]">
                     <a href="products.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Produk <?= $arrow ?></a>
                     <a href="services.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Service <?= $arrow ?></a>
                     <a href="about.php" class="tile flex items-center justify-between py-4 font-semibold transition-colors hover:bg-[var(--tile-2)]">Tentang kami <?= $arrow ?></a>
@@ -172,25 +191,29 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 </nav>
 
                 <!-- Foto besar + pernyataan -->
-                <div class="tile tile--photo col-span-2 lg:col-start-3 lg:col-span-8 lg:row-start-3 flex flex-col lg:block bg-[var(--tile)]">
-                    <div class="aspect-[4/3] lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
+                <div class="tile tile--photo col-span-2 lg:col-start-3 lg:col-span-8 lg:row-start-3 flex flex-col lg:block !bg-transparent lg:!bg-[var(--tile-2)] !overflow-visible lg:!overflow-hidden">
+                    <div class="aspect-square sm:aspect-[4/3] rounded-[var(--r)] lg:rounded-none lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
                         <img src="assets/img/slider3.webp" width="1920" height="1075" fetchpriority="high"
                             class="drift w-full h-full object-cover"
                             alt="Showroom elektronik Kusuma Trisna Bali dengan kulkas, AC, TV, dan audio">
                     </div>
-                    <div class="relative lg:absolute lg:left-0 lg:bottom-0 lg:max-w-[64%] bg-[var(--ground)] lg:rounded-tr-[var(--r)] p-5 lg:p-7">
+                    <div class="relative lg:absolute lg:left-0 lg:bottom-0 lg:max-w-[64%] bg-[var(--ground)] lg:rounded-tr-[var(--r)] pt-6 pb-2 lg:p-7">
                         <h1 class="t-l">Distributor &amp; service elektronik di Tabanan</h1>
                         <p class="t-s mt-3">Produk resmi dari <?= $brandCount ?> merek, dan service yang bisa Anda pantau lewat kode tiket.</p>
+                        <div class="lg:hidden grid grid-cols-2 gap-[var(--gap)] mt-6">
+                            <a href="<?= $waHello ?>" target="_blank" rel="noopener" class="btn">Chat WhatsApp</a>
+                            <a href="#lacak" class="btn !bg-[var(--ink)] hover:!bg-black">Lacak service</a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Rel kiri: foto + fakta -->
                 <div class="col-span-2 lg:col-start-1 lg:col-span-2 lg:row-start-3 grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-[auto_minmax(0,1fr)] gap-[var(--gap)]">
-                    <div class="tile tile--photo aspect-square lg:aspect-auto lg:order-2 min-h-0">
+                    <div class="tile tile--photo hidden lg:block lg:order-2 min-h-0">
                         <img src="assets/img/slider8.webp" width="1536" height="864" loading="lazy"
                             class="object-[30%_50%]" alt="Rak showroom berisi TV, kulkas, dan stok barang">
                     </div>
-                    <ul class="tile t-s font-medium space-y-1 lg:order-1 lg:!p-4">
+                    <ul class="tile col-span-2 lg:col-span-1 t-s font-medium grid grid-cols-2 gap-x-4 gap-y-1 lg:block lg:space-y-1 lg:order-1 lg:!p-4">
                         <li>Sejak 2019</li>
                         <li><?= $brandCount ?> merek resmi</li>
                         <li><?= $productCount ?> produk di katalog</li>
@@ -209,15 +232,15 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                         <span class="font-semibold block">Jl. By Pass Ir. Soekarno</span>
                         <span class="link-arrow">Lihat peta <?= $arrow ?></span>
                     </a>
-                    <a href="tel:+6287779928897" class="tile t-s bg-[var(--ink)] text-white transition-colors hover:bg-black">
+                    <a href="tel:+6287779928897" class="tile col-span-2 lg:col-span-1 t-s bg-[var(--ink)] text-white transition-colors hover:bg-black">
                         <span class="block">Telepon</span>
                         <span class="font-semibold">0877-7992-8897</span>
                     </a>
-                    <a href="#lacak" class="tile t-s bg-[var(--deep)] text-white transition-colors hover:bg-[#5c0000]">
+                    <a href="#lacak" class="tile hidden lg:block t-s bg-[var(--deep)] text-white transition-colors hover:bg-[#5c0000]">
                         <span class="block font-semibold">Lacak service</span>
                         <span>Pakai kode service</span>
                     </a>
-                    <a href="<?= $waHello ?>" target="_blank" rel="noopener" class="tile col-span-2 lg:col-span-1 t-s bg-[var(--accent)] text-white flex flex-col justify-between gap-3 transition-colors hover:bg-[var(--deep)]">
+                    <a href="<?= $waHello ?>" target="_blank" rel="noopener" class="tile hidden lg:flex t-s bg-[var(--accent)] text-white flex-col justify-between gap-3 transition-colors hover:bg-[var(--deep)]">
                         <span class="font-semibold">Chat WhatsApp</span>
                         <span class="link-arrow">Tanya stok <?= $arrow ?></span>
                     </a>
@@ -261,7 +284,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 </div>
 
                 <div class="tile col-span-2 flex flex-col justify-between gap-6 lg:col-start-7 lg:col-span-6 lg:row-start-6 lg:row-span-3">
-                    <p class="t-l max-w-xl">Service oleh teknisi berpengalaman, dengan prosedur yang jelas dan hasil yang dicek ulang.</p>
+                    <p class="t-l max-lg:!text-2xl max-w-xl">Service oleh teknisi berpengalaman, dengan prosedur yang jelas dan hasil yang dicek ulang.</p>
                     <a href="services.php" class="link-arrow hover:text-[var(--accent)]">Layanan service <?= $arrow ?></a>
                 </div>
 
