@@ -489,16 +489,8 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
         </section>
 
         <!-- ============ KONTAK ============ -->
-        <section id="kontak" class="mt-28 lg:mt-40 bg-[var(--deep)] text-white pt-12 pb-20 lg:pb-28 overflow-hidden">
-            <ul class="flex gap-[var(--gap)] -ml-10 w-max" aria-hidden="true">
-                <?php foreach (array_slice($allProducts, 0, 12) as $i => $p): ?>
-                    <li class="h-[110px] lg:h-[150px] <?= ['aspect-[3/4]', 'aspect-square', 'aspect-[3/2]'][$i % 3] ?> rounded-[var(--r)] bg-white flex items-center justify-center p-3 shrink-0">
-                        <img src="<?= $e($productImg($p['image'])) ?>" alt="" loading="lazy" decoding="async" class="max-h-full max-w-full object-contain">
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 mt-14 lg:mt-20" data-reveal>
+        <section id="kontak" class="mt-28 lg:mt-40 bg-[var(--deep)] text-white py-20 lg:py-28">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6" data-reveal>
                 <h2 class="t-h">Tanya stok atau jadwal service</h2>
                 <p class="t-s mt-4 max-w-lg">Tulis nama dan keperluan Anda. Pesannya terbuka di WhatsApp, siap dikirim ke kami.</p>
 
