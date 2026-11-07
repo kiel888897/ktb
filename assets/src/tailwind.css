@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    /* Cegah halaman bisa digeser ke samping di HP
+       (animasi AOS fade-left/right menggeser elemen 100px sebelum tampil). */
+    html {
+        overflow-x: hidden;
+    }
+
+    @supports (overflow: clip) {
+        html,
+        body {
+            overflow-x: clip;
+        }
+    }
+}

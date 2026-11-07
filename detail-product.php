@@ -266,7 +266,7 @@ $breadcrumbItems[] = [$clean($product['name']), $seoUrl];
             <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
 
                 <!-- PRODUCT IMAGE -->
-                <div data-aos="fade-right">
+                <div data-aos="fade-right" class="min-w-0">
                     <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 overflow-hidden w-full max-w-full">
 
                         <!-- MAIN SLIDER -->
@@ -296,7 +296,7 @@ $breadcrumbItems[] = [$clean($product['name']), $seoUrl];
                 </div>
 
                 <!-- PRODUCT INFO -->
-                <div data-aos=" fade-left">
+                <div data-aos="fade-left" class="min-w-0">
                     <span class="text-sm text-primary font-medium">
                         <?= htmlspecialchars($product['brand_name']); ?> • <?= htmlspecialchars($product['subcategory_name']); ?>
                     </span>
