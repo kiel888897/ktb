@@ -384,7 +384,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
                 <div class="lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:self-start lg:pr-8">
                     <h2 class="t-h">Service yang bisa Anda pantau</h2>
-                    <p class="t-s mt-4 max-w-lg">Setiap barang yang masuk mendapat kode service. Masukkan kodenya untuk melihat progres terbaru.</p>
+                    <p class="t-s mt-4 max-w-lg">Barang dijemput ke rumah Anda dan mendapat kode service. Masukkan kodenya untuk melihat progres terbaru.</p>
 
                     <form action="services.php#track-service" method="post" class="mt-6 flex flex-col sm:flex-row gap-[var(--gap)] max-w-xl">
                         <label for="kode-service" class="sr-only">Kode service</label>
@@ -397,11 +397,11 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
                 <figure class="lg:col-start-1 lg:col-span-3 lg:row-start-2 lg:self-end">
                     <div class="tile tile--photo h-[46vw] lg:h-[260px]">
-                        <img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diterima dan dicatat">
+                        <img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diperiksa di toko">
                     </div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Diterima dan dicek</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Barang dicatat, Anda menerima kode service, lalu teknisi memeriksa kerusakannya.</p>
+                        <p class="t-m">Dijemput dan diperiksa</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Barang dijemput ke rumah Anda, dibawa ke toko, lalu diperiksa teknisi.</p>
                     </figcaption>
                 </figure>
 
@@ -411,7 +411,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                     </div>
                     <figcaption class="mt-4">
                         <p class="t-m">Dikerjakan</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Bila menunggu suku cadang atau persetujuan Anda, statusnya tertulis di kode service.</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Masih garansi: suku cadang kami ajukan ke merek. Tidak bergaransi: harganya kami sampaikan dulu, diperbaiki bila Anda setuju.</p>
                     </figcaption>
                 </figure>
 
@@ -420,8 +420,8 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                         <img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf Kusuma Trisna Bali siap menyerahkan barang">
                     </div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Selesai</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Hasil dicek ulang sebelum barang diserahkan kembali kepada Anda.</p>
+                        <p class="t-m">Dikembalikan</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Setelah proses selesai, barang dikembalikan kepada Anda.</p>
                     </figcaption>
                 </figure>
 
