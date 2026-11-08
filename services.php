@@ -16,6 +16,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
         $error = "Kode service tidak ditemukan.";
     }
 }
+
+// Merek service center resmi + FAQ (dipakai di tampilan dan schema FAQPage)
+$partners = $pdo->query("SELECT name, logo FROM partners WHERE is_active = 1 ORDER BY sort_order ASC, id DESC")->fetchAll(PDO::FETCH_ASSOC);
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$partnerNames = array_map(fn($p) => $niceName($p['name']), $partners);
+$partnerList = count($partnerNames) > 1
+    ? implode(', ', array_slice($partnerNames, 0, -1)) . ' dan ' . end($partnerNames)
+    : implode('', $partnerNames);
+
+$faqs = [
+    ['Elektronik apa saja yang bisa diservis di Kusuma Trisna Bali?',
+        'Kami menangani service dan perbaikan TV, mesin cuci, kulkas, audio, dan perangkat elektronik lain di Tabanan, Bali.'],
+];
+if ($partnerList !== '') {
+    $faqs[] = ['Kusuma Trisna Bali service center resmi untuk merek apa saja?',
+        'Kami service center resmi untuk ' . $partnerList . '.'];
+}
+$faqs = array_merge($faqs, [
+    ['Bagaimana cara mengajukan service elektronik?',
+        'Hubungi bagian service di 0812-3830-0513, chat WhatsApp 0877-7992-8897, atau bawa barang langsung ke toko kami. Sebutkan merek, jenis barang, dan kendalanya.'],
+    ['Bagaimana cara mengecek status service?',
+        'Masukkan kode service Anda, misalnya SRV-20260216-001, pada kolom Lacak status service di halaman ini. Kode diberikan saat barang diterima.'],
+    ['Apa saja tahapan status service?',
+        'Barang diterima, pemeriksaan, dikerjakan, menunggu suku cadang, menunggu persetujuan Anda, lalu selesai. Dua status menunggu hanya muncul bila diperlukan.'],
+    ['Di mana lokasi service center dan kapan buka?',
+        'Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113. Buka Senin sampai Sabtu, pukul 08.00 sampai 17.00 WITA.'],
+]);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -73,6 +103,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
         'areaServed' => ['@type' => 'AdministrativeArea', 'name' => 'Bali'],
     ]);
     jsonld(breadcrumb_ld([['Beranda', SITE_URL . '/'], ['Layanan Service', SITE_URL . '/services.php']]));
+    jsonld([
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => array_map(fn($f) => [
+            '@type' => 'Question',
+            'name' => $f[0],
+            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+        ], $faqs),
+    ]);
     ?>
 
     <script>document.documentElement.classList.add('js');</script>
@@ -83,12 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
 </head>
 <?php
 $e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
-$niceName = function ($n) {
-    $n = trim((string) $n);
-    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
-};
 $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-$partners = $pdo->query("SELECT name, logo FROM partners WHERE is_active = 1 ORDER BY sort_order ASC, id DESC")->fetchAll(PDO::FETCH_ASSOC);
 $steps = ['barang diterima', 'checking/diagnose', 'on progress', 'pending part', 'pending customer', 'done'];
 $stepLabel = [
     'barang diterima' => 'Barang diterima',
@@ -125,7 +159,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                         <input id="kode-service" type="text" name="service_code" required autocomplete="off"
                             value="<?= $e($_POST['service_code'] ?? '') ?>"
                             placeholder="Kode service, mis. SRV-20260216-001"
-                            class="flex-1 min-w-0 h-[56px] rounded-[var(--r)] bg-[var(--ground)] px-5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:outline-none focus:ring-2 focus:ring-[var(--ink)]">
+                            class="w-full sm:w-auto sm:flex-1 min-w-0 h-[56px] shrink-0 rounded-[var(--r)] bg-[var(--ground)] px-5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:outline-none focus:ring-2 focus:ring-[var(--ink)]">
                         <button type="submit" class="btn h-[56px]">Cek status <?= $arrow ?></button>
                     </form>
                     <?php if ($error): ?>
@@ -228,6 +262,24 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                 </ul>
             </section>
         <?php endif; ?>
+
+        <!-- FAQ -->
+        <section id="faq" class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-[var(--gap)] gap-y-6 scroll-mt-24">
+            <h2 class="t-h lg:col-span-4 lg:pr-8">Tanya jawab service</h2>
+            <div class="lg:col-span-8 space-y-[var(--gap)]">
+                <?php foreach ($faqs as $i => $f): ?>
+                    <details class="bar" <?= $i === 0 ? 'open' : '' ?>>
+                        <summary class="!py-3">
+                            <span class="font-semibold"><?= $e($f[0]) ?></span>
+                            <svg class="plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                                <path d="M12 5v14M5 12h14" />
+                            </svg>
+                        </summary>
+                        <p class="t-s px-[18px] pb-5 max-w-2xl"><?= $e($f[1]) ?></p>
+                    </details>
+                <?php endforeach; ?>
+            </div>
+        </section>
 
         <!-- Ajakan -->
         <section class="mt-24 lg:mt-32 mb-24 lg:mb-32 grid lg:grid-cols-12 gap-[var(--gap)]">
