@@ -384,7 +384,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
                 <div class="lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:self-start lg:pr-8">
                     <h2 class="t-h">Service yang bisa Anda pantau</h2>
-                    <p class="t-s mt-4 max-w-lg">Barang dijemput ke rumah Anda dan mendapat kode service. Masukkan kodenya untuk melihat progres terbaru.</p>
+                    <p class="t-s mt-4 max-w-lg">Barang kami jemput atau Anda bawa ke toko, lalu mendapat kode service. Masukkan kodenya untuk melihat progres terbaru.</p>
 
                     <form action="services.php#track-service" method="post" class="mt-6 flex flex-col sm:flex-row gap-[var(--gap)] max-w-xl">
                         <label for="kode-service" class="sr-only">Kode service</label>
@@ -400,8 +400,8 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                         <img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diperiksa di toko">
                     </div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Dijemput dan diperiksa</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Barang dijemput ke rumah Anda, dibawa ke toko, lalu diperiksa teknisi.</p>
+                        <p class="t-m">Diterima dan diperiksa</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Barang kami jemput ke rumah atau Anda bawa langsung ke toko, lalu diperiksa teknisi.</p>
                     </figcaption>
                 </figure>
 

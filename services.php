@@ -38,9 +38,9 @@ if ($partnerList !== '') {
 }
 $faqs = array_merge($faqs, [
     ['Bagaimana cara mengajukan service elektronik?',
-        'Hubungi bagian service di 0812-3830-0513 atau chat WhatsApp 0877-7992-8897. Sebutkan merek, jenis barang, dan kendalanya. Tim kami menjemput barang ke rumah Anda dan membawanya ke toko untuk diperiksa.'],
-    ['Apakah barang service dijemput ke rumah?',
-        'Ya. Tim kami menjemput barang ke rumah Anda, membawanya ke toko untuk diperiksa, lalu mengembalikannya setelah proses selesai.'],
+        'Hubungi bagian service di 0812-3830-0513 atau chat WhatsApp 0877-7992-8897. Sebutkan merek, jenis barang, dan kendalanya. Barang bisa kami jemput ke rumah Anda, atau Anda bawa langsung ke toko.'],
+    ['Apakah barang service dijemput atau dibawa sendiri?',
+        'Keduanya bisa. Tim kami dapat menjemput barang ke rumah Anda, atau Anda bisa membawanya langsung ke toko. Barang lalu diperiksa di toko dan dikembalikan setelah proses selesai.'],
     ['Bagaimana service untuk barang yang masih garansi?',
         'Setelah barang diperiksa, kami mengajukan suku cadang ke merek terkait, lalu mengganti suku cadang yang rusak.'],
     ['Bagaimana service untuk barang yang tidak bergaransi?',
@@ -155,7 +155,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                         <a href="/" class="hover:text-[var(--ink)]">Beranda</a> / <span class="text-[var(--ink)]">Service</span>
                     </nav>
                     <h1 class="t-h">Service elektronik di Tabanan</h1>
-                    <p class="t-s mt-4 max-w-xl">Barang dijemput ke rumah Anda, diperiksa teknisi di toko, dan progresnya bisa Anda pantau lewat kode service.</p>
+                    <p class="t-s mt-4 max-w-xl">Barang kami jemput ke rumah atau Anda bawa langsung ke toko. Progresnya bisa Anda pantau lewat kode service.</p>
                 </div>
 
                 <div id="track-service" class="scroll-mt-24">
@@ -230,13 +230,13 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
         <!-- Alur -->
         <section class="mt-24 lg:mt-32">
             <h2 class="t-h">Alur service</h2>
-            <p class="t-s mt-4 max-w-xl">Dari penjemputan sampai barang kembali. Progresnya bisa Anda pantau dengan kode service.</p>
+            <p class="t-s mt-4 max-w-xl">Dari barang masuk sampai kembali ke Anda. Progresnya bisa Anda pantau dengan kode service.</p>
             <div class="mt-10 grid lg:grid-cols-12 gap-[var(--gap)] gap-y-10 items-end" data-reveal>
                 <figure class="lg:col-span-3">
                     <div class="tile tile--photo h-[46vw] lg:h-[260px]"><img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Tim service datang ke rumah pelanggan"></div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Dijemput ke rumah</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Tim kami menjemput barang ke rumah Anda dan membawanya ke toko.</p>
+                        <p class="t-m">Dijemput atau dibawa</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Tim kami menjemput barang ke rumah Anda, atau Anda bawa langsung ke toko.</p>
                     </figcaption>
                 </figure>
                 <figure class="lg:col-span-4">
