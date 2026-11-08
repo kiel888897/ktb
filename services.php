@@ -75,321 +75,184 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_code'])) {
     jsonld(breadcrumb_ld([['Beranda', SITE_URL . '/'], ['Layanan Service', SITE_URL . '/services.php']]));
     ?>
 
-    <!-- Icons & Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
-    <!-- Font -->
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-    <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
+<?php
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+$partners = $pdo->query("SELECT name, logo FROM partners WHERE is_active = 1 ORDER BY sort_order ASC, id DESC")->fetchAll(PDO::FETCH_ASSOC);
+$steps = ['barang diterima', 'checking/diagnose', 'on progress', 'pending part', 'pending customer', 'done'];
+$stepLabel = [
+    'barang diterima' => 'Barang diterima',
+    'checking/diagnose' => 'Pemeriksaan',
+    'on progress' => 'Dikerjakan',
+    'pending part' => 'Menunggu suku cadang',
+    'pending customer' => 'Menunggu persetujuan Anda',
+    'done' => 'Selesai',
+    'cancel' => 'Dibatalkan',
+];
+$waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna Bali, saya ingin mengajukan service untuk: ');
+?>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 leading-relaxed">
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php $hbCurrent = 'service'; include 'header-board.php'; ?>
 
-    <?php include 'header.php'; ?>
-    <main>
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <!-- HERO -->
-        <section class="relative py-20">
-            <div class="absolute inset-0">
-                <img src="assets/img/slider1.webp" width="1600" height="896" fetchpriority="high"
-                    class="w-full h-full object-cover"
-                    alt="Layanan service dan perbaikan elektronik Kusuma Trisna Bali">
-                <div class="absolute inset-0 bg-black/40"></div>
+        <!-- Pembuka + lacak -->
+        <section class="pt-4 lg:pt-6 board lg:[grid-auto-rows:minmax(96px,auto)]">
+            <div class="tile col-span-2 lg:col-span-7 lg:row-span-3 flex flex-col justify-between gap-8 lg:!p-10">
+                <div>
+                    <nav aria-label="Breadcrumb" class="t-s text-[var(--soft)] mb-4">
+                        <a href="/" class="hover:text-[var(--ink)]">Beranda</a> / <span class="text-[var(--ink)]">Service</span>
+                    </nav>
+                    <h1 class="t-h">Service elektronik di Tabanan</h1>
+                    <p class="t-s mt-4 max-w-xl">Perbaikan dan perawatan oleh teknisi berpengalaman. Setiap barang mendapat kode service, jadi progresnya bisa Anda pantau dari sini.</p>
+                </div>
+
+                <div id="track-service" class="scroll-mt-24">
+                    <h2 class="t-m">Lacak status service</h2>
+                    <form method="POST" action="#track-service" class="mt-4 flex flex-col sm:flex-row gap-[var(--gap)]">
+                        <label for="kode-service" class="sr-only">Kode service</label>
+                        <input id="kode-service" type="text" name="service_code" required autocomplete="off"
+                            value="<?= $e($_POST['service_code'] ?? '') ?>"
+                            placeholder="Kode service, mis. SRV-20260216-001"
+                            class="flex-1 min-w-0 h-[56px] rounded-[var(--r)] bg-[var(--ground)] px-5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:outline-none focus:ring-2 focus:ring-[var(--ink)]">
+                        <button type="submit" class="btn h-[56px]">Cek status <?= $arrow ?></button>
+                    </form>
+                    <?php if ($error): ?>
+                        <p class="mt-3 t-s font-semibold text-[var(--accent)]" role="alert"><?= $e($error) ?> Periksa lagi kodenya atau tanyakan lewat WhatsApp.</p>
+                    <?php endif; ?>
+                </div>
             </div>
 
-            <div class="relative max-w-5xl mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-5xl font-semibold text-white mb-6">
-                    Layanan & Tracking Service
-                </h1>
-                <p class="text-lg text-gray-200">
-                    Cek progres perbaikan produk Anda dengan mudah dan cepat.
-                </p>
+            <div class="tile tile--photo col-span-2 lg:col-span-5 lg:row-span-3 aspect-[4/3] lg:aspect-auto">
+                <img src="assets/img/promo1.webp" width="1384" height="1040" fetchpriority="high" alt="Teknisi memeriksa TV di service center Kusuma Trisna Bali">
             </div>
         </section>
 
-        <!-- TRACK SERVICE -->
-        <section id="track-service" class="py-24 bg-gray-50 border-t border-gray-100">
-            <div class="max-w-3xl mx-auto px-6 text-center">
-
-                <h2 class="text-3xl font-semibold text-gray-900 mb-4">
-                    Lacak Status Service
-                </h2>
-                <p class="text-gray-600 mb-10">
-                    Masukkan kode service untuk melihat progres terbaru.
-                </p>
-
-                <!-- Form -->
-                <form method="POST" action="#track-service"
-                    class="flex flex-col sm:flex-row gap-4 justify-center">
-
-                    <input type="text" name="service_code" required
-                        placeholder="Contoh: SRV-20260216-001"
-                        class="flex-1 rounded-xl border border-gray-300 px-5 py-3
-                       focus:ring-2 focus:ring-primary focus:outline-none">
-
-                    <button type="submit"
-                        class="bg-primary text-white px-8 py-3 rounded-xl
-                       hover:bg-darkred transition">
-                        Cek Status
-                    </button>
-                </form>
-
-                <!-- ERROR -->
-                <?php if ($error): ?>
-                    <div class="mt-8 text-red-600 font-medium">
-                        <?= $error; ?>
+        <!-- Hasil lacak -->
+        <?php if ($result):
+            $status = $result['status'] ?? '';
+            $currentIndex = array_search($status, $steps, true); ?>
+            <section aria-label="Status service" class="mt-[var(--gap)] tile bg-[var(--ink)] text-white lg:!p-10">
+                <div class="grid lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-4">
+                        <p class="t-s text-white/70">Status saat ini</p>
+                        <p class="t-h mt-1"><?= $e($stepLabel[$status] ?? ucfirst($status)) ?></p>
+                        <p class="t-s text-white/70 mt-3">Diperbarui <?= $e(date('d M Y', strtotime($result['updated_at']))) ?></p>
                     </div>
+                    <dl class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-[var(--gap)] t-s">
+                        <div class="rounded-[var(--r)] bg-white/10 p-4"><dt class="text-white/70">Pelanggan</dt><dd class="font-semibold"><?= $e($result['customer_name']) ?></dd></div>
+                        <div class="rounded-[var(--r)] bg-white/10 p-4"><dt class="text-white/70">Produk</dt><dd class="font-semibold"><?= $e($result['product_name']) ?></dd></div>
+                        <div class="rounded-[var(--r)] bg-white/10 p-4"><dt class="text-white/70">Masuk</dt><dd class="font-semibold"><?= $e(date('d M Y', strtotime($result['created_at']))) ?></dd></div>
+                    </dl>
+                </div>
+                <?php if ($status !== 'cancel'): ?>
+                    <ol class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-[var(--gap)] t-s">
+                        <?php foreach ($steps as $i => $st):
+                            $done = $currentIndex !== false && $i <= $currentIndex;
+                            $now = $currentIndex !== false && $i === $currentIndex; ?>
+                            <li class="rounded-[var(--r)] p-4 <?= $now ? 'bg-[var(--accent)]' : ($done ? 'bg-white/25' : 'bg-white/5 text-white/60') ?>" <?= $now ? 'aria-current="step"' : '' ?>>
+                                <?= $e($stepLabel[$st]) ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
                 <?php endif; ?>
+            </section>
+        <?php endif; ?>
 
-                <!-- RESULT -->
-                <?php if ($result): ?>
-
-                    <?php
-                    $steps = [
-                        'barang diterima',
-                        'checking/diagnose',
-                        'on progress',
-                        'pending part',
-                        'pending customer',
-                        'done'
-                    ];
-
-                    $currentIndex = array_search($result['status'], $steps);
-                    ?>
-
-                    <div class="mt-14 p-10 bg-white rounded-3xl shadow-xl border border-gray-100 text-left">
-
-                        <h3 class="text-xl font-semibold text-gray-900 mb-10 text-center">
-                            Tracking Service
-                        </h3>
-
-                        <!-- Info -->
-                        <div class="mb-12 text-center space-y-2">
-                            <p><strong>Customer:</strong> <?= htmlspecialchars($result['customer_name']); ?></p>
-                            <p><strong>Produk:</strong> <?= htmlspecialchars($result['product_name']); ?></p>
-                            <p><strong>Tanggal Masuk:</strong>
-                                <?= date('d M Y', strtotime($result['created_at'])); ?>
-                            </p>
-                        </div>
-
-                        <!-- Progress -->
-                        <div class="relative">
-
-                            <div class="absolute top-4 left-0 right-0 h-1 bg-gray-200"></div>
-
-                            <div class="flex justify-between relative z-10">
-
-                                <?php foreach ($steps as $index => $step): ?>
-                                    <?php $isActive = $index <= $currentIndex; ?>
-
-                                    <div class="flex flex-col items-center w-full text-center">
-
-                                        <div class="w-9 h-9 flex items-center justify-center rounded-full
-                                    <?= $isActive ? 'bg-primary text-white' : 'bg-gray-300 text-white'; ?>">
-                                            <?= $index + 1; ?>
-                                        </div>
-
-                                        <p class="mt-3 text-xs font-medium
-                                    <?= $isActive ? 'text-primary' : 'text-gray-400'; ?>">
-                                            <?= ucfirst($step); ?>
-                                        </p>
-
-                                    </div>
-
-                                <?php endforeach; ?>
-
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="mt-12 text-center">
-
-                            <?php
-                            $badgeClass = match ($result['status']) {
-                                'done' => 'bg-green-100 text-green-700',
-                                'cancel' => 'bg-red-100 text-red-700',
-                                'on progress' => 'bg-yellow-100 text-yellow-700',
-                                'pending part' => 'bg-orange-100 text-orange-700',
-                                'pending customer' => 'bg-purple-100 text-purple-700',
-                                default => 'bg-gray-100 text-gray-700'
-                            };
-                            ?>
-
-                            <span class="inline-block px-6 py-3 rounded-full text-sm font-semibold <?= $badgeClass ?>">
-                                Status Saat Ini: <?= ucfirst($result['status']); ?>
-                            </span>
-
-                            <p class="mt-4 text-gray-500 text-sm">
-                                Update Terakhir:
-                                <?= date('d M Y', strtotime($result['updated_at'])); ?>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                <?php endif; ?>
-
+        <!-- Yang kami kerjakan -->
+        <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-[var(--gap)]" data-reveal>
+            <h2 class="t-h lg:col-span-4 lg:pr-8 mb-6 lg:mb-0">Yang kami kerjakan</h2>
+            <div class="tile lg:col-span-4 lg:!p-8">
+                <h3 class="t-m">Service &amp; perbaikan</h3>
+                <p class="t-s mt-3">Perbaikan produk elektronik dengan proses kerja yang rapi dan pengecekan sebelum digunakan kembali.</p>
+            </div>
+            <div class="tile lg:col-span-4 bg-[var(--tile-2)] lg:!p-8">
+                <h3 class="t-m">Konsultasi produk</h3>
+                <p class="t-s mt-3">Informasi dan arahan soal penggunaan, perawatan, dan penanganan produk elektronik.</p>
+            </div>
+            <div class="tile lg:col-start-5 lg:col-span-8 bg-[var(--deep)] text-white lg:!p-8">
+                <h3 class="t-m">Dukungan teknis</h3>
+                <p class="t-s mt-3 max-w-2xl">Membantu menangani kendala teknis agar produk kembali berfungsi dengan baik.</p>
             </div>
         </section>
 
-        <!-- SERVICE LIST -->
-        <section class="py-24">
-            <div class="max-w-6xl mx-auto px-6">
-
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-semibold text-gray-900 mb-4"
-                        data-aos="fade-up">
-                        Apa yang Kami Tawarkan
-                    </h2>
-                    <p class="text-gray-600"
-                        data-aos="fade-up" data-aos-delay="100">
-                        Layanan yang kami sediakan untuk mendukung produk dan pelanggan
-                    </p>
-                </div>
-
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-
-                    <!-- Service Item -->
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover:shadow-md transition"
-                        data-aos="fade-up">
-                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
-                            <i class="fa-solid fa-comments"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
-                            Konsultasi Produk
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Memberikan informasi dan arahan terkait penggunaan,
-                            perawatan, dan penanganan produk elektronik.
-                        </p>
-                    </div>
-
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover:shadow-md transition"
-                        data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
-                            Service & Perbaikan
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Menangani perbaikan produk elektronik dengan proses kerja
-                            yang rapi dan pengecekan sebelum digunakan kembali.
-                        </p>
-                    </div>
-
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm hover:shadow-md transition"
-                        data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-6">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-3">
-                            Dukungan Teknis
-                        </h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">
-                            Membantu penanganan kendala teknis agar produk
-                            dapat berfungsi dengan baik.
-                        </p>
-                    </div>
-
-                </div>
+        <!-- Alur -->
+        <section class="mt-24 lg:mt-32">
+            <h2 class="t-h">Alur service</h2>
+            <p class="t-s mt-4 max-w-xl">Statusnya sama dengan yang Anda lihat saat melacak kode service.</p>
+            <div class="mt-10 grid lg:grid-cols-12 gap-[var(--gap)] gap-y-10 items-end" data-reveal>
+                <figure class="lg:col-span-3">
+                    <div class="tile tile--photo h-[46vw] lg:h-[260px]"><img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diterima dan dicatat"></div>
+                    <figcaption class="mt-4">
+                        <p class="t-m">Diterima dan diperiksa</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Barang dicatat, Anda menerima kode service, lalu teknisi memeriksa kerusakannya.</p>
+                    </figcaption>
+                </figure>
+                <figure class="lg:col-span-4">
+                    <div class="tile tile--photo h-[58vw] lg:h-[380px]"><img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Teknisi menangani perbaikan TV"></div>
+                    <figcaption class="mt-4">
+                        <p class="t-m">Dikerjakan</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Bila menunggu suku cadang atau persetujuan Anda, statusnya tertulis di kode service.</p>
+                    </figcaption>
+                </figure>
+                <figure class="lg:col-span-5">
+                    <div class="tile tile--photo h-[70vw] lg:h-[500px]"><img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf siap menyerahkan barang"></div>
+                    <figcaption class="mt-4">
+                        <p class="t-m">Selesai</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Hasil dicek ulang sebelum barang diserahkan kembali kepada Anda.</p>
+                    </figcaption>
+                </figure>
             </div>
         </section>
 
-        <!-- SERVICE PROCESS -->
-        <section class="bg-gray-50 py-24">
-            <div class="max-w-6xl mx-auto px-6">
+        <?php if ($partners): ?>
+            <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-[var(--gap)] items-center" data-reveal>
+                <h2 class="t-m lg:col-span-3 mb-4 lg:mb-0">Service center resmi untuk</h2>
+                <ul class="lg:col-span-9 grid grid-cols-3 sm:grid-cols-6 gap-[var(--gap)]">
+                    <?php foreach ($partners as $partner): ?>
+                        <li class="tile !p-3 flex items-center justify-center aspect-[3/2]">
+                            <img src="admin/uploads/partners/<?= $e($partner['logo']) ?>" alt="<?= $e($niceName($partner['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </section>
+        <?php endif; ?>
 
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-semibold text-gray-900 mb-4"
-                        data-aos="fade-up">
-                        Alur Layanan
-                    </h2>
-                    <p class="text-gray-600"
-                        data-aos="fade-up" data-aos-delay="100">
-                        Proses kerja yang jelas dan transparan
-                    </p>
-                </div>
-
-                <div class="grid md:grid-cols-4 gap-10">
-
-                    <div class="text-center" data-aos="fade-up">
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
-                            1
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Konsultasi</h3>
-                        <p class="text-sm text-gray-600">
-                            Diskusi awal untuk memahami kebutuhan.
-                        </p>
-                    </div>
-
-                    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
-                            2
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Perencanaan</h3>
-                        <p class="text-sm text-gray-600">
-                            Menyusun strategi dan solusi.
-                        </p>
-                    </div>
-
-                    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
-                            3
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Implementasi</h3>
-                        <p class="text-sm text-gray-600">
-                            Pelaksanaan layanan secara profesional.
-                        </p>
-                    </div>
-
-                    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
-                        <div class="w-14 h-14 mx-auto flex items-center justify-center rounded-full bg-primary text-white font-semibold mb-5">
-                            4
-                        </div>
-                        <h3 class="font-semibold text-gray-900 mb-2">Evaluasi</h3>
-                        <p class="text-sm text-gray-600">
-                            Monitoring dan peningkatan berkelanjutan.
-                        </p>
-                    </div>
-
-                </div>
+        <!-- Ajakan -->
+        <section class="mt-24 lg:mt-32 mb-24 lg:mb-32 grid lg:grid-cols-12 gap-[var(--gap)]">
+            <div class="tile lg:col-span-8 bg-[var(--ink)] text-white flex flex-col justify-between gap-8 lg:min-h-[260px] lg:!p-10">
+                <h2 class="t-h">Ajukan service</h2>
+                <p class="t-s max-w-lg">Ceritakan merek, jenis barang, dan kendalanya. Kami balas pada jam kerja, Senin–Sabtu 08.00–17.00.</p>
             </div>
+            <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="tile lg:col-span-4 bg-[var(--accent)] text-white flex flex-col justify-between gap-6 transition-colors hover:bg-[var(--deep)] lg:!p-10">
+                <span class="t-m">Chat WhatsApp</span>
+                <span class="link-arrow">0877-7992-8897 <?= $arrow ?></span>
+            </a>
         </section>
     </main>
-    <?php include 'footer.php'; ?>
 
+    <?php include 'footer-board.php'; ?>
 
-    <!-- Script -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 900,
-            once: true,
-            easing: 'ease-out-cubic'
-        });
-    </script>
-
-    <script src="assets/main.js"></script>
-    <!-- Auto Scroll -->
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
     <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
         <script>
             window.addEventListener("load", function() {
-                document.getElementById("track-service")
-                    .scrollIntoView({
-                        behavior: "smooth"
-                    });
+                var el = document.getElementById("track-service");
+                if (el) el.scrollIntoView();
             });
         </script>
     <?php endif; ?>
-
 </body>
 
 </html>

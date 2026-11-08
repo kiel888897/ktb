@@ -71,205 +71,119 @@ $partners = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Icons & Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
-    <!-- Font -->
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
+<?php
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+?>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
-    <?php include 'header.php'; ?>
-    <main>
-        <!-- //konten about here -->
-        <section class="relative py-32">
-            <!-- Background Image -->
-            <div class="absolute inset-0">
-                <img src="assets/img/slider4.webp" width="1920" height="1075" fetchpriority="high"
-                    alt="Tentang Kusuma Trisna Bali"
-                    class="w-full h-full object-cover">
-                <!-- Overlay -->
-                <div class="absolute inset-0 bg-black/20"></div>
-                <!--
-            Kalau mau sedikit lebih kontras:
-            ganti bg-white/80 → bg-black/40
-        -->
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php $hbCurrent = 'tentang'; include 'header-board.php'; ?>
+
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
+
+        <section class="pt-4 lg:pt-6 board lg:[grid-auto-rows:minmax(110px,auto)]">
+            <div class="tile col-span-2 lg:col-span-7 lg:row-span-3 flex flex-col justify-end lg:!p-10">
+                <nav aria-label="Breadcrumb" class="t-s text-[var(--soft)] mb-4">
+                    <a href="/" class="hover:text-[var(--ink)]">Beranda</a> / <span class="text-[var(--ink)]">Tentang kami</span>
+                </nav>
+                <h1 class="t-h">Distribusi dan service elektronik sejak 2019</h1>
+                <p class="t-s mt-4 max-w-xl">Kusuma Trisna Bali bergerak di bidang distribusi dan layanan elektronik di Tabanan, dengan fokus pada pelayanan yang baik, dapat diandalkan, dan sesuai kebutuhan pelanggan.</p>
             </div>
-
-            <!-- Content -->
-            <div class="relative max-w-6xl mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-5xl font-semibold text-primary mb-6"
-                    data-aos="fade-up">
-                    Tentang Kami
-                </h1>
-                <p class="max-w-2xl mx-auto text-lg text-white"
-                    data-aos="fade-up" data-aos-delay="150">
-                    Kusuma Trisna Bali merupakan usaha yang bergerak di bidang
-                    distribusi dan layanan elektronik, dengan fokus pada
-                    pelayanan yang baik, dapat diandalkan, dan berorientasi
-                    pada kebutuhan pelanggan.
-                </p>
+            <div class="tile tile--photo col-span-2 lg:col-span-5 lg:row-span-3 aspect-[4/3] lg:aspect-auto">
+                <img src="assets/img/slider4.webp" width="1920" height="1075" fetchpriority="high" alt="Gudang dan ruang pamer Kusuma Trisna Bali">
             </div>
-        </section>
-
-
-        <section class="py-24">
-            <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
-
-                <div data-aos="fade-right">
-                    <span class="text-primary font-medium uppercase tracking-wider text-sm">
-                        Who We Are
-                    </span>
-                    <h2 class="text-3xl font-semibold text-gray-900 mt-3 mb-5">
-                        Distribusi & Layanan Elektronik
-                    </h2>
-                    <p class="text-gray-600 mb-4 leading-relaxed">
-                        Kami melayani kebutuhan distribusi dan perbaikan produk
-                        elektronik dengan proses kerja yang jelas, rapi,
-                        dan sesuai dengan kebutuhan pelanggan.
-                    </p>
-                    <p class="text-gray-600 leading-relaxed">
-                        Dengan pengalaman yang terus berkembang, kami berupaya
-                        memberikan layanan yang konsisten dan dapat diandalkan
-                        dalam setiap pekerjaan.
-                    </p>
-                </div>
-
-                <div data-aos="fade-left">
-                    <img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy"
-                        alt="Tim Kusuma Trisna Bali"
-                        class="rounded-xl shadow-md">
-                </div>
-
+            <div class="tile bg-[var(--ink)] text-white lg:col-span-3">
+                <p class="t-display">2019</p>
+                <p class="t-s mt-2">tahun berdiri</p>
+            </div>
+            <div class="tile bg-[var(--tile-2)] lg:col-span-3">
+                <p class="t-display"><?= count($partners) ?></p>
+                <p class="t-s mt-2">merek dengan service resmi</p>
+            </div>
+            <div class="tile col-span-2 lg:col-span-6 bg-[var(--deep)] text-white flex flex-col justify-between gap-6">
+                <p class="t-l max-lg:!text-2xl">Distribusi dan perbaikan dengan proses kerja yang jelas dan rapi.</p>
+                <a href="products.php" class="link-arrow">Lihat produk <?= $arrow ?></a>
             </div>
         </section>
 
-        <section class="bg-gray-50 py-24">
-            <div class="max-w-6xl mx-auto px-6">
-
-                <div class="text-center mb-14">
-                    <h2 class="text-3xl font-semibold text-gray-900 mb-4"
-                        data-aos="fade-up">
-                        Nilai Perusahaan
-                    </h2>
-                    <p class="text-gray-600"
-                        data-aos="fade-up" data-aos-delay="100">
-                        Nilai yang menjadi pedoman kami dalam bekerja dan melayani pelanggan
-                    </p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-10">
-
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm"
-                        data-aos="fade-up">
-                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-5">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                            Cara Kerja yang Baik
-                        </h3>
-                        <p class="text-gray-600">
-                            Setiap pekerjaan dilakukan dengan tertib, jelas,
-                            dan penuh tanggung jawab.
-                        </p>
-                    </div>
-
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm"
-                        data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-5">
-                            <i class="fa-solid fa-lightbulb"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                            Terus Berkembang
-                        </h3>
-                        <p class="text-gray-600">
-                            Kami terus belajar dan menyesuaikan layanan
-                            sesuai dengan kebutuhan pelanggan.
-                        </p>
-                    </div>
-
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm"
-                        data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-12 h-12 flex items-center justify-center rounded-full bg-primary/10 text-primary mb-5">
-                            <i class="fa-solid fa-handshake"></i>
-                        </div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                            Dapat Diandalkan
-                        </h3>
-                        <p class="text-gray-600">
-                            Berusaha menjaga kepercayaan pelanggan melalui
-                            hasil kerja yang konsisten dan bertanggung jawab.
-                        </p>
-                    </div>
-
-                </div>
+        <!-- Nilai -->
+        <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-[var(--gap)]" data-reveal>
+            <h2 class="t-h lg:col-span-4 lg:pr-8 mb-6 lg:mb-0">Cara kami bekerja</h2>
+            <div class="tile lg:col-span-4 lg:!p-8">
+                <h3 class="t-m">Tertib dan jelas</h3>
+                <p class="t-s mt-3">Setiap pekerjaan dilakukan dengan tertib, jelas, dan penuh tanggung jawab.</p>
+            </div>
+            <div class="tile lg:col-span-4 bg-[var(--tile-2)] lg:!p-8">
+                <h3 class="t-m">Dapat diandalkan</h3>
+                <p class="t-s mt-3">Menjaga kepercayaan pelanggan lewat hasil kerja yang konsisten dan bertanggung jawab.</p>
+            </div>
+            <div class="tile tile--photo lg:col-start-5 lg:col-span-5 aspect-[4/3] lg:aspect-auto lg:min-h-[280px]">
+                <img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" alt="Tim teknisi Kusuma Trisna Bali">
+            </div>
+            <div class="tile lg:col-span-3 bg-[var(--ink)] text-white lg:!p-8">
+                <h3 class="t-m">Terus berkembang</h3>
+                <p class="t-s mt-3">Kami terus belajar dan menyesuaikan layanan dengan kebutuhan pelanggan.</p>
             </div>
         </section>
-        <!-- BRAND PARTNER -->
-        <section class="py-20 bg-white">
-            <div class="max-w-7xl mx-auto px-6">
 
-                <!-- Heading -->
-                <div class="text-center mb-14">
-                    <span class="inline-block mb-3 text-sm font-semibold text-primary">
-                        Brand Partner
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        Authorized Brand Partner
-                    </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">
-                        Kami merupakan mitra resmi dan authorized service untuk berbagai
-                        merek elektronik terpercaya.
-                    </p>
-                </div>
-
-                <!-- Slider -->
-                <div class="swiper brandSwiper">
-                    <div class="swiper-wrapper items-center">
-
-                        <?php foreach ($partners as $partner): ?>
-                            <div class="swiper-slide flex justify-center">
-                                <a href="products.php?partner=<?= $partner['slug']; ?>">
-                                    <img
-                                        src="admin/uploads/partners/<?= htmlspecialchars($partner['logo']); ?>"
-                                        alt="Logo <?= htmlspecialchars($partner['name']); ?>"
-                                        loading="lazy" decoding="async"
-                                        class="h-auto object-contain                            hover:grayscale-0 hover:opacity-100 transition">
-
-                                </a>
-                            </div>
-                        <?php endforeach; ?>
-
+        <!-- Lokasi -->
+        <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-[var(--gap)] lg:gap-4" data-reveal>
+            <div class="lg:col-span-5">
+                <h2 class="t-h">Di Tabanan, Bali</h2>
+                <dl class="grid grid-cols-2 gap-x-4 gap-y-5 mt-8 t-s">
+                    <div class="col-span-2">
+                        <dt class="text-[var(--soft)]">Alamat</dt>
+                        <dd class="font-medium">Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113</dd>
                     </div>
-                </div>
-
-
+                    <div>
+                        <dt class="text-[var(--soft)]">Jam buka</dt>
+                        <dd class="font-medium">Sen–Sab, 08.00–17.00</dd>
+                    </div>
+                    <div>
+                        <dt class="text-[var(--soft)]">Waktu setempat</dt>
+                        <dd class="font-medium" data-clock>WITA (UTC+8)</dd>
+                    </div>
+                </dl>
+                <a href="contact.php" class="btn mt-8">Hubungi kami <?= $arrow ?></a>
+            </div>
+            <div class="lg:col-span-7 tile bg-[var(--ink)] aspect-[3/2] flex items-center justify-center mt-8 lg:mt-0">
+                <svg viewBox="0 0 540 340" class="w-full max-h-full" role="img" aria-label="Peta Pulau Bali, titik merah menandai Tabanan">
+                            <path fill="#374151" d="M10 40 L100 36 L248 44 L276 20 L372 36 L476 92 L504 116 L524 140 L516 160 L468 184 L444 192 L400 204 L368 228 L344 256 L332 272 L332 284 L336 300 L312 320 L276 312 L304 288 L304 268 L292 240 L276 228 L260 220 L232 192 L164 148 L88 140 L72 136 L40 92 Z" />
+                            <circle cx="286" cy="200" r="11" fill="#c1121f" />
+                            <text x="304" y="186" fill="#ffffff" font-size="22" font-weight="600" font-family="IBM Plex Sans, sans-serif">Tabanan</text>
+                        </svg>
             </div>
         </section>
+
+        <?php if ($partners): ?>
+            <section class="mt-24 lg:mt-32 mb-24 lg:mb-32 grid lg:grid-cols-12 gap-[var(--gap)] items-center" data-reveal>
+                <h2 class="t-m lg:col-span-3 mb-4 lg:mb-0">Service center resmi untuk</h2>
+                <ul class="lg:col-span-9 grid grid-cols-3 sm:grid-cols-6 gap-[var(--gap)]">
+                    <?php foreach ($partners as $partner): ?>
+                        <li class="tile !p-3 flex items-center justify-center aspect-[3/2]">
+                            <img src="admin/uploads/partners/<?= $e($partner['logo']) ?>" alt="<?= $e($niceName($partner['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </section>
+        <?php else: ?>
+            <div class="h-24 lg:h-32"></div>
+        <?php endif; ?>
     </main>
-    <?php include 'footer.php'; ?>
 
-    <!-- Script -->
+    <?php include 'footer-board.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 900,
-            once: true,
-            easing: 'ease-out-cubic'
-        });
-    </script>
-
-    <script src="assets/main.js"></script>
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
 </body>
 
 </html>

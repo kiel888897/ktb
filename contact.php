@@ -57,199 +57,107 @@
 
 
     <!-- Icons & Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
-    <!-- Font -->
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
+<?php
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+?>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php $hbCurrent = 'kontak'; include 'header-board.php'; ?>
 
-    <?php include 'header.php'; ?>
-    <main>
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <!-- HERO CONTACT -->
-        <section class="relative py-32">
-            <!-- Background Image -->
-            <div class="absolute inset-0">
-                <img src="assets/img/slider7.webp" width="1536" height="864" fetchpriority="high"
-                    alt="Hubungi Kusuma Trisna Bali di Tabanan"
-                    class="w-full h-full object-cover">
-                <!-- Overlay -->
-                <div class="absolute inset-0 bg-black/30"></div>
-            </div>
-
-            <!-- Content -->
-            <div class="relative max-w-6xl mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-5xl font-semibold text-primary mb-6"
-                    data-aos="fade-up">
-                    Hubungi Kami
-                </h1>
-                <p class="max-w-2xl mx-auto text-lg text-white"
-                    data-aos="fade-up" data-aos-delay="150">
-                    Kami siap membantu dan menjawab pertanyaan Anda.
-                    Silakan hubungi kami melalui form atau informasi di bawah ini.
-                </p>
-            </div>
+        <section class="pt-6 lg:pt-10">
+            <nav aria-label="Breadcrumb" class="t-s text-[var(--soft)] mb-4">
+                <a href="/" class="hover:text-[var(--ink)]">Beranda</a> / <span class="text-[var(--ink)]">Kontak</span>
+            </nav>
+            <h1 class="t-h">Hubungi Kusuma Trisna Bali</h1>
+            <p class="t-s mt-4 max-w-xl">Tanya stok, harga, atau jadwal service. Cara tercepat lewat WhatsApp pada jam kerja.</p>
         </section>
-        <!-- CONTACT CONTENT -->
-        <section class="py-24">
-            <?php if (isset($_GET['status'])): ?>
-                <?php
-                $contactStatus = $_GET['status'];
-                $contactMessage = $contactStatus === 'success'
-                    ? 'Pesan berhasil dikirim. Kami akan segera menghubungi Anda.'
-                    : ($contactStatus === 'captcha' ? 'Verifikasi anti-spam gagal. Silakan coba lagi.' : 'Pesan tidak dapat dikirim. Silakan coba lagi nanti.');
-                $contactAlertClass = $contactStatus === 'success'
-                    ? 'border-green-200 bg-green-50 text-green-800'
-                    : 'border-red-200 bg-red-50 text-red-800';
-                ?>
-                <div class="max-w-6xl mx-auto px-6 mb-8">
-                    <div role="alert" class="border rounded-lg px-4 py-3 <?php echo $contactAlertClass; ?>">
-                        <?php echo htmlspecialchars($contactMessage, ENT_QUOTES, 'UTF-8'); ?>
-                    </div>
+
+        <?php if (isset($_GET['status'])):
+            $contactStatus = $_GET['status'];
+            $contactMessage = $contactStatus === 'success'
+                ? 'Pesan berhasil dikirim. Kami akan segera menghubungi Anda.'
+                : ($contactStatus === 'captcha' ? 'Verifikasi anti-spam gagal. Silakan coba lagi.' : 'Pesan tidak dapat dikirim. Silakan coba lagi nanti.'); ?>
+            <p role="status" class="mt-6 tile t-s font-semibold <?= $contactStatus === 'success' ? '!bg-[#e6f4ea] text-[#14532d]' : '!bg-[#fde8e8] text-[var(--deep)]' ?>"><?= $e($contactMessage) ?></p>
+        <?php endif; ?>
+
+        <!-- Kanal kontak -->
+        <section aria-label="Kontak" class="mt-8 board" data-reveal>
+            <a href="https://wa.me/6287779928897" target="_blank" rel="noopener" class="tile col-span-2 lg:col-span-6 bg-[var(--accent)] text-white flex flex-col justify-between gap-8 lg:min-h-[220px] lg:!p-8 transition-colors hover:bg-[var(--deep)]">
+                <span class="t-l">Chat WhatsApp</span>
+                <span class="link-arrow">Sales · 0877-7992-8897 <?= $arrow ?></span>
+            </a>
+            <a href="tel:+6287779928897" class="tile lg:col-span-2 flex flex-col justify-between gap-6 lg:!p-6 transition-colors hover:bg-[var(--tile-2)]">
+                <span class="font-semibold">Sales</span>
+                <span class="t-s">0877-7992-8897</span>
+            </a>
+            <a href="tel:+6281238300513" class="tile lg:col-span-2 flex flex-col justify-between gap-6 bg-[var(--tile-2)] lg:!p-6 transition-colors hover:bg-[#d1d5db]">
+                <span class="font-semibold">Service</span>
+                <span class="t-s">0812-3830-0513</span>
+            </a>
+            <a href="mailto:info@kusumatrisnabali.com" class="tile col-span-2 lg:col-span-2 flex flex-col justify-between gap-6 bg-[var(--ink)] text-white lg:!p-6 transition-colors hover:bg-black">
+                <span class="font-semibold">Email</span>
+                <span class="t-s break-all">info@kusumatrisnabali.com</span>
+            </a>
+        </section>
+
+        <!-- Peta + form -->
+        <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-24 lg:gap-[var(--gap)]" data-reveal>
+            <div class="lg:col-span-6">
+                <h2 class="t-h">Lokasi toko</h2>
+                <p class="t-s mt-4 max-w-xl">Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113. Buka Senin–Sabtu, 08.00–17.00.</p>
+                <div class="tile tile--photo mt-6 aspect-[4/3]">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.491802868451!2d115.1211551!3d-8.5486154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23bbcadf71b29%3A0x47932c18a19d26e4!2sCV.%20Kusuma%20Trisna%20Bali!5e0!3m2!1sid!2sid!4v1770969154441!5m2!1sid!2sid" title="Lokasi Kusuma Trisna Bali di Google Maps" class="w-full h-full border-0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-            <?php endif; ?>
-            <div class="max-w-6xl mx-auto px-6 pb-16">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.491802868451!2d115.1211551!3d-8.5486154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23bbcadf71b29%3A0x47932c18a19d26e4!2sCV.%20Kusuma%20Trisna%20Bali!5e0!3m2!1sid!2sid!4v1770969154441!5m2!1sid!2sid" title="Lokasi Kusuma Trisna Bali di Google Maps" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <a href="https://share.google/LNnFVBGg7wU9klqp3" target="_blank" rel="noopener" class="link-arrow mt-4 hover:text-[var(--accent)]">Buka di Google Maps <?= $arrow ?></a>
             </div>
-            <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
 
-                <!-- CONTACT INFO -->
-                <div data-aos="fade-right">
-                    <h2 class="text-2xl font-semibold text-gray-900 mb-6">
-                        Informasi Kontak
-                    </h2>
-
-                    <p class="text-gray-600 mb-8">
-                        Jangan ragu untuk menghubungi kami. Tim kami akan merespons
-                        secepat mungkin dengan solusi terbaik.
-                    </p>
-
-                    <div class="space-y-6">
-
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-                                <i class="fa-solid fa-location-dot"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-900">Alamat</h3>
-                                <p class="text-gray-600 text-sm">
-                                    Jl By Pass Jl. Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken,<br> Kec. Tabanan, Kabupaten Tabanan, Bali 82113
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-900">Sales</h3>
-                                <p class="text-gray-600 text-sm">
-                                    +62 877-7992-8897
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-                                <i class="fa-solid fa-phone"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-900">Services</h3>
-                                <p class="text-gray-600 text-sm">
-                                    +62 812-3830-0513
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
-                                <i class="fa-solid fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-900">Email</h3>
-                                <p class="text-gray-600 text-sm">
-                                    info@kusumatrisnabali.com
-                                </p>
-                            </div>
-                        </div>
-
+            <div class="lg:col-span-5 lg:col-start-8">
+                <h2 class="t-h">Kirim pesan</h2>
+                <p class="t-s mt-4">Kami balas lewat email atau telepon pada jam kerja.</p>
+                <form action="send-mail.php" method="post" class="mt-6 grid gap-[var(--gap)]">
+                    <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
+                    <div>
+                        <label for="c-name" class="t-s font-semibold block mb-2">Nama lengkap</label>
+                        <input id="c-name" type="text" name="name" required maxlength="100" autocomplete="name" class="w-full rounded-[var(--r)] bg-[var(--tile)] px-4 py-3.5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:bg-[var(--tile-2)] focus:outline-none">
                     </div>
-                </div>
-
-                <!-- CONTACT FORM -->
-                <div data-aos="fade-left">
-                    <div class="bg-white border border-gray-100 rounded-xl p-8 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-6">
-                            Kirim Pesan
-                        </h3>
-
-                        <form action="send-mail.php" method="post" class="space-y-5">
-                            <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Nama Lengkap
-                                </label>
-                                <input type="text" name="name" required maxlength="100"
-                                    placeholder="Nama Anda"
-                                    class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Email
-                                </label>
-                                <input type="email" name="email" required maxlength="190"
-                                    placeholder="email@contoh.com"
-                                    class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Nomor Telepon / WhatsApp
-                                </label>
-                                <input type="tel" name="phone" required maxlength="30"
-                                    placeholder="08xxxxxxxxxx"
-                                    class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Pesan
-                                </label>
-                                <textarea name="message" rows="5" required maxlength="5000"
-                                    placeholder="Tulis pesan Anda..."
-                                    class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary/30"></textarea>
-                            </div>
-
-                            <input type="hidden" name="recaptcha_token" id="recaptchaToken">
-
-                            <button type="submit"
-                                class="inline-flex items-center justify-center px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-darkred transition">
-                                Kirim Pesan
-                                <i class="fa-solid fa-paper-plane ml-2 text-sm"></i>
-                            </button>
-
-                        </form>
+                    <div>
+                        <label for="c-email" class="t-s font-semibold block mb-2">Email</label>
+                        <input id="c-email" type="email" name="email" required maxlength="190" autocomplete="email" class="w-full rounded-[var(--r)] bg-[var(--tile)] px-4 py-3.5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:bg-[var(--tile-2)] focus:outline-none">
                     </div>
-                </div>
-
+                    <div>
+                        <label for="c-phone" class="t-s font-semibold block mb-2">Nomor telepon / WhatsApp</label>
+                        <input id="c-phone" type="tel" name="phone" required maxlength="30" autocomplete="tel" class="w-full rounded-[var(--r)] bg-[var(--tile)] px-4 py-3.5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:bg-[var(--tile-2)] focus:outline-none">
+                    </div>
+                    <div>
+                        <label for="c-msg" class="t-s font-semibold block mb-2">Pesan</label>
+                        <textarea id="c-msg" name="message" rows="5" required maxlength="5000" class="w-full rounded-[var(--r)] bg-[var(--tile)] px-4 py-3.5 text-[var(--ink)] placeholder:text-[var(--soft)] focus:bg-[var(--tile-2)] focus:outline-none"></textarea>
+                    </div>
+                    <input type="hidden" name="recaptcha_token" id="recaptchaToken">
+                    <button type="submit" class="btn mt-2 disabled:opacity-60">Kirim pesan <?= $arrow ?></button>
+                </form>
             </div>
         </section>
 
+        <div class="h-24 lg:h-32"></div>
     </main>
-    <?php include 'footer.php'; ?>
 
-    <!-- Script -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <?php include 'footer-board.php'; ?>
+
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
+
     <script>
         const contactForm = document.querySelector('form[action="send-mail.php"]');
         const recaptchaSiteKey = '6LdPkaYtAAAAAJDQYb3MtPpTl8m5pO98k1ZMLQAc';
@@ -298,15 +206,6 @@
                 });
         });
     </script>
-    <script>
-        AOS.init({
-            duration: 900,
-            once: true,
-            easing: 'ease-out-cubic'
-        });
-    </script>
-
-    <script src="assets/main.js"></script>
 </body>
 
 </html>

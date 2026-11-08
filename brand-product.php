@@ -160,180 +160,123 @@ $ogImage = !empty($current_brand['logo'])
     ])));
     ?>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
+<?php
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+$brandNice = $niceName($brandName);
+$brandLogo = !empty($current_brand['logo']) ? 'admin/uploads/brands/' . $current_brand['logo'] : 'assets/img/logo.png';
+// Apakah merek ini juga service center resmi?
+$isPartner = false;
+try {
+    $ps = $pdo->prepare("SELECT COUNT(*) FROM partners WHERE is_active = 1 AND LOWER(name) = LOWER(?)");
+    $ps->execute([$brandName]);
+    $isPartner = (int) $ps->fetchColumn() > 0;
+} catch (Throwable $t) {
+    $isPartner = false;
+}
+$waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna Bali, saya ingin bertanya tentang produk ' . $brandNice . '.');
+?>
 
-<body class="text-gray-800 bg-gray-50">
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php $hbCurrent = 'produk'; include 'header-board.php'; ?>
 
-    <?php include 'header.php'; ?>
-    <main>
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <!-- HERO -->
-        <section class="relative py-28">
-            <div class="absolute inset-0">
-                <img src="assets/img/slider5.webp" width="1920" height="1080" fetchpriority="high" class="w-full h-full object-cover" alt="Brand produk elektronik resmi Kusuma Trisna Bali">
-                <div class="absolute inset-0 bg-black/50"></div>
+        <nav aria-label="Breadcrumb" class="pt-6 lg:pt-10 t-s text-[var(--soft)]">
+            <a href="/" class="hover:text-[var(--ink)]">Beranda</a> /
+            <a href="products.php" class="hover:text-[var(--ink)]">Produk</a> /
+            <span class="text-[var(--ink)]" aria-current="page"><?= $e($brandNice) ?></span>
+        </nav>
+
+        <!-- Merek -->
+        <section class="mt-6 grid lg:grid-cols-12 gap-[var(--gap)]">
+            <div class="tile lg:col-span-4 aspect-[3/2] lg:aspect-auto lg:min-h-[260px] flex items-center justify-center !p-8">
+                <img src="<?= $e($brandLogo) ?>" alt="Logo <?= $e($brandNice) ?>" class="blend max-h-28 max-w-full object-contain">
             </div>
-
-            <div class="relative max-w-6xl mx-auto px-6 text-center text-white">
-                <h1 class="text-4xl font-semibold mb-4">
-                    <?= $current_brand ? 'Produk ' . htmlspecialchars($brandName) . ' Resmi' : 'Brand & Produk Resmi'; ?>
-                </h1>
-                <p class="max-w-xl mx-auto text-white/90">
-                    Pilih brand yang Anda butuhkan dan temukan berbagai produk original
-                    dengan dukungan distribusi resmi dan terpercaya.
-                </p>
-            </div>
-        </section>
-
-        <!-- CONTENT -->
-        <section class="py-16">
-            <div class="max-w-6xl mx-auto px-6">
-
-                <!-- BRAND TAB -->
-                <div class="flex flex-wrap justify-center gap-3 mb-12">
-                    <?php foreach ($brands as $b): ?>
-                        <?php $active = ($b['id'] == $brand_id); ?>
-                        <a href="brand-product.php?brand=<?= urlencode($b['slug']); ?>"
-                            class="px-5 py-2 rounded-full text-sm font-medium transition
-                   <?= $active
-                            ? 'bg-primary text-white shadow-md'
-                            : 'bg-white border text-gray-600 hover:bg-primary hover:text-white'; ?>">
-                            <?= htmlspecialchars($b['name']); ?>
-                        </a>
-                    <?php endforeach; ?>
-                </div>
-
-                <!-- BRAND DETAIL -->
-                <?php if ($current_brand): ?>
-
-                    <?php
-                    $brandLogo = !empty($current_brand['logo'])
-                        ? "admin/uploads/brands/" . $current_brand['logo']
-                        : "assets/img/logo.png";
-                    ?>
-
-                    <div class="mb-14">
-
-                        <div class="bg-white border rounded-2xl p-8 shadow-sm">
-
-                            <div class="flex flex-col md:flex-row items-start gap-8">
-
-                                <!-- LOGO -->
-                                <div class="flex-shrink-0">
-                                    <div class="w-40 h-28 flex items-center justify-center bg-gray-50 rounded-xl border">
-                                        <img src="<?= htmlspecialchars($brandLogo); ?>"
-                                            alt="Logo <?= htmlspecialchars($current_brand['name']); ?>"
-                                            loading="lazy"
-                                            class="max-h-20 object-contain">
-                                    </div>
-                                </div>
-
-                                <!-- TEXT CONTENT -->
-                                <div class="flex-1">
-
-                                    <h2 class="text-3xl font-bold text-gray-800 mb-4">
-                                        <?= htmlspecialchars($current_brand['name']); ?>
-                                    </h2>
-
-                                    <?php if (!empty($current_brand['description'])): ?>
-                                        <p class="text-gray-600 leading-relaxed">
-                                            <?= nl2br($current_brand['description']); ?>
-                                        </p>
-                                    <?php else: ?>
-                                        <p class="text-gray-500 italic">
-                                            Informasi brand sedang diperbarui.
-                                        </p>
-                                    <?php endif; ?>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
+            <div class="tile lg:col-span-8 flex flex-col justify-between gap-6 lg:!p-10">
+                <div>
+                    <h1 class="t-h">Produk <?= $e($brandNice) ?> resmi</h1>
+                    <div class="t-s mt-4 max-w-2xl">
+                        <?php if (!empty($current_brand['description'])): ?>
+                            <?= nl2br($current_brand['description']) ?>
+                        <?php else: ?>
+                            Produk <?= $e($brandNice) ?> original yang kami salurkan untuk toko dan rumah tangga di Tabanan dan sekitarnya.
+                        <?php endif; ?>
                     </div>
-
-                <?php endif; ?>
-
-                <!-- PRODUCT GRID -->
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                    <?php if (empty($products)): ?>
-                        <div class="col-span-full text-center text-gray-500">
-                            Tidak ada produk untuk brand ini.
-                        </div>
-                    <?php endif; ?>
-
-                    <?php foreach ($products as $p): ?>
-                        <?php
-                        $img = $p['image'] ?? '';
-                        $imgPath = $img
-                            ? "admin/uploads/products/" . $img
-                            : "assets/img/product-placeholder.webp";
-                        ?>
-
-                        <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">
-
-                            <div class="relative h-56 flex items-center justify-center bg-gray-50">
-
-                                <?php if (!empty($p['model'])): ?>
-                                    <div class="absolute top-3 right-3">
-                                        <span class="bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full shadow-md">
-                                            <?= htmlspecialchars($p['model']); ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-
-                                <img src="<?= htmlspecialchars($imgPath); ?>"
-                                    alt="<?= htmlspecialchars($p['name']); ?>"
-                                    loading="lazy" decoding="async"
-                                    class="max-h-44 object-contain">
-                            </div>
-
-                            <div class="p-6">
-
-                                <div class="text-sm text-primary font-medium mb-1">
-                                    <?= htmlspecialchars($p['brand_name']); ?> • <?= htmlspecialchars($p['subcategory_name']); ?>
-                                </div>
-
-                                <h3 class="text-lg font-semibold mb-1">
-                                    <?= htmlspecialchars($p['name']); ?>
-                                </h3>
-
-                                <?php if (!empty($p['tagline'])): ?>
-                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                        <?= htmlspecialchars($p['tagline']); ?>
-                                    </p>
-                                <?php endif; ?>
-
-                                <div class="flex justify-between items-center mt-3">
-                                    <span class="text-xs text-gray-500 uppercase tracking-wide">
-                                        <?= htmlspecialchars($p['category_name']); ?>
-                                    </span>
-
-                                    <a href="detail-product.php?slug=<?= urlencode($p['slug']); ?>"
-                                        class="text-primary text-sm font-medium hover:underline">
-                                        Detail <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    <?php endforeach; ?>
-
                 </div>
-
+                <div class="flex flex-wrap gap-[var(--gap)] items-center">
+                    <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn">Tanya produk <?= $e($brandNice) ?></a>
+                    <?php if ($isPartner): ?>
+                        <a href="services.php" class="px-4 py-3 rounded-[var(--r)] bg-[var(--deep)] text-white font-semibold hover:bg-[#5c0000] transition-colors">Service center resmi <?= $e($brandNice) ?></a>
+                    <?php endif; ?>
+                </div>
             </div>
         </section>
 
-    </main>
-    <?php include 'footer.php'; ?>
+        <!-- Produk merek -->
+        <section class="mt-16 lg:mt-24">
+            <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+                <h2 class="t-h"><?= count($products) ?> produk <?= $e($brandNice) ?></h2>
+                <a href="products.php?brand=<?= urlencode($current_brand['slug'] ?? '') ?>" class="link-arrow hover:text-[var(--accent)]">Cari &amp; filter <?= $arrow ?></a>
+            </div>
+            <?php if (empty($products)): ?>
+                <div class="tile py-14 text-center">
+                    <p class="t-m">Belum ada produk <?= $e($brandNice) ?> di katalog online</p>
+                    <p class="t-s mt-2">Tanyakan langsung, kami bantu cek ketersediaannya.</p>
+                    <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn mt-6">Chat WhatsApp</a>
+                </div>
+            <?php else: ?>
+                <ul class="board !grid-cols-2 lg:!grid-cols-3" data-reveal>
+                    <?php foreach ($products as $p):
+                        $imgPath = !empty($p['image']) ? 'admin/uploads/products/' . $p['image'] : 'assets/img/product-placeholder.webp'; ?>
+                        <li>
+                            <a href="detail-product.php?slug=<?= urlencode($p['slug']) ?>" class="tile group flex flex-col h-full !p-4 lg:!p-6">
+                                <div class="aspect-square flex items-center justify-center p-1 lg:p-3">
+                                    <img src="<?= $e($imgPath) ?>" alt="<?= $e($p['name'] . ' - ' . $brandNice) ?>" loading="lazy" decoding="async"
+                                        class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                                </div>
+                                <div class="mt-3 flex-1">
+                                    <h3 class="t-m group-hover:text-[var(--accent)] transition-colors"><?= $e($p['name']) ?></h3>
+                                    <p class="t-s text-[var(--soft)] mt-1"><?= $e($p['subcategory_name']) ?></p>
+                                </div>
+                                <span class="link-arrow mt-4 t-s">Lihat detail <?= $arrow ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </section>
 
-    <script src="assets/main.js"></script>
+        <!-- Merek lain -->
+        <section class="mt-24 lg:mt-32 mb-24 lg:mb-32">
+            <h2 class="t-h"><?= count($brands) ?> merek resmi</h2>
+            <ul class="mt-8 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-[var(--gap)]">
+                <?php foreach ($brands as $b): $on = (int) $b['id'] === (int) $brand_id; ?>
+                    <li>
+                        <a href="brand-product.php?brand=<?= urlencode($b['slug']) ?>" <?= $on ? 'aria-current="page"' : '' ?>
+                            class="tile !p-3 flex items-center justify-center aspect-[3/2] transition-colors <?= $on ? '!bg-[var(--tile-2)] outline outline-2 outline-[var(--ink)] -outline-offset-2' : 'hover:bg-[var(--tile-2)]' ?>"
+                            title="Produk <?= $e($niceName($b['name'])) ?>">
+                            <img src="admin/uploads/brands/<?= $e($b['logo']) ?>" alt="<?= $e($niceName($b['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </section>
+    </main>
+
+    <?php include 'footer-board.php'; ?>
+
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
 </body>
 
 </html>

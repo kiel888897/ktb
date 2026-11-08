@@ -14,29 +14,34 @@ http_response_code(404);
     <link rel="icon" href="/assets/favicon.ico">
     <meta name="theme-color" content="#c1121f">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
 
-<body class="text-gray-800 bg-gray-50">
-    <?php include __DIR__ . '/header.php'; ?>
-    <main>
-        <section class="bg-gray-900 pt-40 pb-24 text-center text-white">
-            <div class="max-w-3xl mx-auto px-6">
-                <p class="text-primary font-semibold tracking-widest mb-3">404</p>
-                <h1 class="text-4xl md:text-5xl font-semibold mb-6">Halaman tidak ditemukan</h1>
-                <p class="text-gray-300 mb-10">
-                    Halaman atau produk yang Anda cari tidak tersedia atau sudah dipindahkan.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="products.php" class="px-6 py-3 bg-primary rounded-lg font-medium hover:bg-darkred transition">Lihat Produk</a>
-                    <a href="/" class="px-6 py-3 border border-white rounded-lg font-medium hover:bg-white hover:text-gray-900 transition">Ke Beranda</a>
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php include __DIR__ . '/header-board.php'; ?>
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6 pt-4 lg:pt-6 pb-24 lg:pb-32">
+        <section class="board">
+            <div class="tile col-span-2 lg:col-span-8 lg:row-span-2 bg-[var(--ink)] text-white flex flex-col justify-between gap-10 lg:min-h-[420px] lg:!p-10">
+                <p class="t-display">404</p>
+                <div>
+                    <h1 class="t-h">Halaman tidak ditemukan</h1>
+                    <p class="t-s mt-4 max-w-lg">Halaman atau produk yang Anda cari tidak tersedia atau sudah dipindahkan.</p>
                 </div>
             </div>
+            <a href="products.php" class="tile lg:col-span-4 bg-[var(--accent)] text-white flex flex-col justify-between gap-6 transition-colors hover:bg-[var(--deep)] lg:!p-8">
+                <span class="t-m">Lihat katalog produk</span>
+                <span class="font-semibold">Produk &rarr;</span>
+            </a>
+            <a href="/" class="tile lg:col-start-9 lg:col-span-4 flex flex-col justify-between gap-6 transition-colors hover:bg-[var(--tile-2)] lg:!p-8">
+                <span class="t-m">Kembali ke beranda</span>
+                <span class="font-semibold">Beranda &rarr;</span>
+            </a>
         </section>
     </main>
-    <?php include __DIR__ . '/footer.php'; ?>
+    <?php include __DIR__ . '/footer-board.php'; ?>
     <script src="assets/main.js"></script>
 </body>
 
