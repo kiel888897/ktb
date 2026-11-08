@@ -151,24 +151,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 </head>
 
 <body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
-    <!-- Bar atas khusus HP/tablet -->
-    <header class="lg:hidden sticky top-0 z-40 bg-[var(--ground)]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
-            <a href="/" class="flex items-center gap-3 min-w-0">
-                <img src="assets/img/logo.webp" width="96" height="96" alt="" class="w-9 h-9 rounded-full shrink-0">
-                <span class="text-lg font-bold tracking-tight truncate">Kusuma Trisna Bali</span>
-            </a>
-            <details class="mnav">
-                <summary class="flex items-center gap-2 h-11 px-3 rounded-[var(--r)] bg-[var(--tile)] font-semibold cursor-pointer list-none" aria-label="Buka menu">Menu <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
-                <nav aria-label="Menu HP" class="absolute left-0 right-0 top-16 bg-[var(--ground)] px-4 sm:px-6 pb-6 pt-2 grid gap-[var(--gap)]">
-                    <a href="products.php" class="tile flex items-center justify-between py-4 font-semibold">Produk <?= $arrow ?></a>
-                    <a href="services.php" class="tile flex items-center justify-between py-4 font-semibold">Service &amp; lacak <?= $arrow ?></a>
-                    <a href="about.php" class="tile flex items-center justify-between py-4 font-semibold">Tentang kami <?= $arrow ?></a>
-                    <a href="contact.php" class="tile flex items-center justify-between py-4 font-semibold">Kontak <?= $arrow ?></a>
-                </nav>
-            </details>
-        </div>
-    </header>
+    <?php $hbMobileOnly = true; include 'header-board.php'; ?>
 
     <main id="main-content">
 

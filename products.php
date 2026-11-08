@@ -268,282 +268,152 @@ $noindex = $search !== ''
     jsonld(breadcrumb_ld([['Beranda', $site . '/'], ['Produk', $site . '/products.php']]));
     ?>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
+<?php
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+$h1 = $filterLabel !== "" ? $filterLabel . " resmi di Tabanan" : "Katalog produk elektronik resmi";
+$pageUrl = function (array $set) {
+    $q = array_merge($_GET, $set);
+    $q = array_filter($q, fn($v) => $v !== '' && $v !== null);
+    return 'products.php' . ($q ? '?' . http_build_query($q) : '');
+};
+$hasFilter = $search !== '' || $brand_id > 0 || $category_id > 0 || $subcategory_id > 0 || $partner_id > 0;
+$field = 'w-full h-[52px] rounded-[var(--r)] bg-[var(--tile)] px-4 text-[var(--ink)] placeholder:text-[var(--soft)] focus:bg-[var(--tile-2)] focus:outline-none';
+?>
 
-<body class="text-gray-800 bg-gray-50">
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php $hbCurrent = 'produk'; include 'header-board.php'; ?>
 
-    <?php include 'header.php'; ?>
-    <main>
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
 
-        <!-- HERO -->
-        <section class="relative py-28">
-            <div class="absolute inset-0">
-                <img src="assets/img/slider5.webp" width="1920" height="1080" fetchpriority="high" class="w-full h-full object-cover" alt="Produk elektronik resmi Kusuma Trisna Bali">
-                <div class="absolute inset-0 bg-black/40"></div>
+        <!-- Judul -->
+        <section class="pt-6 lg:pt-10 grid lg:grid-cols-12 gap-[var(--gap)] items-end">
+            <div class="lg:col-span-8">
+                <nav aria-label="Breadcrumb" class="t-s text-[var(--soft)] mb-4">
+                    <a href="/" class="hover:text-[var(--ink)]">Beranda</a> / <span class="text-[var(--ink)]">Produk</span>
+                </nav>
+                <h1 class="t-h"><?= $e($h1) ?></h1>
             </div>
-            <div class="relative max-w-6xl mx-auto px-6 text-center">
-                <h1 class="text-4xl font-semibold text-primary mb-4">Produk Kami</h1>
-                <p class="text-white max-w-xl mx-auto">
-                    Berbagai pilihan produk elektronik untuk kebutuhan bisnis dan pelanggan Anda.
-                </p>
-            </div>
+            <p class="lg:col-span-4 t-s mt-4 lg:mt-0">
+                <?= $totalData ?> produk resmi<?= $hasFilter ? ' sesuai pilihan Anda' : ' dari ' . count($brands) . ' merek' ?>. Tanya stok atau harga lewat WhatsApp.
+            </p>
         </section>
 
-        <!-- PRODUCTS -->
-        <section class="py-16">
-            <div class="max-w-6xl mx-auto px-6">
-                <h2 class="text-2xl font-semibold text-gray-900 mb-8">Daftar Produk</h2>
+        <!-- Jenis produk -->
+        <nav aria-label="Jenis produk" class="mt-8 -mx-4 sm:mx-0 px-4 sm:px-0 flex gap-[var(--gap)] overflow-x-auto lg:overflow-visible lg:flex-wrap pb-1">
+            <a href="<?= $e($pageUrl(['subcategory' => '', 'category' => '', 'page' => ''])) ?>"
+                class="shrink-0 px-4 py-2.5 rounded-[var(--r)] font-semibold transition-colors <?= $subcategory_id === 0 && $category_id === 0 ? 'bg-[var(--ink)] text-white' : 'bg-[var(--tile)] hover:bg-[var(--tile-2)]' ?>">Semua</a>
+            <?php foreach ($subcategories as $sc): $on = $subcategory_slug === $sc['slug']; ?>
+                <a href="<?= $e($pageUrl(['subcategory' => $sc['slug'], 'category' => '', 'page' => ''])) ?>" <?= $on ? 'aria-current="true"' : '' ?>
+                    class="shrink-0 px-4 py-2.5 rounded-[var(--r)] font-semibold transition-colors <?= $on ? 'bg-[var(--ink)] text-white' : 'bg-[var(--tile)] hover:bg-[var(--tile-2)]' ?>"><?= $e($sc['name']) ?></a>
+            <?php endforeach; ?>
+        </nav>
 
-                <!-- FILTER -->
-                <form method="GET"
-                    class="bg-white border rounded-2xl p-5 mb-10 shadow-md
-           transition-all duration-300 hover:shadow-lg">
-
-                    <div
-                        class="grid grid-cols-1 lg:grid-cols-[2fr_1.2fr_1.2fr_1fr_auto]
-               gap-4 items-center">
-
-                        <!-- SEARCH -->
-                        <div>
-                            <div class="relative">
-                                <input type="text"
-                                    name="search"
-                                    value="<?= htmlspecialchars($search); ?>"
-                                    placeholder="Nama produk..."
-                                    class="w-full border border-gray-300 rounded-xl
-                           px-4 py-3 pl-11
-                           focus:ring-2 focus:ring-primary/30
-                           focus:border-primary transition">
-
-                                <i
-                                    class="fa-solid fa-magnifying-glass
-                           absolute left-4 top-1/2 -translate-y-1/2
-                           text-gray-400">
-                                </i>
-                            </div>
-                        </div>
-
-                        <!-- BRAND -->
-                        <div>
-                            <label for="brandFilter" class="sr-only">Pilih brand</label>
-                            <select name="brand"
-                                id="brandFilter"
-                                class="w-full border border-gray-300 rounded-xl
-                       px-4 py-3
-                       focus:ring-2 focus:ring-primary/30
-                       focus:border-primary transition">
-                                <option value="">Semua Brand</option>
-                                <?php foreach ($brands as $b): ?>
-                                    <option value="<?= htmlspecialchars($b['slug']); ?>"
-                                        <?= $brand_slug === $b['slug'] ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($b['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- CATEGORY -->
-                        <div>
-                            <label for="categoryFilter" class="sr-only">Pilih kategori</label>
-                            <select name="category"
-                                id="categoryFilter"
-                                class="w-full border border-gray-300 rounded-xl
-                       px-4 py-3
-                       focus:ring-2 focus:ring-primary/30
-                       focus:border-primary transition">
-                                <option value="">Semua Kategori</option>
-                                <?php foreach ($categories as $c): ?>
-                                    <option value="<?= htmlspecialchars($c['slug']); ?>"
-                                        <?= $category_slug === $c['slug'] ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($c['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- SUBCATEGORY -->
-                        <div>
-                            <label for="subcategoryFilter" class="sr-only">Pilih subkategori</label>
-                            <select name="subcategory"
-                                id="subcategoryFilter"
-                                class="w-full border border-gray-300 rounded-xl
-                       px-4 py-3
-                       focus:ring-2 focus:ring-primary/30
-                       focus:border-primary transition">
-                                <option value="">Semua</option>
-                                <?php foreach ($subcategories as $s): ?>
-                                    <option value="<?= htmlspecialchars($s['slug']); ?>"
-                                        <?= $subcategory_slug === $s['slug'] ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($s['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-
-                        <!-- ACTION -->
-
-                        <!-- FILTER -->
-                        <button type="submit"
-                            class="w-auto h-11 flex items-center justify-center
-                       rounded-xl bg-primary text-white
-                       hover:bg-darkred hover:scale-105
-                       transition-all duration-300 shadow px-2">
-                            <i class="fa-solid fa-search p-2"></i> Search
-                        </button>
-                    </div>
-                </form>
-
-
-
-                <!-- GRID -->
-                <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                    <?php if (empty($products)): ?>
-                        <div class="col-span-full text-center text-gray-500">
-                            Tidak ada produk.
-                        </div>
-                    <?php endif; ?>
-
-                    <?php foreach ($products as $p): ?>
-                        <?php
-                        $img = $p['image'] ?? '';
-                        $imgPath = $img ? "admin/uploads/products/" . $img : "assets/img/product-placeholder.webp";
-                        ?>
-                        <!-- <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition"> -->
-                        <div class="bg-white border rounded-xl overflow-hidden hover:shadow-lg transition">
-
-                            <!-- IMAGE WRAPPER -->
-                            <div class="relative h-56 flex items-center justify-center bg-gray-50">
-
-                                <!-- Floating Model Badge -->
-                                <?php if (!empty($p['model'])): ?>
-                                    <div class="absolute top-3 right-3">
-                                        <span class="bg-white/90 backdrop-blur-sm text-primary text-xs font-semibold px-3 py-1 rounded-full shadow-md">
-                                            <?= htmlspecialchars($p['model']); ?>
-                                        </span>
-                                    </div>
-                                <?php endif; ?>
-
-                                <!-- Product Image -->
-                                <img
-                                    src="<?= htmlspecialchars($imgPath); ?>"
-                                    alt="<?= htmlspecialchars($p['name'] . ' - ' . $p['brand_name']); ?>"
-                                    loading="lazy" decoding="async"
-                                    class="max-h-44 object-contain">
-                            </div>
-
-                            <!-- IMAGE (FIX: jangan dobel) -->
-                            <!-- <div class="h-56 flex items-center justify-center bg-gray-50">
-                            <img
-                                src="<?= htmlspecialchars($imgPath); ?>"
-                                alt="<?= htmlspecialchars($p['name']); ?>"
-                                class="max-h-44 object-contain">
-                        </div> -->
-
-                            <div class="p-6">
-                                <!-- Brand & Subcategory -->
-                                <div class="text-sm text-primary font-medium mb-1">
-                                    <?= htmlspecialchars($p['brand_name']); ?> • <?= htmlspecialchars($p['subcategory_name']); ?>
-                                </div>
-
-                                <!-- Product Name -->
-                                <h3 class="text-lg font-semibold mb-1">
-                                    <?= htmlspecialchars($p['name']); ?>
-                                </h3>
-
-                                <!-- Model (jadi badge) -->
-                                <!-- <?php if (!empty($p['model'])): ?>
-                                <div class="mb-2">
-                                    <span class="inline-block bg-primary/10 text-primary text-xs font-semibold px-3 py-1 rounded-full">
-                                        Model: <?= htmlspecialchars($p['model']); ?>
-                                    </span>
-                                </div>
-                            <?php endif; ?> -->
-
-                                <!-- Tagline -->
-                                <?php if (!empty($p['tagline'])): ?>
-                                    <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                                        <?= htmlspecialchars($p['tagline']); ?>
-                                    </p>
-                                <?php endif; ?>
-
-                                <!-- Bottom Section -->
-                                <div class="flex justify-between items-center mt-3">
-                                    <span class="text-xs text-gray-500 uppercase tracking-wide">
-                                        <?= htmlspecialchars($p['category_name']); ?>
-                                    </span>
-
-                                    <a href="detail-product.php?slug=<?= urlencode($p['slug']); ?>"
-                                        class="text-primary text-sm font-medium hover:underline">
-                                        Detail <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                        </div>
+        <!-- Cari & filter -->
+        <form method="GET" class="mt-[var(--gap)] grid grid-cols-2 lg:grid-cols-12 gap-[var(--gap)]">
+            <?php if ($subcategory_id > 0): ?><input type="hidden" name="subcategory" value="<?= $e($subcategory_slug) ?>"><?php endif; ?>
+            <div class="col-span-2 lg:col-span-5">
+                <label for="cari" class="sr-only">Cari nama produk</label>
+                <input id="cari" type="search" name="search" value="<?= $e($search) ?>" placeholder="Cari nama atau model produk" class="<?= $field ?>">
+            </div>
+            <div class="lg:col-span-3">
+                <label for="brandFilter" class="sr-only">Pilih merek</label>
+                <select name="brand" id="brandFilter" class="<?= $field ?>">
+                    <option value="">Semua merek</option>
+                    <?php foreach ($brands as $b): ?>
+                        <option value="<?= $e($b['slug']) ?>" <?= $brand_slug === $b['slug'] ? 'selected' : '' ?>><?= $e($niceName($b['name'])) ?></option>
                     <?php endforeach; ?>
-
-                </div>
-                <!-- PAGINATION -->
-                <?php if ($totalPages > 1): ?>
-                    <div class="flex justify-center mt-12">
-                        <nav class="flex items-center gap-2">
-
-                            <?php
-                            $queryString = $_GET;
-                            ?>
-
-                            <!-- Previous -->
-                            <?php if ($page > 1): ?>
-                                <?php
-                                $queryString['page'] = $page - 1;
-                                ?>
-                                <a href="?<?= http_build_query($queryString); ?>"
-                                    aria-label="Halaman sebelumnya"
-                                    class="px-4 py-2 border rounded-lg hover:bg-gray-100">
-                                    <i class="fa-solid fa-angles-left"></i>
-                                </a>
-                            <?php endif; ?>
-
-                            <!-- Page Numbers -->
-                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                                <?php
-                                $queryString['page'] = $i;
-                                ?>
-                                <a href="?<?= http_build_query($queryString); ?>"
-                                    aria-label="Buka halaman <?= $i; ?>"
-                                    class="px-4 py-2 border rounded-lg
-                        <?= $i == $page ? 'bg-primary text-white border-primary' : 'hover:bg-gray-100'; ?>">
-                                    <?= $i; ?>
-                                </a>
-                            <?php endfor; ?>
-
-                            <!-- Next -->
-                            <?php if ($page < $totalPages): ?>
-                                <?php
-                                $queryString['page'] = $page + 1;
-                                ?>
-                                <a href="?<?= http_build_query($queryString); ?>"
-                                    aria-label="Halaman berikutnya"
-                                    class="px-4 py-2 border rounded-lg hover:bg-gray-100">
-                                    <i class="fa-solid fa-angles-right"></i>
-                                </a>
-                            <?php endif; ?>
-
-                        </nav>
-                    </div>
-                <?php endif; ?>
+                </select>
             </div>
+            <div class="lg:col-span-2">
+                <label for="categoryFilter" class="sr-only">Pilih kategori</label>
+                <select name="category" id="categoryFilter" class="<?= $field ?>">
+                    <option value="">Semua kategori</option>
+                    <?php foreach ($categories as $c): ?>
+                        <option value="<?= $e($c['slug']) ?>" <?= $category_slug === $c['slug'] ? 'selected' : '' ?>><?= $e($c['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <button type="submit" class="btn col-span-2 lg:col-span-2 h-[52px]">Cari</button>
+        </form>
+
+        <?php if ($hasFilter): ?>
+            <p class="mt-4 t-s"><a href="products.php" class="link-arrow text-[var(--accent)]">Hapus semua filter <?= $arrow ?></a></p>
+        <?php endif; ?>
+
+        <!-- Daftar produk -->
+        <section aria-label="Daftar produk" class="mt-10 lg:mt-12">
+            <?php if (empty($products)): ?>
+                <div class="tile py-16 text-center">
+                    <p class="t-m">Produk tidak ditemukan</p>
+                    <p class="t-s mt-2">Coba kata lain, atau tanya langsung stoknya lewat WhatsApp.</p>
+                    <a href="https://wa.me/6287779928897" target="_blank" rel="noopener" class="btn mt-6">Chat WhatsApp</a>
+                </div>
+            <?php else: ?>
+                <ul class="board !grid-cols-2 lg:!grid-cols-3" data-reveal>
+                    <?php foreach ($products as $p):
+                        $imgPath = !empty($p['image']) ? 'admin/uploads/products/' . $p['image'] : 'assets/img/product-placeholder.webp'; ?>
+                        <li>
+                            <a href="detail-product.php?slug=<?= urlencode($p['slug']) ?>" class="tile group flex flex-col h-full !p-4 lg:!p-6">
+                                <div class="aspect-square flex items-center justify-center p-1 lg:p-3">
+                                    <img src="<?= $e($imgPath) ?>" alt="<?= $e($p['name'] . ' - ' . $niceName($p['brand_name'])) ?>"
+                                        loading="lazy" decoding="async"
+                                        class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                                </div>
+                                <div class="mt-3 flex-1">
+                                    <h2 class="t-m group-hover:text-[var(--accent)] transition-colors"><?= $e($p['name']) ?></h2>
+                                    <p class="t-s text-[var(--soft)] mt-1"><?= $e($niceName($p['brand_name'])) ?> · <?= $e($p['subcategory_name']) ?></p>
+                                </div>
+                                <span class="link-arrow mt-4 t-s">Lihat detail <?= $arrow ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
+            <?php if ($totalPages > 1): ?>
+                <nav aria-label="Halaman" class="mt-10 flex flex-wrap items-center gap-[var(--gap)]">
+                    <?php if ($page > 1): ?>
+                        <a href="<?= $e($pageUrl(['page' => $page - 1])) ?>" class="px-4 py-2.5 rounded-[var(--r)] bg-[var(--tile)] font-semibold hover:bg-[var(--tile-2)]" aria-label="Halaman sebelumnya">Sebelumnya</a>
+                    <?php endif; ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="<?= $e($pageUrl(['page' => $i])) ?>" aria-label="Halaman <?= $i ?>" <?= $i == $page ? 'aria-current="page"' : '' ?>
+                            class="min-w-[44px] text-center px-3 py-2.5 rounded-[var(--r)] font-semibold <?= $i == $page ? 'bg-[var(--ink)] text-white' : 'bg-[var(--tile)] hover:bg-[var(--tile-2)]' ?>"><?= $i ?></a>
+                    <?php endfor; ?>
+                    <?php if ($page < $totalPages): ?>
+                        <a href="<?= $e($pageUrl(['page' => $page + 1])) ?>" class="px-4 py-2.5 rounded-[var(--r)] bg-[var(--tile)] font-semibold hover:bg-[var(--tile-2)]" aria-label="Halaman berikutnya">Berikutnya</a>
+                    <?php endif; ?>
+                </nav>
+            <?php endif; ?>
         </section>
 
+        <!-- Ajakan -->
+        <section class="mt-24 lg:mt-32 mb-24 lg:mb-32 grid lg:grid-cols-12 gap-[var(--gap)]">
+            <div class="tile lg:col-span-8 bg-[var(--deep)] text-white flex flex-col justify-between gap-8 lg:min-h-[260px]">
+                <h2 class="t-h">Tidak menemukan yang dicari?</h2>
+                <p class="t-s max-w-lg">Sebutkan merek atau model yang Anda perlukan, kami bantu cek ketersediaannya.</p>
+            </div>
+            <a href="https://wa.me/6287779928897?text=<?= rawurlencode('Halo Kusuma Trisna Bali, saya mencari produk: ') ?>" target="_blank" rel="noopener"
+                class="tile lg:col-span-4 bg-[var(--accent)] text-white flex flex-col justify-between gap-6 transition-colors hover:bg-[var(--deep)]">
+                <span class="t-m">Tanya stok lewat WhatsApp</span>
+                <span class="link-arrow">0877-7992-8897 <?= $arrow ?></span>
+            </a>
+        </section>
     </main>
-    <?php include 'footer.php'; ?>
 
-    <script src="assets/main.js"></script>
+    <?php include 'footer-board.php'; ?>
+
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
 </body>
 
 </html>

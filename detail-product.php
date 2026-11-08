@@ -179,34 +179,10 @@ $breadcrumbItems[] = [$clean($product['name']), $seoUrl];
     <meta name="twitter:description" content="<?= htmlspecialchars($seoDescription) ?>">
     <meta name="twitter:image" content="<?= htmlspecialchars($seoImage, ENT_QUOTES, 'UTF-8') ?>">
 
-    <!-- Icons & Library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <!-- Swiper -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" />
-
-    <!-- Font -->
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="assets/style.css">
-    <style>
-        .swiper {
-            width: 100% !important;
-            max-width: 100%;
-        }
-
-        .swiper-slide {
-            width: 100% !important;
-        }
-
-        .swiper-wrapper {
-            max-width: 100%;
-        }
-    </style>
     <?php
     include 'schema-store.php';
     jsonld($productLd);
@@ -215,240 +191,147 @@ $breadcrumbItems[] = [$clean($product['name']), $seoUrl];
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
 
-<body class="font-['IBM_Plex_Sans'] text-gray-800 tracking-tight leading-relaxed">
-    <?php include 'header.php'; ?>
-    <main>
-        <!-- HERO -->
-        <section class="relative pt-40 pb-32">
-            <!-- Background -->
-            <div class="absolute inset-0">
-                <img src="assets/img/slider8.webp" width="1920" height="1080" fetchpriority="high"
-                    class="w-full h-full object-cover"
-                    alt="Produk Kusuma Trisna Bali">
-                <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/20"></div>
-            </div>
+<?php
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+$niceName = function ($n) {
+    $n = trim((string) $n);
+    return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
+};
+$arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+$brandNice = $niceName($product['brand_name']);
+$waText = 'Halo Kusuma Trisna Bali, saya tertarik dengan produk ' . $clean($product['name'])
+    . (!empty($product['model']) ? ' (' . $clean($product['model']) . ')' : '') . '. Apakah stoknya tersedia dan berapa harganya?';
+$waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
+?>
+<body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
+    <?php $hbCurrent = 'produk'; include 'header-board.php'; ?>
 
-            <!-- Content -->
-            <div class="relative max-w-6xl mx-auto px-6 text-center">
+    <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
 
-                <!-- Breadcrumb -->
-                <nav aria-label="Breadcrumb" class="inline-flex items-center gap-2 px-4 py-2 text-white mb-6"
-                    data-aos="fade-up">
+        <nav aria-label="Breadcrumb" class="pt-6 lg:pt-8 t-s text-[var(--soft)]">
+            <a href="/" class="hover:text-[var(--ink)]">Beranda</a> /
+            <a href="products.php" class="hover:text-[var(--ink)]">Produk</a> /
+            <?php if (!empty($product['brand_slug'])): ?>
+                <a href="brand-product.php?brand=<?= urlencode($product['brand_slug']) ?>" class="hover:text-[var(--ink)]"><?= $e($brandNice) ?></a> /
+            <?php endif; ?>
+            <span class="text-[var(--ink)]" aria-current="page"><?= $e($product['name']) ?></span>
+        </nav>
 
-                    <a href="/"
-                        class="hover:text-primary transition">
-                        Home
-                    </a>
+        <!-- Produk -->
+        <section class="mt-6 grid lg:grid-cols-12 gap-[var(--gap)] lg:gap-x-10 items-start">
 
-                    <span class="opacity-70">/</span>
-
-                    <a href="products.php"
-                        class="hover:text-primary transition">
-                        Produk
-                    </a>
-
-                    <span class="opacity-70">/</span>
-
-                    <?php if (!empty($product['brand_slug'])): ?>
-                    <a href="brand-product.php?brand=<?= urlencode($product['brand_slug']); ?>" class="hover:text-primary transition"><?= htmlspecialchars($product['brand_name']); ?></a>
-                    <span class="opacity-70">/</span>
-                    <?php endif; ?>
-                    <span class="font-semibold text-primary" aria-current="page"><?= htmlspecialchars($product['name']); ?></span>
-
-                </nav>
-
-            </div>
-
-        </section>
-
-        <!-- PRODUCT DETAIL -->
-        <section class="py-20">
-            <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start">
-
-                <!-- PRODUCT IMAGE -->
-                <div data-aos="fade-right" class="min-w-0">
-                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 overflow-hidden w-full max-w-full">
-
-                        <!-- MAIN SLIDER -->
-                        <div class="swiper productMain mb-4 w-full max-w-full">
-                            <div class="swiper-wrapper">
-
-
-                                <?php foreach ($images as $i => $img): ?>
-                                    <div class="swiper-slide">
-                                        <div class="flex items-center justify-center">
-                                            <img
-                                                src="<?= htmlspecialchars($imgSrc($img['image'])); ?>"
-                                                alt="<?= htmlspecialchars($seoImageAlt . ($i ? ' - foto ' . ($i + 1) : '')); ?>"
-                                                width="600" height="420" <?= $i ? 'loading="lazy"' : '' ?>
-                                                class="w-full h-[300px] md:h-[420px] object-contain">
-                                        </div>
-                                    </div>
-                                <?php endforeach; ?>
-
-                            </div>
-
-                            <!-- Navigation -->
-                            <div class="swiper-button-next text-primary"></div>
-                            <div class="swiper-button-prev text-primary"></div>
-                        </div>
-                    </div>
+            <!-- Foto -->
+            <div class="lg:col-span-7 min-w-0">
+                <div class="tile aspect-square sm:aspect-[4/3] flex items-center justify-center !p-6 lg:!p-12">
+                    <img id="mainImg" src="<?= $e($imgSrc($images[0]['image'])) ?>"
+                        alt="<?= $e($seoImageAlt) ?>" width="600" height="600" fetchpriority="high"
+                        class="blend max-h-full max-w-full object-contain">
                 </div>
-
-                <!-- PRODUCT INFO -->
-                <div data-aos="fade-left" class="min-w-0">
-                    <span class="text-sm text-primary font-medium">
-                        <?= htmlspecialchars($product['brand_name']); ?> • <?= htmlspecialchars($product['subcategory_name']); ?>
-                    </span>
-
-                    <h1 class="text-3xl md:text-4xl font-semibold text-gray-900 mt-3 mb-5">
-                        <?= htmlspecialchars($product['name']); ?>
-                    </h1>
-
-                    <!-- Tagline -->
-                    <?php if (!empty($product['tagline'])): ?>
-                        <p class="text-sm text-gray-600 italic line-clamp-2 mb-2">
-                            <?= htmlspecialchars($product['tagline']); ?>
-                        </p>
-                    <?php endif; ?>
-
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        <?= nl2br($product['short_description']); ?>
-                    </p>
-
-                    <!-- PRODUCT META -->
-                    <div class="grid grid-cols-2 gap-6 text-sm text-gray-700 mb-8">
-                        <div><span class="font-medium">Brand:</span> <?= htmlspecialchars($product['brand_name']); ?></div>
-                        <div><span class="font-medium">Kategori:</span> <?= htmlspecialchars($product['category_name']); ?></div>
-                        <div><span class="font-medium">Subkategori:</span> <?= htmlspecialchars($product['subcategory_name']); ?></div>
-                    </div>
-                    <!-- Floating Model Badge -->
-                    <?php if (!empty($product['model'])): ?>
-                        <p class="text-primary mb-8"><?= htmlspecialchars($product['model']); ?></p>
-                    <?php endif; ?>
-                    <!-- CTA -->
-                    <div class="flex flex-wrap gap-4">
-
-                        <!-- EMAIL -->
-                        <a href="mailto:info@kusumatrisnabali.com"
-                            class="inline-flex items-center px-6 py-3 bg-primary text-white
-                          rounded-lg font-medium hover:bg-darkred transition">
-                            <i class="fa-solid fa-envelope mr-2"></i>
-                            Email Kami
-                        </a>
-
-                        <!-- WHATSAPP -->
-                        <a href="https://wa.me/6287779928897?text=Halo%20Kusuma%20Trisna%20Bali%2C%20saya%20tertarik%20dengan%20produk%20<?= urlencode($product['name']); ?>.%20Bisakah%20saya%20mendapatkan%20informasi%20lebih%20lanjut%3F"
-                            target="_blank"
-                            class="inline-flex items-center px-6 py-3 bg-green-700 text-white
-                                                    rounded-lg font-medium hover:bg-green-800 transition">
-                            <i class="fa-brands fa-whatsapp mr-2 text-lg"></i>
-                            WhatsApp
-                        </a>
-
-                    </div>
-                </div>
-
-            </div>
-        </section>
-        <!-- PRODUCT DESCRIPTION -->
-        <?php if (!empty($product['description']) || !empty($product['specifications'])): ?>
-            <section class="bg-gray-50 py-20">
-                <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
-
-                    <?php if (!empty($product['description'])): ?>
-                        <div data-aos="fade-up">
-                            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
-                                Deskripsi Produk
-                            </h2>
-                            <p class="text-gray-600 leading-relaxed">
-                                <?= nl2br(htmlspecialchars($product['description'], ENT_QUOTES, 'UTF-8')); ?>
-                            </p>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($product['specifications'])): ?>
-                        <div data-aos="fade-up" data-aos-delay="100">
-                            <h2 class="text-2xl font-semibold text-gray-900 mb-4">
-                                Spesifikasi
-                            </h2>
-                            <p class="text-gray-600">
-                                <?= $product['specifications']; ?>
-                            </p>
-                        </div>
-                    <?php endif; ?>
-
-                </div>
-            </section>
-        <?php endif; ?>
-        <!-- RELATED PRODUCTS -->
-        <?php if ($related): ?>
-            <section class="py-20">
-                <div class="max-w-6xl mx-auto px-6">
-
-                    <div class="mb-12">
-                        <h2 class="text-2xl font-semibold text-gray-900"
-                            data-aos="fade-up">
-                            Produk Terkait
-                        </h2>
-                    </div>
-
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <?php foreach ($related as $r): ?>
-                            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition"
-                                data-aos="fade-up">
-                                <div class="h-48 flex items-center justify-center bg-gray-50">
-                                    <img
-                                        src="<?= htmlspecialchars($imgSrc($r['image'] ?: 'product-placeholder.png')); ?>"
-                                        alt="<?= htmlspecialchars($r['name']); ?>"
-                                        loading="lazy" decoding="async"
-                                        class="object-contain">
-
-                                </div>
-
-                                <div class="p-5 mt-2">
-                                    <h3 class="font-medium text-gray-900 mb-2">
-                                        <?= htmlspecialchars($r['name']); ?>
-                                    </h3>
-                                    <a href="detail-product.php?slug=<?= urlencode($r['slug']); ?>"
-                                        class="text-primary text-sm font-medium hover:underline">
-                                        Lihat Detail
-                                    </a>
-                                </div>
-                            </div>
+                <?php if (count($images) > 1): ?>
+                    <ul class="mt-[var(--gap)] grid grid-cols-4 sm:grid-cols-6 gap-[var(--gap)]">
+                        <?php foreach ($images as $i => $img): ?>
+                            <li>
+                                <button type="button" data-thumb="<?= $e($imgSrc($img['image'])) ?>" aria-label="Lihat foto <?= $i + 1 ?>" <?= $i === 0 ? 'aria-current="true"' : '' ?>
+                                    class="thumb tile w-full aspect-square !p-2 flex items-center justify-center transition-colors hover:bg-[var(--tile-2)]">
+                                    <img src="<?= $e($imgSrc($img['image'])) ?>" alt="" loading="lazy" class="blend max-h-full max-w-full object-contain">
+                                </button>
+                            </li>
                         <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+
+            <!-- Info -->
+            <div class="lg:col-span-5 min-w-0 mt-6 lg:mt-0 lg:sticky lg:top-28">
+                <p class="t-s text-[var(--soft)]">
+                    <?php if (!empty($product['brand_slug'])): ?>
+                        <a href="brand-product.php?brand=<?= urlencode($product['brand_slug']) ?>" class="hover:text-[var(--ink)]"><?= $e($brandNice) ?></a>
+                    <?php else: ?><?= $e($brandNice) ?><?php endif; ?>
+                    · <?= $e($product['subcategory_name']) ?>
+                </p>
+                <h1 class="t-l mt-2"><?= $e($product['name']) ?></h1>
+                <?php if (!empty($product['tagline'])): ?>
+                    <p class="t-m font-normal mt-3"><?= $e($product['tagline']) ?></p>
+                <?php endif; ?>
+                <?php if (!empty($product['short_description'])): ?>
+                    <div class="t-s mt-4"><?= nl2br($product['short_description']) ?></div>
+                <?php endif; ?>
+
+                <dl class="mt-6 grid grid-cols-2 gap-[var(--gap)] t-s">
+                    <div class="tile !p-4">
+                        <dt class="text-[var(--soft)]">Merek</dt>
+                        <dd class="font-semibold"><?= $e($brandNice) ?></dd>
                     </div>
+                    <div class="tile !p-4">
+                        <dt class="text-[var(--soft)]">Model</dt>
+                        <dd class="font-semibold break-words"><?= $e($product['model'] ?: '-') ?></dd>
+                    </div>
+                    <div class="tile !p-4">
+                        <dt class="text-[var(--soft)]">Kategori</dt>
+                        <dd class="font-semibold"><?= $e($product['category_name']) ?></dd>
+                    </div>
+                    <div class="tile !p-4">
+                        <dt class="text-[var(--soft)]">Jenis</dt>
+                        <dd class="font-semibold"><?= $e($product['subcategory_name']) ?></dd>
+                    </div>
+                </dl>
+
+                <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn w-full mt-6 !py-4">Tanya stok &amp; harga di WhatsApp <?= $arrow ?></a>
+                <div class="mt-[var(--gap)] grid grid-cols-2 gap-[var(--gap)]">
+                    <a href="tel:+6287779928897" class="tile !p-4 t-s font-semibold transition-colors hover:bg-[var(--tile-2)]">Telepon<span class="block font-normal">0877-7992-8897</span></a>
+                    <a href="services.php" class="tile !p-4 t-s font-semibold transition-colors hover:bg-[var(--tile-2)]">Butuh service?<span class="block font-normal">Lacak atau ajukan</span></a>
                 </div>
+            </div>
+        </section>
+
+        <!-- Deskripsi & spesifikasi -->
+        <?php if (!empty($product['description']) || !empty($product['specifications'])): ?>
+            <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-10 lg:gap-[var(--gap)]" data-reveal>
+                <?php if (!empty($product['description'])): ?>
+                    <div class="<?= !empty($product['specifications']) ? 'lg:col-span-6 lg:pr-10' : 'lg:col-span-8' ?>">
+                        <h2 class="t-h">Deskripsi</h2>
+                        <p class="t-s mt-6"><?= nl2br($e($product['description'])) ?></p>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($product['specifications'])): ?>
+                    <div class="<?= !empty($product['description']) ? 'lg:col-span-6' : 'lg:col-span-8' ?>">
+                        <h2 class="t-h">Spesifikasi</h2>
+                        <div class="spec t-s mt-6"><?= $product['specifications'] ?></div>
+                    </div>
+                <?php endif; ?>
             </section>
-
         <?php endif; ?>
+
+        <!-- Produk terkait -->
+        <?php if ($related): ?>
+            <section class="mt-24 lg:mt-32">
+                <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+                    <h2 class="t-h">Produk sejenis</h2>
+                    <a href="products.php" class="link-arrow hover:text-[var(--accent)]">Semua produk <?= $arrow ?></a>
+                </div>
+                <ul class="board !grid-cols-2 lg:!grid-cols-3" data-reveal>
+                    <?php foreach ($related as $r): ?>
+                        <li>
+                            <a href="detail-product.php?slug=<?= urlencode($r['slug']) ?>" class="tile group flex flex-col h-full !p-4 lg:!p-6">
+                                <div class="aspect-square flex items-center justify-center p-2 lg:p-6">
+                                    <img src="<?= $e($imgSrc($r['image'] ?: 'product-placeholder.png')) ?>" alt="<?= $e($r['name']) ?>"
+                                        loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                                </div>
+                                <h3 class="t-m mt-3 group-hover:text-[var(--accent)] transition-colors"><?= $e($r['name']) ?></h3>
+                                <span class="link-arrow mt-3 t-s">Lihat detail <?= $arrow ?></span>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </section>
+        <?php endif; ?>
+
+        <div class="h-24 lg:h-32"></div>
     </main>
-    <?php include 'footer.php'; ?>
 
-    <!-- Script -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 900,
-            once: true,
-            easing: 'ease-out-cubic'
-        });
-    </script>
+    <?php include 'footer-board.php'; ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js"></script>
-    <script>
-        const mainSwiper = new Swiper('.productMain', {
-            loop: true,
-            spaceBetween: 20,
-
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            }
-        });
-    </script>
-
-    <script src="assets/main.js"></script>
+    <script src="assets/main.js?v=<?= filemtime(__DIR__ . '/assets/main.js'); ?>"></script>
 </body>
 
 </html>

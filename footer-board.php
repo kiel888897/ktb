@@ -2,6 +2,23 @@
 // Footer gaya "papan" (dipakai beranda; halaman lain menyusul)
 $fArrow = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
 $fCatalog = isset($catalog) && is_array($catalog) ? array_slice($catalog, 0, 5, true) : [];
+if (!$fCatalog && isset($pdo)) {
+    // Halaman lain: 5 jenis produk dengan produk terbanyak
+    try {
+        foreach ($pdo->query("
+            SELECT s.slug, s.name, COUNT(p.id) AS n
+            FROM subcategories s
+            JOIN products p ON p.subcategory_id = s.id AND p.is_active = 1
+            GROUP BY s.id, s.slug, s.name
+            ORDER BY n DESC, s.name ASC
+            LIMIT 5
+        ") as $row) {
+            $fCatalog[$row['slug']] = ['name' => $row['name']];
+        }
+    } catch (Throwable $t) {
+        $fCatalog = [];
+    }
+}
 ?>
 <footer class="bg-[#111827] text-white pt-16 lg:pt-24 pb-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">

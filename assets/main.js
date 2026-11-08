@@ -180,3 +180,14 @@ if (reveals.length) {
     reveals.forEach(show);
   }
 }
+
+// Galeri detail produk
+document.querySelectorAll("[data-thumb]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const main = document.getElementById("mainImg");
+    if (!main) return;
+    main.src = btn.dataset.thumb;
+    document.querySelectorAll("[data-thumb]").forEach((b) => b.removeAttribute("aria-current"));
+    btn.setAttribute("aria-current", "true");
+  });
+});
