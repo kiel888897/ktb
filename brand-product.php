@@ -85,17 +85,31 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $site = 'https://www.kusumatrisnabali.com';
 $brandName = nice_brand($current_brand['name'] ?? '');
-$page_title = $current_brand
+// Merek service center resmi tetap diindeks walau belum punya produk di katalog
+$isPartner = false;
+try {
+    $ps = $pdo->prepare("SELECT COUNT(*) FROM partners WHERE is_active = 1 AND LOWER(name) = LOWER(?)");
+    $ps->execute([$brandName]);
+    $isPartner = (int) $ps->fetchColumn() > 0;
+} catch (Throwable $t) {
+    $isPartner = false;
+}
+$serviceOnly = $isPartner && !$products;
+$page_title = $serviceOnly
+    ? "Service Center Resmi {$brandName} di Tabanan Bali | Kusuma Trisna Bali"
+    : ($current_brand
     ? "Produk {$brandName} Resmi di Tabanan Bali | Kusuma Trisna Bali"
-    : "Brand Produk | Kusuma Trisna Bali";
+    : "Brand Produk | Kusuma Trisna Bali");
 $canonical = $current_brand
     ? $site . '/brand-product.php?brand=' . rawurlencode($current_brand['slug'])
     : $site . '/brand-product.php';
 $brandDesc = trim(preg_replace('/\s+/u', ' ', strip_tags((string) ($current_brand['description'] ?? ''))));
 $metaDesc = mb_strimwidth(
-    $current_brand
+    $serviceOnly
+        ? "Service center resmi {$brandName} di Tabanan, Bali. Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko Kusuma Trisna Bali."
+        : ($current_brand
         ? "Daftar produk {$brandName} resmi di Kusuma Trisna Bali, distributor elektronik di Tabanan, Bali. " . $brandDesc
-        : 'Brand elektronik resmi yang didistribusikan Kusuma Trisna Bali di Tabanan, Bali.',
+        : 'Brand elektronik resmi yang didistribusikan Kusuma Trisna Bali di Tabanan, Bali.'),
     0, 160, '…', 'UTF-8'
 );
 $ogImage = !empty($current_brand['logo'])
@@ -112,7 +126,7 @@ $ogImage = !empty($current_brand['logo'])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title); ?></title>
     <meta name="description" content="<?= htmlspecialchars($metaDesc); ?>">
-    <meta name="robots" content="<?= $products ? 'index, follow, max-image-preview:large' : 'noindex, follow' ?>">
+    <meta name="robots" content="<?= ($products || $isPartner) ? 'index, follow, max-image-preview:large' : 'noindex, follow' ?>">
     <link rel="canonical" href="<?= htmlspecialchars($canonical); ?>">
 
     <link rel="icon" href="/assets/favicon.ico">
@@ -176,16 +190,7 @@ $niceName = function ($n) {
 $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 $brandNice = $niceName($brandName);
 $brandLogo = !empty($current_brand['logo']) ? 'admin/uploads/brands/' . $current_brand['logo'] : 'assets/img/logo.png';
-// Apakah merek ini juga service center resmi?
-$isPartner = false;
-try {
-    $ps = $pdo->prepare("SELECT COUNT(*) FROM partners WHERE is_active = 1 AND LOWER(name) = LOWER(?)");
-    $ps->execute([$brandName]);
-    $isPartner = (int) $ps->fetchColumn() > 0;
-} catch (Throwable $t) {
-    $isPartner = false;
-}
-$waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna Bali, saya ingin bertanya tentang produk ' . $brandNice . '.');
+$waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna Bali, saya ingin bertanya tentang ' . ($serviceOnly ? 'service ' : 'produk ') . $brandNice . '.');
 ?>
 
 <body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
@@ -206,9 +211,11 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
             </div>
             <div class="tile lg:col-span-8 flex flex-col justify-between gap-6 lg:!p-10">
                 <div>
-                    <h1 class="t-h">Produk <?= $e($brandNice) ?> resmi</h1>
+                    <h1 class="t-h"><?= $serviceOnly ? 'Service center resmi ' . $e($brandNice) : 'Produk ' . $e($brandNice) . ' resmi' ?></h1>
                     <div class="t-s mt-4 max-w-2xl">
-                        <?php if (!empty($current_brand['description'])): ?>
+                        <?php if ($serviceOnly): ?>
+                            Kami service center resmi <?= $e($brandNice) ?> di Tabanan. Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko.
+                        <?php elseif (!empty($current_brand['description'])): ?>
                             <?= nl2br($current_brand['description']) ?>
                         <?php else: ?>
                             Produk <?= $e($brandNice) ?> original yang kami salurkan untuk toko dan rumah tangga di Tabanan dan sekitarnya.
@@ -216,9 +223,9 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                     </div>
                 </div>
                 <div class="flex flex-wrap gap-[var(--gap)] items-center">
-                    <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn">Tanya produk <?= $e($brandNice) ?></a>
+                    <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn"><?= $serviceOnly ? 'Tanya service ' : 'Tanya produk ' ?><?= $e($brandNice) ?></a>
                     <?php if ($isPartner): ?>
-                        <a href="services.php" class="px-4 py-3 rounded-[var(--r)] bg-[var(--deep)] text-white font-semibold hover:bg-[#5c0000] transition-colors">Service center resmi <?= $e($brandNice) ?></a>
+                        <a href="services.php" class="px-4 py-3 rounded-[var(--r)] bg-[var(--deep)] text-white font-semibold hover:bg-[#5c0000] transition-colors"><?= $serviceOnly ? 'Lihat alur service' : 'Service center resmi ' . $e($brandNice) ?></a>
                     <?php endif; ?>
                 </div>
             </div>

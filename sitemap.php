@@ -13,12 +13,15 @@ $static = [
     ['/contact.php', 'monthly', '0.7'],
 ];
 
-// Hanya merek yang punya produk aktif; merek kosong diberi noindex
+// Merek dengan produk aktif atau service center resmi; merek lain diberi noindex
 $brands = $pdo->query("
     SELECT b.slug
     FROM brands b
     WHERE b.slug <> ''
-      AND EXISTS (SELECT 1 FROM products p WHERE p.brand_id = b.id AND p.is_active = 1)
+      AND (
+          EXISTS (SELECT 1 FROM products p WHERE p.brand_id = b.id AND p.is_active = 1)
+          OR EXISTS (SELECT 1 FROM partners pr WHERE pr.is_active = 1 AND LOWER(pr.name) = LOWER(b.name))
+      )
     ORDER BY b.name
 ")->fetchAll(PDO::FETCH_COLUMN);
 
