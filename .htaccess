@@ -7,8 +7,9 @@ ErrorDocument 404 /404.php
     RewriteBase /
 
     # Situs juga bisa terbuka lewat nama subfolder hosting: arahkan ke alamat asli agar tidak dobel
-    RewriteCond %{THE_REQUEST} \s/+kusumatrisnabali\.com(/[^\s?]*)?(\?[^\s]*)?\s [NC]
-    RewriteRule ^ https://www.kusumatrisnabali.com%1%2 [L,R=301,NE]
+    # Query string ikut otomatis; jangan ditangkap, Apache menolak "?" dari backreference (403)
+    RewriteCond %{THE_REQUEST} \s/+kusumatrisnabali\.com(/[^\s?]*)?[\s?] [NC]
+    RewriteRule ^ https://www.kusumatrisnabali.com%1 [L,R=301,NE]
 
     # Domain tanpa www -> https://www (HTTP->HTTPS sudah ditangani hosting)
     RewriteCond %{HTTP_HOST} ^kusumatrisnabali\.com$ [NC]
