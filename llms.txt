@@ -26,3 +26,4 @@
 - [Service dan lacak service](https://www.kusumatrisnabali.com/services.php): alur service, tanya jawab, lacak kode service
 - [Tentang kami](https://www.kusumatrisnabali.com/about.php): profil usaha
 - [Kontak](https://www.kusumatrisnabali.com/contact.php): kontak, peta, form pesan
+- [English: service for villas and hotels](https://www.kusumatrisnabali.com/en/): service and supply for properties across Bali

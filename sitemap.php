@@ -11,6 +11,7 @@ $static = [
     ['/services.php', 'monthly', '0.9'],
     ['/about.php', 'monthly', '0.7'],
     ['/contact.php', 'monthly', '0.7'],
+    ['/en/', 'monthly', '0.8'],
 ];
 
 // Merek dengan produk aktif atau service center resmi; merek lain diberi noindex

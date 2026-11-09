@@ -109,6 +109,9 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
     <meta name="robots" content="index, follow">
 
     <link rel="canonical" href="https://www.kusumatrisnabali.com/">
+    <link rel="alternate" hreflang="id" href="https://www.kusumatrisnabali.com/">
+    <link rel="alternate" hreflang="en" href="https://www.kusumatrisnabali.com/en/">
+    <link rel="alternate" hreflang="x-default" href="https://www.kusumatrisnabali.com/">
 
     <link rel="icon" href="/assets/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">

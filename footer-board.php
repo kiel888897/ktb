@@ -46,6 +46,7 @@ if (!$fCatalog && isset($pdo)) {
                     <li><a href="services.php" class="hover:text-white">Service</a></li>
                     <li><a href="about.php" class="hover:text-white">Tentang kami</a></li>
                     <li><a href="contact.php" class="hover:text-white">Kontak</a></li>
+                    <li><a href="/en/" hreflang="en" lang="en" class="hover:text-white">English: villas and hotels</a></li>
                 </ul>
             </nav>
 
