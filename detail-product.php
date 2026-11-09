@@ -96,9 +96,10 @@ $imgSrc = fn(string $file): string => $file === 'product-placeholder.png'
     ? 'assets/img/product-placeholder.webp'
     : 'admin/uploads/products/' . rawurlencode($file);
 
-// Judul SEO: "<Nama> <Model> - <Brand> | Kusuma Trisna Bali" (maks ~65 karakter)
+// Judul SEO: "<Nama> <Varian> - <Brand> | Kusuma Trisna Bali" (maks ~65 karakter)
+// Kolom model berisi varian (ukuran/warna); pilihan ganda dengan "|" tidak masuk judul.
 $titleCore = $clean($product['name']);
-if (!empty($product['model']) && mb_stripos($titleCore, $clean($product['model'])) === false) {
+if (!empty($product['model']) && strpos($product['model'], '|') === false && mb_stripos($titleCore, $clean($product['model'])) === false) {
     $titleCore .= ' ' . $clean($product['model']);
 }
 if (mb_stripos($titleCore, $clean($product['brand_name'])) === false) {
@@ -136,10 +137,6 @@ $productLd = [
     'brand' => ['@type' => 'Brand', 'name' => $clean($product['brand_name'])],
     'category' => $clean($product['category_name'] . ' > ' . $product['subcategory_name']),
 ];
-if (!empty($product['model'])) {
-    $productLd['model'] = $clean($product['model']);
-    $productLd['mpn'] = $clean($product['model']);
-}
 
 $breadcrumbItems = [
     ['Beranda', $site . '/'],
@@ -275,7 +272,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
                     </div>
                     <?php if ($hasModel): ?>
                         <div class="tile !p-4">
-                            <dt class="text-[var(--soft)]">Model</dt>
+                            <dt class="text-[var(--soft)]">Varian</dt>
                             <dd class="font-semibold break-words"><?= $e($product['model']) ?></dd>
                         </div>
                     <?php endif; ?>

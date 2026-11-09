@@ -191,8 +191,13 @@ if ($page > 1) {
     $seoTitle = "Halaman {$page} - " . $seoTitle;
 }
 
-// Hasil pencarian & filter tidak dikenal: jangan diindeks
+// Jenis produk yang punya produk aktif (tombol pilihan). Yang sedang dipilih tetap tampil.
+$filledSubs = array_flip($pdo->query("SELECT DISTINCT subcategory_id FROM products WHERE is_active = 1")->fetchAll(PDO::FETCH_COLUMN));
+$subChips = array_values(array_filter($subcategories, fn($sc) => isset($filledSubs[$sc['id']]) || $sc['slug'] === $subcategory_slug));
+
+// Hasil pencarian, filter tidak dikenal, dan hasil kosong: jangan diindeks
 $noindex = $search !== ''
+    || $totalData === 0
     || ($brand_slug !== '' && $brand_id === 0)
     || ($partner_slug !== '' && $partner_id === 0)
     || ($category_slug !== '' && $category_id === 0)
@@ -313,7 +318,7 @@ $field = 'w-full h-[52px] rounded-[var(--r)] bg-[var(--tile)] px-4 text-[var(--i
         <nav aria-label="Jenis produk" class="mt-8 -mx-4 sm:mx-0 px-4 sm:px-0 flex gap-[var(--gap)] overflow-x-auto lg:overflow-visible lg:flex-wrap pb-1">
             <a href="<?= $e($pageUrl(['subcategory' => '', 'category' => '', 'page' => ''])) ?>"
                 class="shrink-0 px-4 py-2.5 rounded-[var(--r)] font-semibold transition-colors <?= $subcategory_id === 0 && $category_id === 0 ? 'bg-[var(--ink)] text-white' : 'bg-[var(--tile)] hover:bg-[var(--tile-2)]' ?>">Semua</a>
-            <?php foreach ($subcategories as $sc): $on = $subcategory_slug === $sc['slug']; ?>
+            <?php foreach ($subChips as $sc): $on = $subcategory_slug === $sc['slug']; ?>
                 <a href="<?= $e($pageUrl(['subcategory' => $sc['slug'], 'category' => '', 'page' => ''])) ?>" <?= $on ? 'aria-current="true"' : '' ?>
                     class="shrink-0 px-4 py-2.5 rounded-[var(--r)] font-semibold transition-colors <?= $on ? 'bg-[var(--ink)] text-white' : 'bg-[var(--tile)] hover:bg-[var(--tile-2)]' ?>"><?= $e($sc['name']) ?></a>
             <?php endforeach; ?>

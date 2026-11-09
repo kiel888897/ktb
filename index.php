@@ -251,10 +251,9 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 </div>
 
                 <ul class="tile bg-[var(--tile-2)] t-s font-medium space-y-1 lg:col-start-7 lg:col-span-3 lg:row-start-9 lg:row-span-2">
-                    <li>Televisi</li>
-                    <li>AC dan air cooler</li>
-                    <li>Kulkas, showcase, freezer</li>
-                    <li>Mesin cuci, kipas angin</li>
+                    <?php foreach (array_slice($catalog, 0, 4) as $group): ?>
+                        <li><?= $e($group['name']) ?></li>
+                    <?php endforeach; ?>
                 </ul>
 
                 <div class="tile col-span-2 lg:col-span-3 bg-[var(--tile-2)] flex flex-col justify-between gap-4 lg:col-start-4 lg:row-start-4 lg:row-span-2">

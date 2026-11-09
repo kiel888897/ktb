@@ -13,8 +13,14 @@ $static = [
     ['/contact.php', 'monthly', '0.7'],
 ];
 
-$brands = $pdo->query("SELECT slug FROM brands WHERE slug <> '' ORDER BY name")
-    ->fetchAll(PDO::FETCH_COLUMN);
+// Hanya merek yang punya produk aktif; merek kosong diberi noindex
+$brands = $pdo->query("
+    SELECT b.slug
+    FROM brands b
+    WHERE b.slug <> ''
+      AND EXISTS (SELECT 1 FROM products p WHERE p.brand_id = b.id AND p.is_active = 1)
+    ORDER BY b.name
+")->fetchAll(PDO::FETCH_COLUMN);
 
 $products = $pdo->query("
     SELECT slug

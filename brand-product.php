@@ -111,7 +111,7 @@ $ogImage = !empty($current_brand['logo'])
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($page_title); ?></title>
     <meta name="description" content="<?= htmlspecialchars($metaDesc); ?>">
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="robots" content="<?= $products ? 'index, follow, max-image-preview:large' : 'noindex, follow' ?>">
     <link rel="canonical" href="<?= htmlspecialchars($canonical); ?>">
 
     <link rel="icon" href="/assets/favicon.ico">
@@ -226,7 +226,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
         <!-- Produk merek -->
         <section class="mt-16 lg:mt-24">
             <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-                <h2 class="t-h"><?= count($products) ?> produk <?= $e($brandNice) ?></h2>
+                <h2 class="t-h"><?= $products ? count($products) . ' produk ' : 'Produk ' ?><?= $e($brandNice) ?></h2>
                 <a href="products.php?brand=<?= urlencode($current_brand['slug'] ?? '') ?>" class="link-arrow hover:text-[var(--accent)]">Cari &amp; filter <?= $arrow ?></a>
             </div>
             <?php if (empty($products)): ?>
