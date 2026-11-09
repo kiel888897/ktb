@@ -38,15 +38,17 @@ if ($partnerList !== '') {
 }
 $faqs = array_merge($faqs, [
     ['Bagaimana cara mengajukan service elektronik?',
-        'Hubungi bagian service di 0812-3830-0513 atau chat WhatsApp 0877-7992-8897. Sebutkan merek, jenis barang, dan kendalanya. Barang bisa kami jemput ke rumah Anda, atau Anda bawa langsung ke toko.'],
-    ['Apakah barang service dijemput atau dibawa sendiri?',
-        'Keduanya bisa. Tim kami dapat menjemput barang ke rumah Anda, atau Anda bisa membawanya langsung ke toko. Barang lalu diperiksa di toko dan dikembalikan setelah proses selesai.'],
+        'Hubungi bagian service di 0812-3830-0513 atau chat WhatsApp 0877-7992-8897. Tim kami mencatat kontak Anda dan produk yang akan diservice, lalu datang ke lokasi Anda. Anda juga bisa membawa barang langsung ke toko.'],
+    ['Apakah penjemputan service gratis dan sampai mana wilayahnya?',
+        'Penjemputan gratis dan melayani seluruh Bali, tanpa batas wilayah. Tim kami tidak langsung datang saat Anda menghubungi, karena kunjungan perlu dijadwalkan.'],
     ['Bagaimana service untuk barang yang masih garansi?',
-        'Setelah barang diperiksa, kami mengajukan suku cadang ke merek terkait, lalu mengganti suku cadang yang rusak.'],
+        'Tim kami mengecek kerusakan di lokasi. Jika masih masuk garansi, barang kami bawa ke kantor, suku cadang diajukan ke merek terkait, lalu diganti.'],
     ['Bagaimana service untuk barang yang tidak bergaransi?',
-        'Setelah pemeriksaan, kami menghubungi Anda untuk menyampaikan harga perbaikan. Jika Anda setuju, barang kami perbaiki. Jika tidak, barang dikembalikan.'],
+        'Tim kami menyampaikan biaya perbaikan saat pengecekan di lokasi. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak kami bawa.'],
+    ['Berapa lama proses service?',
+        'Lamanya tidak bisa ditentukan di awal, karena tergantung pengiriman suku cadang. Progresnya bisa Anda pantau dengan kode service.'],
     ['Bagaimana cara mengecek status service?',
-        'Masukkan kode service Anda, misalnya SRV-20260216-001, pada kolom Lacak status service di halaman ini. Kode diberikan saat barang diterima.'],
+        'Masukkan kode service Anda, misalnya SRV-20260216-001, pada kolom Lacak status service di halaman ini. Kode didapat setelah barang masuk ke kantor kami.'],
     ['Apa saja tahapan status service?',
         'Barang diterima, pemeriksaan, dikerjakan, menunggu suku cadang, menunggu persetujuan Anda, lalu selesai. Dua status menunggu hanya muncul bila diperlukan.'],
     ['Di mana lokasi service center dan kapan buka?',
@@ -155,7 +157,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                         <a href="/" class="hover:text-[var(--ink)]">Beranda</a> / <span class="text-[var(--ink)]">Service</span>
                     </nav>
                     <h1 class="t-h">Service elektronik di Tabanan</h1>
-                    <p class="t-s mt-4 max-w-xl">Barang kami jemput ke rumah atau Anda bawa langsung ke toko. Progresnya bisa Anda pantau lewat kode service.</p>
+                    <p class="t-s mt-4 max-w-xl">Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko. Setelah barang masuk ke kantor kami, progresnya bisa Anda pantau lewat kode service.</p>
                 </div>
 
                 <div id="track-service" class="scroll-mt-24">
@@ -230,27 +232,27 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
         <!-- Alur -->
         <section class="mt-24 lg:mt-32">
             <h2 class="t-h">Alur service</h2>
-            <p class="t-s mt-4 max-w-xl">Dari barang masuk sampai kembali ke Anda. Progresnya bisa Anda pantau dengan kode service.</p>
+            <p class="t-s mt-4 max-w-xl">Penjemputan gratis, tanpa batas wilayah di seluruh Bali. Kunjungan dijadwalkan, jadi tim tidak langsung datang saat Anda menghubungi.</p>
             <div class="mt-10 grid lg:grid-cols-12 gap-[var(--gap)] gap-y-10 items-end" data-reveal>
                 <figure class="lg:col-span-3">
-                    <div class="tile tile--photo h-[46vw] lg:h-[260px]"><img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Tim service datang ke rumah pelanggan"></div>
+                    <div class="tile tile--photo h-[46vw] lg:h-[260px]"><img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf Kusuma Trisna Bali mencatat data pelanggan"></div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Dijemput atau dibawa</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Tim kami menjemput barang ke rumah Anda, atau Anda bawa langsung ke toko.</p>
+                        <p class="t-m">Anda menghubungi kami</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Tim kami mencatat kontak Anda dan produk yang akan diservice.</p>
                     </figcaption>
                 </figure>
                 <figure class="lg:col-span-4">
-                    <div class="tile tile--photo h-[58vw] lg:h-[380px]"><img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diperiksa di toko"></div>
+                    <div class="tile tile--photo h-[58vw] lg:h-[380px]"><img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Tim service mengecek TV di rumah pelanggan"></div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Diperiksa di toko</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Teknisi memeriksa kerusakannya. Langkah berikutnya tergantung status garansi.</p>
+                        <p class="t-m">Dicek di lokasi</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Tim datang ke lokasi Anda dan mengecek jenis kerusakannya.</p>
                     </figcaption>
                 </figure>
                 <figure class="lg:col-span-5">
-                    <div class="tile tile--photo h-[70vw] lg:h-[500px]"><img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf siap mengembalikan barang"></div>
+                    <div class="tile tile--photo h-[70vw] lg:h-[500px]"><img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service masuk ke kantor Kusuma Trisna Bali"></div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Dikembalikan</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Setelah proses selesai, barang dikembalikan kepada Anda.</p>
+                        <p class="t-m">Masuk ke kantor</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Anda mendapat kode service. Lama pengerjaan tergantung pengiriman suku cadang.</p>
                     </figcaption>
                 </figure>
             </div>
@@ -258,13 +260,15 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
             <div class="mt-10 grid lg:grid-cols-2 gap-[var(--gap)]" data-reveal>
                 <div class="tile bg-[var(--ink)] text-white lg:!p-8">
                     <h3 class="t-l">Masih garansi</h3>
-                    <p class="t-s mt-3 max-w-lg">Kami mengajukan suku cadang ke merek terkait, lalu mengganti suku cadang yang rusak.</p>
+                    <p class="t-s mt-3 max-w-lg">Barang kami bawa ke kantor, suku cadang diajukan ke merek terkait, lalu diganti.</p>
                 </div>
                 <div class="tile bg-[var(--deep)] text-white lg:!p-8">
                     <h3 class="t-l">Tidak bergaransi</h3>
-                    <p class="t-s mt-3 max-w-lg">Kami menghubungi Anda untuk menyampaikan harga perbaikan. Jika setuju, barang kami perbaiki. Jika tidak, barang dikembalikan.</p>
+                    <p class="t-s mt-3 max-w-lg">Biaya perbaikan kami sampaikan saat pengecekan. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak kami bawa.</p>
                 </div>
             </div>
+
+            <p class="t-s mt-6">Lebih suka datang sendiri? Anda juga bisa <a href="contact.php" class="underline underline-offset-4 hover:text-[var(--accent)]">membawa barang langsung ke toko</a>.</p>
         </section>
 
         <?php if ($partners): ?>

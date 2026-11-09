@@ -384,7 +384,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
                 <div class="lg:col-start-1 lg:col-span-7 lg:row-start-1 lg:self-start lg:pr-8">
                     <h2 class="t-h">Service yang bisa Anda pantau</h2>
-                    <p class="t-s mt-4 max-w-lg">Barang kami jemput atau Anda bawa ke toko, lalu mendapat kode service. Masukkan kodenya untuk melihat progres terbaru.</p>
+                    <p class="t-s mt-4 max-w-lg">Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko. Setelah barang masuk ke kantor kami, Anda mendapat kode untuk melihat progresnya.</p>
 
                     <form action="services.php#track-service" method="post" class="mt-6 flex flex-col sm:flex-row gap-[var(--gap)] max-w-xl">
                         <label for="kode-service" class="sr-only">Kode service</label>
@@ -397,31 +397,31 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
                 <figure class="lg:col-start-1 lg:col-span-3 lg:row-start-2 lg:self-end">
                     <div class="tile tile--photo h-[46vw] lg:h-[260px]">
-                        <img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service diperiksa di toko">
+                        <img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Tim service mengecek TV di rumah pelanggan">
                     </div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Diterima dan diperiksa</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Barang kami jemput ke rumah atau Anda bawa langsung ke toko, lalu diperiksa teknisi.</p>
+                        <p class="t-m">Dicek di lokasi</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Tim kami datang sesuai jadwal dan mengecek jenis kerusakannya.</p>
                     </figcaption>
                 </figure>
 
                 <figure class="lg:col-start-4 lg:col-span-4 lg:row-start-2 lg:self-end">
                     <div class="tile tile--photo h-[58vw] lg:h-[400px]">
-                        <img src="assets/img/slider1.webp" width="1600" height="896" loading="lazy" class="object-[40%_50%]" alt="Dua teknisi menangani perbaikan TV">
+                        <img src="assets/img/h4.webp" width="1600" height="896" loading="lazy" alt="Barang service dibawa ke kantor Kusuma Trisna Bali">
                     </div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Dikerjakan</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Masih garansi: suku cadang kami ajukan ke merek. Tidak bergaransi: harganya kami sampaikan dulu, diperbaiki bila Anda setuju.</p>
+                        <p class="t-m">Dibawa ke kantor</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Masih garansi: barang langsung kami bawa. Tidak bergaransi: biayanya kami sampaikan dulu, dibawa bila cocok.</p>
                     </figcaption>
                 </figure>
 
                 <figure class="lg:col-start-8 lg:col-span-5 lg:row-start-1 lg:row-span-2 lg:self-end">
                     <div class="tile tile--photo h-[72vw] lg:h-[600px]">
-                        <img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf Kusuma Trisna Bali siap menyerahkan barang">
+                        <img src="assets/img/slider7.webp" width="1536" height="864" loading="lazy" class="object-[88%_40%]" alt="Staf Kusuma Trisna Bali memantau progres service">
                     </div>
                     <figcaption class="mt-4">
-                        <p class="t-m">Dikembalikan</p>
-                        <p class="t-s text-[var(--soft)] mt-1">Setelah proses selesai, barang dikembalikan kepada Anda.</p>
+                        <p class="t-m">Dikerjakan dan dipantau</p>
+                        <p class="t-s text-[var(--soft)] mt-1">Anda mendapat kode service. Lama pengerjaan tergantung pengiriman suku cadang.</p>
                     </figcaption>
                 </figure>
 
