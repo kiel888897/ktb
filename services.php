@@ -44,7 +44,9 @@ $faqs = array_merge($faqs, [
     ['Bagaimana service untuk barang yang masih garansi?',
         'Tim kami mengecek kerusakan di lokasi. Jika masih masuk garansi, barang kami bawa ke kantor, suku cadang diajukan ke merek terkait, lalu diganti.'],
     ['Bagaimana service untuk barang yang tidak bergaransi?',
-        'Tim kami menyampaikan biaya perbaikan saat pengecekan di lokasi. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak kami bawa.'],
+        'Tim kami menyampaikan biaya perbaikan saat pengecekan di lokasi. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak kami bawa dan tidak ada biaya.'],
+    ['Apakah hasil perbaikan barang tidak bergaransi mendapat garansi?',
+        'Tergantung kebijakan dari merek terkait.'],
     ['Berapa lama proses service?',
         'Lamanya tidak bisa ditentukan di awal, karena tergantung pengiriman suku cadang. Progresnya bisa Anda pantau dengan kode service.'],
     ['Bagaimana cara mengecek status service?',
@@ -264,7 +266,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                 </div>
                 <div class="tile bg-[var(--deep)] text-white lg:!p-8">
                     <h3 class="t-l">Tidak bergaransi</h3>
-                    <p class="t-s mt-3 max-w-lg">Biaya perbaikan kami sampaikan saat pengecekan. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak kami bawa.</p>
+                    <p class="t-s mt-3 max-w-lg">Biaya perbaikan kami sampaikan saat pengecekan. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak kami bawa dan tidak ada biaya.</p>
                 </div>
             </div>
 
