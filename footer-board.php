@@ -74,6 +74,7 @@ if (!$fCatalog && isset($pdo)) {
                 <h2 class="font-semibold mb-3">Ikuti</h2>
                 <ul class="space-y-2 text-gray-300">
                     <li><a href="https://www.facebook.com/kusumatrisnabali.ktb/" target="_blank" rel="noopener noreferrer" class="hover:text-white">Facebook</a></li>
+                    <li><a href="https://shopee.co.id/trisnaelectronics" target="_blank" rel="noopener noreferrer" class="hover:text-white">Shopee</a></li>
                 </ul>
             </div>
 

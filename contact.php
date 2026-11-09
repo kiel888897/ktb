@@ -111,6 +111,10 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 <span class="font-semibold">Email</span>
                 <span class="t-s break-all">info@kusumatrisnabali.com</span>
             </a>
+            <a href="https://shopee.co.id/trisnaelectronics" target="_blank" rel="noopener" class="tile col-span-2 lg:col-span-12 flex flex-wrap items-center justify-between gap-3 lg:!px-8 transition-colors hover:bg-[var(--tile-2)]">
+                <span class="t-m">Toko Shopee: Trisna Electronics</span>
+                <span class="link-arrow">Kunjungi toko <?= $arrow ?></span>
+            </a>
         </section>
 
         <!-- Peta + form -->

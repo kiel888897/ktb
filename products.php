@@ -408,6 +408,7 @@ $field = 'w-full h-[52px] rounded-[var(--r)] bg-[var(--tile)] px-4 text-[var(--i
                 <span class="t-m">Tanya stok lewat WhatsApp</span>
                 <span class="link-arrow">0877-7992-8897 <?= $arrow ?></span>
             </a>
+            <p class="lg:col-span-12 t-s mt-4">Lebih suka belanja online? Kunjungi <a href="https://shopee.co.id/trisnaelectronics" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-[var(--accent)]">toko Shopee kami, Trisna Electronics</a>.</p>
         </section>
     </main>
 

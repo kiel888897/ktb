@@ -82,6 +82,7 @@ jsonld([
     ],
     'sameAs' => [
         'https://www.facebook.com/kusumatrisnabali.ktb/',
+        'https://shopee.co.id/trisnaelectronics',
     ],
 ]);
 
