@@ -84,7 +84,7 @@ $stmt->execute([$brand_id]);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $site = 'https://www.kusumatrisnabali.com';
-$brandName = $current_brand['name'] ?? '';
+$brandName = nice_brand($current_brand['name'] ?? '');
 $page_title = $current_brand
     ? "Produk {$brandName} Resmi di Tabanan Bali | Kusuma Trisna Bali"
     : "Brand Produk | Kusuma Trisna Bali";

@@ -182,7 +182,7 @@ $canonical = $site . '/products.php' . ($canonParams ? '?' . http_build_query($c
 
 $filterLabel = trim(implode(' ', array_filter([
     $subcategory_id > 0 ? $nameBySlug($subcategories, $subcategory_slug) : ($category_id > 0 ? $nameBySlug($categories, $category_slug) : ''),
-    $brand_id > 0 ? $nameBySlug($brands, $brand_slug) : '',
+    $brand_id > 0 ? nice_brand($nameBySlug($brands, $brand_slug)) : '',
 ])));
 
 $seoTitle = $filterLabel !== ''

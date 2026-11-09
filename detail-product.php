@@ -40,6 +40,7 @@ if (!$product) {
     include __DIR__ . '/404.php';
     exit;
 }
+$product['brand_name'] = nice_brand($product['brand_name']);
 
 /*
 |--------------------------------------------------------------------------
