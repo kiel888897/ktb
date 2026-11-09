@@ -15,6 +15,9 @@ ErrorDocument 404 /404.php
     RewriteCond %{THE_REQUEST} \s/+index\.php[\s?] [NC]
     RewriteRule ^index\.php$ / [L,R=301]
 
+    # /en -> /en/ (redirect bawaan Apache ikut membawa nama subfolder hosting)
+    RewriteRule ^en$ https://www.kusumatrisnabali.com/en/ [L,R=301]
+
     # Sitemap dinamis
     RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
