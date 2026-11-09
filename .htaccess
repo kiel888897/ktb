@@ -6,6 +6,10 @@ ErrorDocument 404 /404.php
     RewriteEngine On
     RewriteBase /
 
+    # Situs juga bisa terbuka lewat nama subfolder hosting: arahkan ke alamat asli agar tidak dobel
+    RewriteCond %{THE_REQUEST} \s/+kusumatrisnabali\.com(/[^\s?]*)?(\?[^\s]*)?\s [NC]
+    RewriteRule ^ https://www.kusumatrisnabali.com%1%2 [L,R=301,NE]
+
     # Domain tanpa www -> https://www (HTTP->HTTPS sudah ditangani hosting)
     RewriteCond %{HTTP_HOST} ^kusumatrisnabali\.com$ [NC]
     # Pakai $1 (path relatif folder ini); %{REQUEST_URI} di hosting ini ikut membawa nama subfolder
