@@ -1,5 +1,6 @@
 <?php
 require 'admin/config/database.php';
+require_once __DIR__ . '/image-helper.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -201,7 +202,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
         <!-- Merek -->
         <section class="mt-6 grid lg:grid-cols-12 gap-[var(--gap)]">
             <div class="tile lg:col-span-4 aspect-[3/2] lg:aspect-auto lg:min-h-[260px] flex items-center justify-center !p-8">
-                <img src="<?= $e($brandLogo) ?>" alt="Logo <?= $e($brandNice) ?>" class="blend max-h-28 max-w-full object-contain">
+                <img src="<?= $e(thumb_src($brandLogo, 480)) ?>" alt="Logo <?= $e($brandNice) ?>" class="blend max-h-28 max-w-full object-contain">
             </div>
             <div class="tile lg:col-span-8 flex flex-col justify-between gap-6 lg:!p-10">
                 <div>
@@ -242,7 +243,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                         <li>
                             <a href="detail-product.php?slug=<?= urlencode($p['slug']) ?>" class="tile group flex flex-col h-full !p-4 lg:!p-6">
                                 <div class="aspect-square flex items-center justify-center p-1 lg:p-3">
-                                    <img src="<?= $e($imgPath) ?>" alt="<?= $e($p['name'] . ' - ' . $brandNice) ?>" loading="lazy" decoding="async"
+                                    <img src="<?= $e(thumb_src($imgPath, 480)) ?>" alt="<?= $e($p['name'] . ' - ' . $brandNice) ?>" loading="lazy" decoding="async"
                                         class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
                                 </div>
                                 <div class="mt-3 flex-1">
@@ -266,7 +267,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                         <a href="brand-product.php?brand=<?= urlencode($b['slug']) ?>" <?= $on ? 'aria-current="page"' : '' ?>
                             class="tile !p-3 flex items-center justify-center aspect-[3/2] transition-colors <?= $on ? '!bg-[var(--tile-2)] outline outline-2 outline-[var(--ink)] -outline-offset-2' : 'hover:bg-[var(--tile-2)]' ?>"
                             title="Produk <?= $e($niceName($b['name'])) ?>">
-                            <img src="admin/uploads/brands/<?= $e($b['logo']) ?>" alt="<?= $e($niceName($b['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
+                            <img src="<?= $e(thumb_src('admin/uploads/brands/' . $b['logo'], 240)) ?>" alt="<?= $e($niceName($b['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
                         </a>
                     </li>
                 <?php endforeach; ?>

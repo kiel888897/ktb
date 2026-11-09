@@ -1,5 +1,6 @@
 <?php
 require 'admin/config/database.php';
+require_once __DIR__ . '/image-helper.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -371,7 +372,7 @@ $field = 'w-full h-[52px] rounded-[var(--r)] bg-[var(--tile)] px-4 text-[var(--i
                         <li>
                             <a href="detail-product.php?slug=<?= urlencode($p['slug']) ?>" class="tile group flex flex-col h-full !p-4 lg:!p-6">
                                 <div class="aspect-square flex items-center justify-center p-1 lg:p-3">
-                                    <img src="<?= $e($imgPath) ?>" alt="<?= $e($p['name'] . ' - ' . $niceName($p['brand_name'])) ?>"
+                                    <img src="<?= $e(thumb_src($imgPath, 480)) ?>" alt="<?= $e($p['name'] . ' - ' . $niceName($p['brand_name'])) ?>"
                                         loading="lazy" decoding="async"
                                         class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
                                 </div>

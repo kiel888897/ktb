@@ -1,6 +1,7 @@
 <?php
 
 require 'admin/config/database.php';
+require_once __DIR__ . '/image-helper.php';
 
 $e = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 
@@ -321,7 +322,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                                 <a href="brand-product.php?brand=<?= $e($brand['slug']) ?>"
                                     class="tile !p-3 flex items-center justify-center aspect-[3/2] transition-colors hover:bg-[var(--tile-2)]"
                                     title="Produk <?= $e($brandName($brand['name'])) ?>">
-                                    <img src="admin/uploads/brands/<?= $e($brand['logo']) ?>" alt="<?= $e($brandName($brand['name'])) ?>"
+                                    <img src="<?= $e(thumb_src('admin/uploads/brands/' . $brand['logo'], 240)) ?>" alt="<?= $e($brandName($brand['name'])) ?>"
                                         loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
                                 </a>
                             </li>
@@ -359,7 +360,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                     <a href="detail-product.php?slug=<?= $e($p['slug']) ?>"
                         class="tile group flex flex-col <?= $place ?> <?= $big ? 'aspect-square lg:aspect-auto' : 'aspect-[3/4] lg:aspect-auto' ?>">
                         <div class="flex-1 min-h-0 flex items-center justify-center <?= $big ? 'p-6 lg:p-10' : 'p-2' ?>">
-                            <img src="<?= $e($productImg($p['image'])) ?>" alt="<?= $e($p['name']) ?>"
+                            <img src="<?= $e(thumb_src($productImg($p['image']), $big ? 900 : 480)) ?>" alt="<?= $e($p['name']) ?>"
                                 loading="lazy" decoding="async"
                                 class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
                         </div>
@@ -432,7 +433,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                     <ul class="lg:col-span-9 grid grid-cols-3 sm:grid-cols-6 gap-[var(--gap)]">
                         <?php foreach ($partners as $partner): ?>
                             <li class="tile !p-3 flex items-center justify-center aspect-[3/2]">
-                                <img src="admin/uploads/partners/<?= $e($partner['logo']) ?>" alt="<?= $e($brandName($partner['name'])) ?>"
+                                <img src="<?= $e(thumb_src('admin/uploads/partners/' . $partner['logo'], 240)) ?>" alt="<?= $e($brandName($partner['name'])) ?>"
                                     loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
                             </li>
                         <?php endforeach; ?>

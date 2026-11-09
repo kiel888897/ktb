@@ -1,5 +1,6 @@
 <?php
 require 'admin/config/database.php';
+require_once __DIR__ . '/image-helper.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -231,7 +232,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
             <!-- Foto -->
             <div class="lg:col-span-7 min-w-0">
                 <div class="tile aspect-square sm:aspect-[4/3] flex items-center justify-center !p-6 lg:!p-12">
-                    <img id="mainImg" src="<?= $e($imgSrc($images[0]['image'])) ?>"
+                    <img id="mainImg" src="<?= $e(thumb_src($imgSrc($images[0]['image']), 900)) ?>"
                         alt="<?= $e($seoImageAlt) ?>" width="600" height="600" fetchpriority="high"
                         class="blend max-h-full max-w-full object-contain">
                 </div>
@@ -239,9 +240,9 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
                     <ul class="mt-[var(--gap)] grid grid-cols-4 sm:grid-cols-6 gap-[var(--gap)]">
                         <?php foreach ($images as $i => $img): ?>
                             <li>
-                                <button type="button" data-thumb="<?= $e($imgSrc($img['image'])) ?>" aria-label="Lihat foto <?= $i + 1 ?>" <?= $i === 0 ? 'aria-current="true"' : '' ?>
+                                <button type="button" data-thumb="<?= $e(thumb_src($imgSrc($img['image']), 900)) ?>" aria-label="Lihat foto <?= $i + 1 ?>" <?= $i === 0 ? 'aria-current="true"' : '' ?>
                                     class="thumb tile w-full aspect-square !p-2 flex items-center justify-center transition-colors hover:bg-[var(--tile-2)]">
-                                    <img src="<?= $e($imgSrc($img['image'])) ?>" alt="" loading="lazy" class="blend max-h-full max-w-full object-contain">
+                                    <img src="<?= $e(thumb_src($imgSrc($img['image']), 240)) ?>" alt="" loading="lazy" class="blend max-h-full max-w-full object-contain">
                                 </button>
                             </li>
                         <?php endforeach; ?>
@@ -324,7 +325,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
                         <li>
                             <a href="detail-product.php?slug=<?= urlencode($r['slug']) ?>" class="tile group flex flex-col h-full !p-4 lg:!p-6">
                                 <div class="aspect-square flex items-center justify-center p-2 lg:p-6">
-                                    <img src="<?= $e($imgSrc($r['image'] ?: 'product-placeholder.png')) ?>" alt="<?= $e($r['name']) ?>"
+                                    <img src="<?= $e(thumb_src($imgSrc($r['image'] ?: 'product-placeholder.png'), 480)) ?>" alt="<?= $e($r['name']) ?>"
                                         loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
                                 </div>
                                 <h3 class="t-m mt-3 group-hover:text-[var(--accent)] transition-colors"><?= $e($r['name']) ?></h3>

@@ -1,6 +1,7 @@
 <?php
 
 require 'admin/config/database.php';
+require_once __DIR__ . '/image-helper.php';
 
 $stmt = $pdo->prepare("
     SELECT name, logo, slug
@@ -171,7 +172,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 <ul class="lg:col-span-9 grid grid-cols-3 sm:grid-cols-6 gap-[var(--gap)]">
                     <?php foreach ($partners as $partner): ?>
                         <li class="tile !p-3 flex items-center justify-center aspect-[3/2]">
-                            <img src="admin/uploads/partners/<?= $e($partner['logo']) ?>" alt="<?= $e($niceName($partner['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
+                            <img src="<?= $e(thumb_src('admin/uploads/partners/' . $partner['logo'], 240)) ?>" alt="<?= $e($niceName($partner['name'])) ?>" loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain">
                         </li>
                     <?php endforeach; ?>
                 </ul>

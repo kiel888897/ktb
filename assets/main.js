@@ -191,3 +191,29 @@ document.querySelectorAll("[data-thumb]").forEach((btn) => {
     btn.setAttribute("aria-current", "true");
   });
 });
+
+/* ---------- Pelacakan GA4: hanya jenis aksi dan letaknya, tanpa isi form ---------- */
+function track(name, el) {
+  if (typeof window.gtag !== "function") return;
+  const area = el.closest("header, footer, section[id], section[aria-label], nav");
+  const lokasi = area
+    ? area.id || area.getAttribute("aria-label") || area.tagName.toLowerCase()
+    : "lainnya";
+  window.gtag("event", name, { lokasi: lokasi, transport_type: "beacon" });
+}
+
+document.addEventListener("click", (e) => {
+  const a = e.target.closest ? e.target.closest("a[href]") : null;
+  if (!a) return;
+  const href = a.getAttribute("href");
+  if (href.indexOf("wa.me/") !== -1) track("whatsapp_click", a);
+  else if (href.indexOf("tel:") === 0) track("phone_click", a);
+  else if (href.indexOf("shopee.co.id") !== -1) track("shopee_click", a);
+});
+
+document.addEventListener("submit", (e) => {
+  const f = e.target;
+  if (f.hasAttribute("data-wa-form")) track("whatsapp_click", f);
+  else if (f.querySelector('[name="service_code"]')) track("service_track", f);
+  else if ((f.getAttribute("action") || "") === "send-mail.php") track("contact_form", f);
+});
