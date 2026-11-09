@@ -197,6 +197,16 @@ $niceName = function ($n) {
     $n = trim((string) $n);
     return strlen($n) <= 3 ? strtoupper($n) : preg_replace('/\bTv\b/', 'TV', ucwords(strtolower($n), " -"));
 };
+// Deskripsi dari admin bisa berupa HTML: izinkan tag teks saja, tanpa atribut. h1/h2 diturunkan agar struktur judul halaman tetap benar.
+$richText = function ($html) {
+    $html = trim((string) $html);
+    $allowed = '<p><br><strong><b><em><i><u><ul><ol><li><h1><h2><h3><h4><table><thead><tbody><tr><th><td>';
+    $html = preg_replace('#<(script|style)\b[^>]*>.*?</\1>#is', '', $html);
+    $safe = strip_tags($html, $allowed);
+    $safe = preg_replace('/<([a-z][a-z0-9]*)\b[^>]*?(\/?)>/i', '<$1$2>', $safe);
+    $safe = preg_replace('#<(/?)h[12]>#i', '<$1h3>', $safe);
+    return preg_match('#<(p|ul|ol|table|h3|h4)>#i', $safe) ? $safe : nl2br($safe);
+};
 $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 $brandNice = $niceName($product['brand_name']);
 $waText = 'Halo Kusuma Trisna Bali, saya tertarik dengan produk ' . $clean($product['name'])
@@ -290,7 +300,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
                 <?php if (!empty($product['description'])): ?>
                     <div class="<?= !empty($product['specifications']) ? 'lg:col-span-6 lg:pr-10' : 'lg:col-span-8' ?>">
                         <h2 class="t-h">Deskripsi</h2>
-                        <p class="t-s mt-6"><?= nl2br($e($product['description'])) ?></p>
+                        <div class="spec t-s mt-6"><?= $richText($product['description']) ?></div>
                     </div>
                 <?php endif; ?>
                 <?php if (!empty($product['specifications'])): ?>
