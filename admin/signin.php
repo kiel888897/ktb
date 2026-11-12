@@ -125,14 +125,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Password<span class="text-error-500">*</span>
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    required
-                    class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm
-                         text-gray-800 shadow-theme-xs
-                         focus:border-brand-300 focus:outline-none
-                         dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+                  <div style="position:relative">
+                    <input
+                      id="password"
+                      type="password"
+                      name="password"
+                      required
+                      autocomplete="current-password"
+                      style="padding-right:3rem"
+                      class="dark:bg-dark-900 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm
+                           text-gray-800 shadow-theme-xs
+                           focus:border-brand-300 focus:outline-none
+                           dark:border-gray-700 dark:bg-gray-900 dark:text-white/90" />
+                    <button type="button" id="togglePassword" aria-label="Tampilkan password" aria-pressed="false"
+                      class="text-gray-500 dark:text-gray-400"
+                      style="position:absolute;top:0;right:0;height:2.75rem;width:2.75rem;display:flex;align-items:center;justify-content:center;background:none;border:0;cursor:pointer">
+                      <svg data-eye="show" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                      <svg data-eye="hide" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.9 10.9 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6A17.4 17.4 0 0 0 2 12s3.5 7 10 7a10.6 10.6 0 0 0 5.4-1.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+                    </button>
+                  </div>
                 </div>
 
                 <!-- Button -->
@@ -164,6 +175,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <script defer src="bundle.js"></script>
+  <script>
+    // Tampilkan / sembunyikan password
+    (function () {
+      var input = document.getElementById('password');
+      var btn = document.getElementById('togglePassword');
+      if (!input || !btn) return;
+      btn.addEventListener('click', function () {
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        btn.setAttribute('aria-pressed', show ? 'true' : 'false');
+        btn.setAttribute('aria-label', show ? 'Sembunyikan password' : 'Tampilkan password');
+        btn.querySelector('[data-eye="show"]').style.display = show ? 'none' : '';
+        btn.querySelector('[data-eye="hide"]').style.display = show ? '' : 'none';
+        input.focus();
+      });
+    })();
+  </script>
 </body>
 
 </html>
