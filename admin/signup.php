@@ -158,6 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 
   <script defer src="bundle.js"></script>
+  <script src="password-toggle.js?v=1"></script>
 </body>
 
 </html>
