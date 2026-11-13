@@ -31,7 +31,7 @@ $sendOriginal = function () use ($orig, $send) {
 };
 
 $dir = __DIR__ . '/admin/uploads/.cache';
-$cache = $dir . '/' . $w . '-' . md5($src . '|' . filemtime($orig)) . '.webp';
+$cache = $dir . '/v2-' . $w . '-' . md5($src . '|' . filemtime($orig)) . '.webp';
 if (is_file($cache)) {
     $send($cache, 'image/webp');
 }
@@ -45,13 +45,21 @@ try {
     if (!$im) {
         $sendOriginal();
     }
-    if (imagesx($im) > $w) {
-        $scaled = imagescale($im, $w, -1, IMG_BICUBIC);
-        if ($scaled) {
-            $im = $scaled;
-        }
-    }
     imagepalettetotruecolor($im);
+    $ow = imagesx($im);
+    $oh = imagesy($im);
+    if ($ow > $w) {
+        // imagescale() dengan IMG_BICUBIC mengembalikan false di GD bawaan PHP, jadi skala manual.
+        $h = max(1, (int) round($oh * $w / $ow));
+        $scaled = imagecreatetruecolor($w, $h);
+        imagealphablending($scaled, false);
+        imagesavealpha($scaled, true);
+        imagefill($scaled, 0, 0, imagecolorallocatealpha($scaled, 0, 0, 0, 127));
+        if (!imagecopyresampled($scaled, $im, 0, 0, 0, 0, $w, $h, $ow, $oh)) {
+            $sendOriginal();
+        }
+        $im = $scaled;
+    }
     imagealphablending($im, false);
     imagesavealpha($im, true);
 
