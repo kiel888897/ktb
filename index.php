@@ -147,8 +147,8 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="assets/img/slider3.webp" fetchpriority="high">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" as="image" href="assets/img/slider3.webp" imagesrcset="assets/img/slider3-800.webp 800w, assets/img/slider3.webp 1920w" imagesizes="(min-width: 1024px) 66vw, 100vw" fetchpriority="high">
 
     <?php include 'schema-store.php'; ?>
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
@@ -161,7 +161,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
         <!-- ============ PAPAN PEMBUKA ============ -->
         <section class="max-w-7xl mx-auto px-4 sm:px-6 pt-1 lg:pt-6 lg:h-[100svh] lg:min-h-[680px] lg:max-h-[1100px] lg:flex lg:flex-col" aria-label="Kusuma Trisna Bali">
-            <div class="board lg:flex-1 lg:min-h-0 lg:grid-rows-[auto_auto_minmax(0,1fr)]" data-reveal>
+            <div class="board lg:flex-1 lg:min-h-0 lg:grid-rows-[auto_auto_minmax(0,1fr)]">
 
                 <!-- Nama -->
                 <a href="/" class="tile hidden lg:flex lg:col-span-12 items-center gap-4 lg:gap-8 bg-[var(--ink)] text-white py-5 lg:py-7">
@@ -180,7 +180,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 <!-- Foto besar + pernyataan -->
                 <div class="tile tile--photo col-span-2 lg:col-start-3 lg:col-span-8 lg:row-start-3 flex flex-col lg:block !bg-transparent lg:!bg-[var(--tile-2)] !overflow-visible lg:!overflow-hidden">
                     <div class="aspect-square sm:aspect-[4/3] rounded-[var(--r)] lg:rounded-none lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
-                        <img src="assets/img/slider3.webp" width="1920" height="1075" fetchpriority="high"
+                        <img src="assets/img/slider3.webp" srcset="assets/img/slider3-800.webp 800w, assets/img/slider3.webp 1920w" sizes="(min-width: 1024px) 66vw, 100vw" width="1920" height="1075" fetchpriority="high"
                             class="drift w-full h-full object-cover"
                             alt="Showroom elektronik Kusuma Trisna Bali dengan kulkas, AC, TV, dan audio">
                     </div>

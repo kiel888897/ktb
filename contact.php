@@ -60,7 +60,7 @@
     <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime(__DIR__ . '/assets/tailwind.css'); ?>">
 </head>
 <?php
@@ -94,7 +94,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
         <?php endif; ?>
 
         <!-- Kanal kontak -->
-        <section aria-label="Kontak" class="mt-8 board" data-reveal>
+        <section aria-label="Kontak" class="mt-8 board">
             <a href="https://wa.me/6287779928897" target="_blank" rel="noopener" class="tile col-span-2 lg:col-span-6 bg-[var(--accent)] text-white flex flex-col justify-between gap-8 lg:min-h-[220px] lg:!p-8 transition-colors hover:bg-[var(--deep)]">
                 <span class="t-l">Chat WhatsApp</span>
                 <span class="link-arrow">Sales · 0877-7992-8897 <?= $arrow ?></span>

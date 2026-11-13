@@ -98,7 +98,7 @@ $faqs = [
     <script>document.documentElement.classList.add('js');</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="assets/tailwind.css?v=<?= filemtime($root . '/assets/tailwind.css'); ?>">
 </head>
 
@@ -119,7 +119,7 @@ $faqs = [
     <main id="main-content" class="max-w-7xl mx-auto px-4 sm:px-6">
 
         <!-- Opening -->
-        <section class="pt-4 lg:pt-6 board lg:[grid-auto-rows:minmax(120px,auto)]" data-reveal>
+        <section class="pt-4 lg:pt-6 board lg:[grid-auto-rows:minmax(120px,auto)]">
             <div class="tile col-span-2 lg:col-span-7 lg:row-span-3 flex flex-col justify-between gap-8 lg:!p-10">
                 <div>
                     <h1 class="t-h">Electronics service for villas &amp; hotels</h1>
@@ -131,7 +131,7 @@ $faqs = [
                 </div>
             </div>
             <div class="tile tile--photo col-span-2 lg:col-span-5 lg:row-span-3 aspect-[4/3] lg:aspect-auto">
-                <img src="assets/img/promo1.webp" width="1384" height="1040" fetchpriority="high" alt="Technician checking a TV">
+                <img src="assets/img/promo1.webp" srcset="assets/img/promo1-800.webp 800w, assets/img/promo1.webp 1384w" sizes="(min-width: 1024px) 50vw, 100vw" width="1384" height="1040" fetchpriority="high" alt="Technician checking a TV">
             </div>
         </section>
 
