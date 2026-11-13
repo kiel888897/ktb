@@ -95,6 +95,44 @@ try {
     $isPartner = false;
 }
 $serviceOnly = $isPartner && !$products;
+
+// Teks dan FAQ per merek, disusun hanya dari data katalog dan fakta layanan yang sudah ada di situs
+$brandSubcats = array_values(array_unique(array_filter(array_map(fn($p) => trim((string) $p['subcategory_name']), $products))));
+$brandModels = array_slice(array_values(array_unique(array_map(fn($p) => trim((string) $p['name']), $products))), 0, 6);
+$joinId = function (array $items): string {
+    $items = array_values($items);
+    if (count($items) <= 1) {
+        return (string) ($items[0] ?? '');
+    }
+    return implode(', ', array_slice($items, 0, -1)) . ' dan ' . end($items);
+};
+$storeAddress = 'Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113';
+$storeHours = 'Senin sampai Sabtu, pukul 08.00 sampai 17.00 WITA';
+$brandAbout = [];
+$brandFaqs = [];
+if ($current_brand) {
+    if ($products) {
+        $subcatText = mb_strtolower($joinId($brandSubcats), 'UTF-8');
+        $brandAbout[] = 'Di katalog Kusuma Trisna Bali ada ' . count($products) . ' produk ' . $brandName
+            . ($subcatText !== '' ? ' untuk kategori ' . $subcatText : '') . '. '
+            . 'Model yang tersedia antara lain ' . $joinId($brandModels) . '.';
+        $brandAbout[] = 'Stok bisa berubah, jadi tanyakan ketersediaan dan harga lewat WhatsApp 0877-7992-8897 atau datang langsung ke toko kami di Tabanan.';
+        $brandFaqs[] = ['Di mana membeli produk ' . $brandName . ' resmi di Tabanan, Bali?',
+            'Di Kusuma Trisna Bali, ' . $storeAddress . '. Toko buka ' . $storeHours . '. Stok dan harga bisa ditanyakan lewat WhatsApp 0877-7992-8897.'];
+        $brandFaqs[] = ['Produk ' . $brandName . ' apa saja yang tersedia?',
+            'Saat ini ada ' . count($products) . ' produk ' . $brandName . ($subcatText !== '' ? ' (' . $subcatText . ')' : '')
+            . ', antara lain ' . $joinId($brandModels) . '. Daftar lengkapnya ada di halaman ini.'];
+    }
+    if ($isPartner) {
+        $brandAbout[] = 'Kami ' . ($products ? 'juga ' : '') . 'service center resmi ' . $brandName . '. Barang diperiksa di lokasi Anda; bila masih garansi, barang kami bawa dan suku cadang diajukan ke ' . $brandName . '. Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko.';
+        $brandFaqs[] = ['Apakah Kusuma Trisna Bali service center resmi ' . $brandName . '?',
+            'Ya. Kami service center resmi ' . $brandName . ' di Tabanan dan melayani penjemputan gratis di seluruh Bali. Hubungi bagian service di 0812-3830-0513 atau WhatsApp 0877-7992-8897.'];
+        $brandFaqs[] = ['Bagaimana service ' . $brandName . ' yang masih garansi?',
+            'Tim kami mengecek kerusakan di lokasi. Jika masih masuk garansi, barang kami bawa ke kantor, suku cadang diajukan ke ' . $brandName . ', lalu diganti. Progresnya bisa dipantau dengan kode service.'];
+        $brandFaqs[] = ['Bagaimana service ' . $brandName . ' yang tidak bergaransi?',
+            'Biaya perbaikan kami sampaikan saat pengecekan di lokasi. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak dibawa dan tidak ada biaya.'];
+    }
+}
 $page_title = $serviceOnly
     ? "Service Center Resmi {$brandName} di Tabanan Bali | Kusuma Trisna Bali"
     : ($current_brand
@@ -108,7 +146,8 @@ $metaDesc = mb_strimwidth(
     $serviceOnly
         ? "Service center resmi {$brandName} di Tabanan, Bali. Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko Kusuma Trisna Bali."
         : ($current_brand
-        ? "Daftar produk {$brandName} resmi di Kusuma Trisna Bali, distributor elektronik di Tabanan, Bali. " . $brandDesc
+        ? "Daftar produk {$brandName} resmi di Kusuma Trisna Bali, distributor elektronik di Tabanan, Bali. "
+            . ($brandDesc !== '' ? $brandDesc : ($brandSubcats ? 'Tersedia ' . mb_strtolower($joinId($brandSubcats), 'UTF-8') . '. ' : '') . 'Tanya stok via WhatsApp.')
         : 'Brand elektronik resmi yang didistribusikan Kusuma Trisna Bali di Tabanan, Bali.'),
     0, 160, '…', 'UTF-8'
 );
@@ -173,6 +212,17 @@ $ogImage = !empty($current_brand['logo'])
         ['Produk', $site . '/products.php'],
         $current_brand ? [$brandName, $canonical] : null,
     ])));
+    if ($brandFaqs) {
+        jsonld([
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(fn($f) => [
+                '@type' => 'Question',
+                'name' => $f[0],
+                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+            ], $brandFaqs),
+        ]);
+    }
     ?>
 
     <script>document.documentElement.classList.add('js');</script>
@@ -264,6 +314,36 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
                 </ul>
             <?php endif; ?>
         </section>
+
+        <?php if ($brandAbout || $brandFaqs): ?>
+        <!-- Tentang merek dan tanya jawab -->
+        <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-10 lg:gap-[var(--gap)]">
+            <div class="lg:col-span-5">
+                <h2 class="t-h"><?= $e($brandNice) ?> di Kusuma Trisna Bali</h2>
+                <?php foreach ($brandAbout as $para): ?>
+                    <p class="t-s mt-4 max-w-xl"><?= $e($para) ?></p>
+                <?php endforeach; ?>
+            </div>
+            <?php if ($brandFaqs): ?>
+                <div class="lg:col-span-7">
+                    <h2 class="t-m">Tanya jawab <?= $e($brandNice) ?></h2>
+                    <div class="mt-4 space-y-[var(--gap)]">
+                        <?php foreach ($brandFaqs as $i => $f): ?>
+                            <details class="bar" <?= $i === 0 ? 'open' : '' ?>>
+                                <summary class="!py-3">
+                                    <span class="font-semibold"><?= $e($f[0]) ?></span>
+                                    <svg class="plus shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                                        <path d="M12 5v14M5 12h14" />
+                                    </svg>
+                                </summary>
+                                <p class="t-s px-[18px] pb-5 max-w-2xl"><?= $e($f[1]) ?></p>
+                            </details>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </section>
+        <?php endif; ?>
 
         <!-- Merek lain -->
         <section class="mt-24 lg:mt-32 mb-24 lg:mb-32">
