@@ -121,7 +121,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
         <section class="mt-24 lg:mt-32 grid lg:grid-cols-12 gap-24 lg:gap-[var(--gap)]" data-reveal>
             <div class="lg:col-span-6">
                 <h2 class="t-h">Lokasi toko</h2>
-                <p class="t-s mt-4 max-w-xl">Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113. Buka Senin–Sabtu, 08.00–17.00.</p>
+                <p class="t-s mt-4 max-w-xl">Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113. Buka Senin–Sabtu, 09.00–17.00.</p>
                 <div class="tile tile--photo mt-6 aspect-[4/3]">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.491802868451!2d115.1211551!3d-8.5486154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd23bbcadf71b29%3A0x47932c18a19d26e4!2sCV.%20Kusuma%20Trisna%20Bali!5e0!3m2!1sid!2sid!4v1770969154441!5m2!1sid!2sid" title="Lokasi Kusuma Trisna Bali di Google Maps" class="w-full h-full border-0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>

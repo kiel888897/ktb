@@ -55,7 +55,7 @@ $faqs = array_merge($faqs, [
     ['Apa saja tahapan status service?',
         'Barang diterima, pemeriksaan, dikerjakan, menunggu suku cadang, menunggu persetujuan Anda, lalu selesai. Dua status menunggu hanya muncul bila diperlukan.'],
     ['Di mana lokasi service center dan kapan buka?',
-        'Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113. Buka Senin sampai Sabtu, pukul 08.00 sampai 17.00 WITA.'],
+        'Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113. Buka Senin sampai Sabtu, pukul 09.00 sampai 17.00 WITA.'],
 ]);
 ?>
 <!DOCTYPE html>
@@ -309,7 +309,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode('Halo Kusuma Trisna 
         <section class="mt-24 lg:mt-32 mb-24 lg:mb-32 grid lg:grid-cols-12 gap-[var(--gap)]">
             <div class="tile lg:col-span-8 bg-[var(--ink)] text-white flex flex-col justify-between gap-8 lg:min-h-[260px] lg:!p-10">
                 <h2 class="t-h">Ajukan service</h2>
-                <p class="t-s max-w-lg">Ceritakan merek, jenis barang, dan kendalanya. Kami balas pada jam kerja, Senin–Sabtu 08.00–17.00.</p>
+                <p class="t-s max-w-lg">Ceritakan merek, jenis barang, dan kendalanya. Kami balas pada jam kerja, Senin–Sabtu 09.00–17.00.</p>
             </div>
             <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="tile lg:col-span-4 bg-[var(--accent)] text-white flex flex-col justify-between gap-6 transition-colors hover:bg-[var(--deep)] lg:!p-10">
                 <span class="t-m">Chat WhatsApp</span>

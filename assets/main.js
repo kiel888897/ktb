@@ -5,21 +5,21 @@ function witaNow() {
   return new Date(Date.now() + 8 * 3600 * 1000);
 }
 
-// Status buka: Senin–Sabtu 08.00–17.00
+// Status buka: Senin–Sabtu 09.00–17.00
 document.querySelectorAll("[data-open-status]").forEach((el) => {
   const t = witaNow();
   const day = t.getUTCDay(); // 0 = Minggu
   const min = t.getUTCHours() * 60 + t.getUTCMinutes();
   const workday = day >= 1 && day <= 6;
   let text;
-  if (workday && min >= 480 && min < 1020) {
+  if (workday && min >= 540 && min < 1020) {
     text = "Buka sekarang, tutup 17.00";
-  } else if (workday && min < 480) {
-    text = "Tutup, buka hari ini 08.00";
+  } else if (workday && min < 540) {
+    text = "Tutup, buka hari ini 09.00";
   } else if (day === 6 || day === 0) {
-    text = "Tutup, buka Senin 08.00";
+    text = "Tutup, buka Senin 09.00";
   } else {
-    text = "Tutup, buka besok 08.00";
+    text = "Tutup, buka besok 09.00";
   }
   el.textContent = text;
 });

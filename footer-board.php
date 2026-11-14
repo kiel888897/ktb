@@ -89,7 +89,7 @@ if (!$fCatalog && isset($pdo)) {
                     <span class="block font-semibold text-white mb-3">Hubungi</span>
                     <a href="tel:+6287779928897" class="hover:text-white">0877-7992-8897</a><br>
                     <a href="https://wa.me/6287779928897" target="_blank" rel="noopener noreferrer" class="hover:text-white">WhatsApp</a><br>
-                    Senin–Sabtu, 08.00–17.00
+                    Senin–Sabtu, 09.00–17.00
                 </div>
             </div>
         </div>

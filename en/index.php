@@ -36,7 +36,7 @@ $faqs = [
     ['Is a repair on an out-of-warranty item guaranteed?',
         'That depends on the policy of the brand concerned.'],
     ['Can we bring the item to you instead?',
-        'Yes. You can bring it directly to our store in Tabanan, Monday to Saturday, 08:00 to 17:00 WITA.'],
+        'Yes. You can bring it directly to our store in Tabanan, Monday to Saturday, 09:00 to 17:00 WITA.'],
 ];
 ?>
 <!DOCTYPE html>
@@ -246,7 +246,7 @@ $faqs = [
         <section id="contact" class="mt-24 lg:mt-32 mb-24 lg:mb-32 grid lg:grid-cols-12 gap-[var(--gap)] scroll-mt-24">
             <div class="tile lg:col-span-8 bg-[var(--ink)] text-white flex flex-col justify-between gap-8 lg:min-h-[260px] lg:!p-10">
                 <h2 class="t-h">Tell us what needs fixing</h2>
-                <p class="t-s max-w-lg">Share the brand, the item, the fault, and your location. We reply during working hours, Monday to Saturday, 08:00 to 17:00 WITA.</p>
+                <p class="t-s max-w-lg">Share the brand, the item, the fault, and your location. We reply during working hours, Monday to Saturday, 09:00 to 17:00 WITA.</p>
             </div>
             <a href="<?= $e($waService) ?>" target="_blank" rel="noopener" class="tile lg:col-span-4 bg-[var(--accent)] text-white flex flex-col justify-between gap-6 transition-colors hover:bg-[var(--deep)] lg:!p-10">
                 <span class="t-m">Chat on WhatsApp</span>

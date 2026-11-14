@@ -148,7 +148,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                     </div>
                     <div>
                         <dt class="text-[var(--soft)]">Jam buka</dt>
-                        <dd class="font-medium">Sen–Sab, 08.00–17.00</dd>
+                        <dd class="font-medium">Sen–Sab, 09.00–17.00</dd>
                     </div>
                     <div>
                         <dt class="text-[var(--soft)]">Waktu setempat</dt>

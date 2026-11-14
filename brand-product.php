@@ -107,7 +107,7 @@ $joinId = function (array $items): string {
     return implode(', ', array_slice($items, 0, -1)) . ' dan ' . end($items);
 };
 $storeAddress = 'Jl. By Pass Dr. Ir. Soekarno, Banjar Tegal Belodan, Dauh Peken, Tabanan, Bali 82113';
-$storeHours = 'Senin sampai Sabtu, pukul 08.00 sampai 17.00 WITA';
+$storeHours = 'Senin sampai Sabtu, pukul 09.00 sampai 17.00 WITA';
 $brandAbout = [];
 $brandFaqs = [];
 if ($current_brand) {

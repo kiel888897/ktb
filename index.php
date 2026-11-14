@@ -212,7 +212,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                 <!-- Rel kanan: warna terang ke gelap, terakhir aksi -->
                 <div class="rail col-span-2 lg:col-start-11 lg:col-span-2 lg:row-start-3 grid grid-cols-2 lg:grid-cols-1 lg:grid-rows-5 gap-[var(--gap)] lg:min-h-0">
                     <div class="tile t-s">
-                        <p class="font-semibold">Sen–Sab 08.00–17.00</p>
+                        <p class="font-semibold">Sen–Sab 09.00–17.00</p>
                         <p class="text-[var(--soft)]" data-open-status>WITA</p>
                     </div>
                     <a href="<?= $mapsUrl ?>" target="_blank" rel="noopener" class="tile t-s bg-[var(--tile-2)] transition-colors hover:bg-[#d1d5db]">
@@ -482,7 +482,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                         </div>
                         <div>
                             <dt class="text-[var(--soft)]">Jam buka</dt>
-                            <dd class="font-medium">Sen–Sab, 08.00–17.00</dd>
+                            <dd class="font-medium">Sen–Sab, 09.00–17.00</dd>
                         </div>
                         <div>
                             <dt class="text-[var(--soft)]">Berdiri</dt>
@@ -517,7 +517,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
                     </button>
                 </form>
                 <div class="grid lg:grid-cols-3 gap-[var(--gap)] mt-4 t-s text-white/90">
-                    <p>Dibalas pada jam kerja, Senin–Sabtu 08.00–17.00.</p>
+                    <p>Dibalas pada jam kerja, Senin–Sabtu 09.00–17.00.</p>
                     <p class="hidden lg:block"></p>
                     <p>Atau telepon <a href="tel:+6287779928897" class="underline underline-offset-4 hover:text-white">0877-7992-8897</a></p>
                 </div>
