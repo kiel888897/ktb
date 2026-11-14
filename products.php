@@ -62,6 +62,7 @@ $sql = "
         p.slug,
         p.tagline,
         p.model,
+        p.price,
         b.name AS brand_name,
         c.name AS category_name,
         s.name AS subcategory_name,
@@ -379,6 +380,7 @@ $field = 'w-full h-[52px] rounded-[var(--r)] bg-[var(--tile)] px-4 text-[var(--i
                                 <div class="mt-3 flex-1">
                                     <h2 class="t-m group-hover:text-[var(--accent)] transition-colors"><?= $e($p['name']) ?></h2>
                                     <p class="t-s text-[var(--soft)] mt-1"><?= $e($niceName($p['brand_name'])) ?> · <?= $e($p['subcategory_name']) ?></p>
+                                    <?php if ($price = sell_price($pdo, $p['price'])): ?><p class="t-m font-semibold mt-2"><?= rupiah($price) ?></p><?php endif; ?>
                                 </div>
                                 <span class="link-arrow mt-4 t-s">Lihat detail <?= $arrow ?></span>
                             </a>

@@ -41,6 +41,7 @@ if (!$product) {
     exit;
 }
 $product['brand_name'] = nice_brand($product['brand_name']);
+$sellPrice = sell_price($pdo, $product['price']);
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,7 @@ $relStmt = $pdo->prepare("
         p.id,
         p.name,
         p.slug,
+        p.price,
         (
             SELECT pi.image
             FROM product_images pi
@@ -139,6 +141,17 @@ $productLd = [
     'brand' => ['@type' => 'Brand', 'name' => $clean($product['brand_name'])],
     'category' => $clean($product['category_name'] . ' > ' . $product['subcategory_name']),
 ];
+if ($sellPrice) {
+    $productLd['offers'] = [
+        '@type' => 'Offer',
+        'url' => $seoUrl,
+        'price' => (string) $sellPrice,
+        'priceCurrency' => 'IDR',
+        'availability' => 'https://schema.org/' . ((int) $product['stock'] > 0 ? 'InStock' : 'BackOrder'),
+        'itemCondition' => 'https://schema.org/NewCondition',
+        'seller' => ['@id' => $site . '/#store'],
+    ];
+}
 
 $breadcrumbItems = [
     ['Beranda', $site . '/'],
@@ -210,7 +223,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 $brandNice = $niceName($product['brand_name']);
 $hasModel = trim((string) ($product['model'] ?? '')) !== '';
 $waText = 'Halo Kusuma Trisna Bali, saya tertarik dengan produk ' . $clean($product['name'])
-    . (!empty($product['model']) ? ' (' . $clean($product['model']) . ')' : '') . '. Apakah stoknya tersedia dan berapa harganya?';
+    . (!empty($product['model']) ? ' (' . $clean($product['model']) . ')' : '') . ($sellPrice ? '. Apakah stoknya tersedia?' : '. Apakah stoknya tersedia dan berapa harganya?');
 $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
 ?>
 <body id="top" class="home font-['IBM_Plex_Sans'] antialiased">
@@ -288,7 +301,10 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
                     </div>
                 </dl>
 
-                <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn w-full mt-6 !py-4">Tanya stok &amp; harga di WhatsApp <?= $arrow ?></a>
+                <?php if ($sellPrice): ?>
+                    <p class="mt-6"><span class="t-s text-[var(--soft)] block">Harga</span><span class="t-l font-semibold"><?= rupiah($sellPrice) ?></span></p>
+                <?php endif; ?>
+                <a href="<?= $e($waUrl) ?>" target="_blank" rel="noopener" class="btn w-full mt-6 !py-4"><?= $sellPrice ? 'Tanya stok' : 'Tanya stok &amp; harga' ?> di WhatsApp <?= $arrow ?></a>
                 <div class="mt-[var(--gap)] grid grid-cols-2 gap-[var(--gap)]">
                     <a href="tel:+6287779928897" class="tile !p-4 t-s font-semibold transition-colors hover:bg-[var(--tile-2)]">Telepon<span class="block font-normal">0877-7992-8897</span></a>
                     <a href="services.php" class="tile !p-4 t-s font-semibold transition-colors hover:bg-[var(--tile-2)]">Butuh service?<span class="block font-normal">Lacak atau ajukan</span></a>
@@ -330,6 +346,7 @@ $waUrl = 'https://wa.me/6287779928897?text=' . rawurlencode($waText);
                                         loading="lazy" decoding="async" class="blend max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105">
                                 </div>
                                 <h3 class="t-m mt-3 group-hover:text-[var(--accent)] transition-colors"><?= $e($r['name']) ?></h3>
+                                <?php if ($price = sell_price($pdo, $r['price'])): ?><p class="t-m font-semibold mt-2"><?= rupiah($price) ?></p><?php endif; ?>
                                 <span class="link-arrow mt-3 t-s">Lihat detail <?= $arrow ?></span>
                             </a>
                         </li>
