@@ -180,6 +180,10 @@ if ($category_id > 0) $canonParams['category'] = $category_slug;
 if ($subcategory_id > 0) $canonParams['subcategory'] = $subcategory_slug;
 if ($page > 1) $canonParams['page'] = $page;
 $canonical = $site . '/products.php' . ($canonParams ? '?' . http_build_query($canonParams) : '');
+// Filter merek saja = isi halaman merek (yang memuat semua produk merek itu); hindari halaman kembar.
+if ($brand_id > 0 && $search === '' && !$partner_id && !$category_id && !$subcategory_id) {
+    $canonical = $site . '/brand-product.php?brand=' . rawurlencode($brand_slug);
+}
 
 $filterLabel = trim(implode(' ', array_filter([
     $subcategory_id > 0 ? $nameBySlug($subcategories, $subcategory_slug) : ($category_id > 0 ? $nameBySlug($categories, $category_slug) : ''),
