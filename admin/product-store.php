@@ -113,6 +113,16 @@ if (!empty($_FILES['images']['name'][0])) {
     }
 }
 
+// ===== INDEXNOW =====
+require_once __DIR__ . '/../indexnow.php';
+$bs = $pdo->prepare("SELECT slug FROM brands WHERE id = ?");
+$bs->execute([$brand_id]);
+indexnow_ping([
+    'detail-product.php?slug=' . rawurlencode($slug),
+    'brand-product.php?brand=' . rawurlencode((string) $bs->fetchColumn()),
+    'products.php',
+]);
+
 // ===== SELESAI =====
 header('Location: product.php?created=1');
 exit;

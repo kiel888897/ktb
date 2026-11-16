@@ -102,9 +102,9 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Distributor &amp; Service Elektronik Tabanan | Kusuma Trisna Bali</title>
+    <title>Toko Elektronik Tabanan: Jual &amp; Service Resmi | Kusuma Trisna Bali</title>
 
-    <meta name="description" content="Distributor dan service center elektronik resmi di Tabanan, Bali. Produk original dari brand ternama, teknisi profesional, dan garansi resmi.">
+    <meta name="description" content="Toko elektronik di Tabanan, Bali: TV, AC, kulkas, kipas, dispenser resmi. Service center resmi TCL, Hisense, Changhong, Coocaa. Buka Sen–Sab 09.00–17.00.">
 
     <meta name="robots" content="index, follow">
 
@@ -120,7 +120,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Kusuma Trisna Bali | Distributor & Service Elektronik di Tabanan Bali">
+    <meta property="og:title" content="Toko Elektronik Tabanan: Jual & Service Resmi | Kusuma Trisna Bali">
     <meta property="og:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali. Menyediakan berbagai produk elektronik resmi dengan harga terbaik dan dukungan teknis profesional.">
     <meta property="og:url" content="https://www.kusumatrisnabali.com/">
     <meta property="og:site_name" content="Kusuma Trisna Bali">
@@ -132,7 +132,7 @@ $arrow = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="cu
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Kusuma Trisna Bali | Distributor & Service Elektronik">
+    <meta name="twitter:title" content="Toko Elektronik Tabanan: Jual & Service Resmi | Kusuma Trisna Bali">
     <meta name="twitter:description" content="Distributor dan pusat layanan perbaikan elektronik terpercaya di Tabanan, Bali.">
     <meta name="twitter:image" content="https://www.kusumatrisnabali.com/assets/og-image.jpg">
 

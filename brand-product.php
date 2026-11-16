@@ -134,10 +134,13 @@ if ($current_brand) {
             'Biaya perbaikan kami sampaikan saat pengecekan di lokasi. Jika cocok, barang kami bawa dan perbaiki. Jika tidak cocok, barang tidak dibawa dan tidak ada biaya.'];
     }
 }
+// Kueri yang muncul di GSC berbentuk "{merek} bali", jadi "{merek} Bali" diletakkan di depan judul.
 $page_title = $serviceOnly
-    ? "Service Center Resmi {$brandName} di Tabanan Bali | Kusuma Trisna Bali"
+    ? "Service Center Resmi {$brandName} Bali di Tabanan | Kusuma Trisna Bali"
     : ($current_brand
-    ? "Produk {$brandName} Resmi di Tabanan Bali | Kusuma Trisna Bali"
+    ? ($isPartner
+        ? "{$brandName} Bali: Jual & Service Center Resmi | Kusuma Trisna Bali"
+        : "{$brandName} Bali: Jual Produk Resmi di Tabanan | Kusuma Trisna Bali")
     : "Brand Produk | Kusuma Trisna Bali");
 $canonical = $current_brand
     ? $site . '/brand-product.php?brand=' . rawurlencode($current_brand['slug'])
@@ -147,7 +150,9 @@ $metaDesc = mb_strimwidth(
     $serviceOnly
         ? "Service center resmi {$brandName} di Tabanan, Bali. Penjemputan gratis di seluruh Bali, atau bawa langsung ke toko Kusuma Trisna Bali."
         : ($current_brand
-        ? "Daftar produk {$brandName} resmi di Kusuma Trisna Bali, distributor elektronik di Tabanan, Bali. "
+        ? ($isPartner
+            ? "{$brandName} di Bali: jual produk resmi dan service center resmi {$brandName} di Tabanan, penjemputan gratis seluruh Bali. "
+            : "Jual {$brandName} resmi di Kusuma Trisna Bali, toko elektronik di Tabanan, Bali. ")
             . ($brandDesc !== '' ? $brandDesc : ($brandSubcats ? 'Tersedia ' . mb_strtolower($joinId($brandSubcats), 'UTF-8') . '. ' : '') . 'Tanya stok via WhatsApp.')
         : 'Brand elektronik resmi yang didistribusikan Kusuma Trisna Bali di Tabanan, Bali.'),
     0, 160, '…', 'UTF-8'
