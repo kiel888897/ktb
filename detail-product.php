@@ -114,10 +114,17 @@ if (mb_strlen($seoTitle) > 65) {
     $seoTitle = $titleCore;
 }
 
-// Description
+// Description: Short Description, atau potongan awal deskripsi panjang bila kosong (dipotong di batas kata)
+$shortText = $clean($product['short_description']);
+if ($shortText === '') {
+    $shortText = $clean(html_entity_decode(preg_replace('#<br\s*/?>|</(?:p|h\d|li|div)>#i', ' ', (string) $product['description']), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+    if (mb_strlen($shortText) > 140) {
+        $shortText = rtrim(preg_replace('/\s+\S*$/u', '', mb_substr($shortText, 0, 140)), " ,.;:-–") . '…';
+    }
+}
 $seoDescription = $clean(
     (!empty($product['tagline']) ? $clean($product['tagline']) . '. ' : '')
-        . $clean($product['short_description'])
+        . $shortText
         . ' Tersedia di Kusuma Trisna Bali, distributor '
         . mb_strtolower($product['subcategory_name'])
         . ' ' . $product['brand_name'] . ' di Tabanan, Bali.'
@@ -137,7 +144,7 @@ $productLd = [
     'name' => $clean($product['name']),
     'url' => $seoUrl,
     'image' => $seoImages,
-    'description' => $clean($product['short_description'] ?: $seoDescription),
+    'description' => $shortText !== '' ? $shortText : $seoDescription,
     'brand' => ['@type' => 'Brand', 'name' => $clean($product['brand_name'])],
     'category' => $clean($product['category_name'] . ' > ' . $product['subcategory_name']),
 ];
