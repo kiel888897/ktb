@@ -198,7 +198,14 @@ if ($page > 1) {
 }
 
 // Jenis produk yang punya produk aktif (tombol pilihan). Yang sedang dipilih tetap tampil.
-$filledSubs = array_flip($pdo->query("SELECT DISTINCT subcategory_id FROM products WHERE is_active = 1")->fetchAll(PDO::FETCH_COLUMN));
+// Bila merek/partner dipilih, hanya jenis yang punya produk untuk merek/partner itu (hindari tautan ke hasil kosong).
+$subSql = "SELECT DISTINCT subcategory_id FROM products WHERE is_active = 1";
+$subArgs = [];
+if ($brand_id > 0) { $subSql .= " AND brand_id = ?"; $subArgs[] = $brand_id; }
+if ($partner_id > 0) { $subSql .= " AND partner_id = ?"; $subArgs[] = $partner_id; }
+$subStmt = $pdo->prepare($subSql);
+$subStmt->execute($subArgs);
+$filledSubs = array_flip($subStmt->fetchAll(PDO::FETCH_COLUMN));
 $subChips = array_values(array_filter($subcategories, fn($sc) => isset($filledSubs[$sc['id']]) || $sc['slug'] === $subcategory_slug));
 
 // Hasil pencarian, filter tidak dikenal, dan hasil kosong: jangan diindeks
